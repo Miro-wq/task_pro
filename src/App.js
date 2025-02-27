@@ -1,35 +1,17 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './Pages/HomePage/HomePage';
-import LoginPage from './Pages/LoginPage/LoginPage';
-import RegisterPage from './Pages/RegisterPage/RegisterPage';
-import DiaryPage from './Pages/DiaryPage/DiaryPage';
-import CalculatorPage from './Pages/CalculatorPage/CalculatorPage';
-import ProtectedRoute from './components/ProtectedRoute';
+import Login from './pages/LoginPage/LoginPage';
+import HomePage from './pages/HomePage/HomePage';
+import LandingPage from './pages/LandingPage/LandingPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route
-          path="/calculator"
-          element={
-            <ProtectedRoute>
-              <CalculatorPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/diary"
-          element={
-            <ProtectedRoute>
-              <DiaryPage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/home/:boardName" element={<HomePage />} />
       </Routes>
     </Router>
   );
