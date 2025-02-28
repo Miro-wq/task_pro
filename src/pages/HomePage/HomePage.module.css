@@ -15,8 +15,20 @@
   justify-content: center;
   max-width: 100%;
   width: 90rem;
-
 }
+
+.description {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 45em;
+}
+
+.green {
+  color: #a8df65;}
 
 .title {
   /* font-weight: 400; */

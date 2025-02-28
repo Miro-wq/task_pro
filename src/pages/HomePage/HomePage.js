@@ -36,7 +36,8 @@ function HomePage() {
       <div className={styles.homePage}>
         <Sidebar />
         <div className={styles.container}>
-          <h1 className={styles.title}>Welcome, {user?.name}</h1>
+          {/* <h1 className={styles.title}>Welcome, {user?.name}</h1> */}
+          <p className={styles.description}>Before starting your project, it is essential <span className={styles.green}>to create a board</span> to visualize and track all the necessary tasks and milestones. This board serves as a powerful tool to organize the workflow and ensure effective collaboration among team members.</p>
 
           <button className={styles.logoutButton}
             onClick={() => {
