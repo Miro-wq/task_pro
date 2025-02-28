@@ -62,12 +62,12 @@
   text-decoration: none;
   border-radius: 0.25rem;
   transition: border 0.2s ease;
-  font-weight: 500;
+  font-weight: 700;
   border: 1px solid #ffffff00;
 }
 
 .loginButton:hover {
-  border: 1px solid #161616;
+  /* border: 1px solid #161616; */
 }
 .icon {
   width: 48px;

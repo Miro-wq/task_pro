@@ -22,7 +22,6 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log("Connected to MongoDB"))
 .catch((error) => console.error("Error connecting to MongoDB:", error));
 
-// pentru test doar
 app.get('/', (req, res) => {
   res.send('Backend is running');
 });
@@ -31,13 +30,10 @@ app.get('/', (req, res) => {
 const specs = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-// rute de autentificare și diary
+// rute de autentificare
 const authRoutes = require('./routes/auth');
-const diaryRoutes = require('./routes/diary');
 
 app.use('/api/auth', authRoutes);
-app.use('/api/diary', diaryRoutes);
-// app.use('/api/auth', authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

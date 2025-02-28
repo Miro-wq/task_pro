@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { registerUser, loginUser } from '../../services/api';
 import { Link } from 'react-router-dom';
 import styles from './RegisterPage.module.css';
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('');
+
   const formik = useFormik({
     initialValues: { name: '', email: '', password: '' },
     validationSchema: Yup.object({
@@ -15,10 +19,23 @@ const RegisterPage = () => {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await axios.post('http://localhost:PORT/register', values);
-        // pt procesare raspuns aici (ex.: token, redirecționare etc.)
+        await registerUser(values.name, values.email, values.password);
+
+        const response = await loginUser(values.email, values.password);
+        const { accessToken, refreshToken, user } = response.data;
+
+        // pt stocare tokenuri și datele userului
+        localStorage.setItem('token', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('user', JSON.stringify(user));
+
+        navigate('/home');
       } catch (error) {
-        console.error(error);
+        if (error.response && error.response.data.message) {
+          setErrorMessage(error.response.data.message);
+        } else {
+          setErrorMessage('An error occurred. Please try again later.');
+        }
       }
     },
   });
@@ -34,8 +51,8 @@ const RegisterPage = () => {
         <form onSubmit={formik.handleSubmit} className={styles.form}>
           <input
             className={styles.inputField}
-            name="name"
             type="text"
+            name="name"
             placeholder="Enter your name"
             onChange={formik.handleChange}
             value={formik.values.name}
@@ -44,8 +61,8 @@ const RegisterPage = () => {
 
           <input
             className={styles.inputField}
-            name="email"
             type="email"
+            name="email"
             placeholder="Enter your email"
             onChange={formik.handleChange}
             value={formik.values.email}
@@ -54,16 +71,18 @@ const RegisterPage = () => {
 
           <input
             className={styles.inputField}
-            name="password"
             type="password"
+            name="password"
             placeholder="Create a password"
             onChange={formik.handleChange}
             value={formik.values.password}
           />
           {formik.errors.password && <div className={styles.errorText}>{formik.errors.password}</div>}
 
-          <button type="submit" className={styles.registerButton}>Register Now</button>
+          <button type="submit" className={styles.registerButton}>Register</button>
         </form>
+
+        {errorMessage && <div className={styles.errorText}>{errorMessage}</div>}
       </div>
     </div>
   );

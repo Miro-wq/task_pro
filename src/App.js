@@ -11,7 +11,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/home/:boardName" element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
       </Routes>
     </Router>
   );

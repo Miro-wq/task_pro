@@ -104,7 +104,7 @@ router.post('/register', async (req, res) => {
  *         description: Server error
  */
 
-// POST /auth/login
+// POST /auth/login (cu refresh token)
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -112,22 +112,86 @@ router.post('/login', async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
+    // trebuie comparata  parola
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    const token = jwt.sign(
+    // Access Token generat pt durată scurtă
+    const accessToken = jwt.sign(
       { userId: user._id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: '1h' }
+      { expiresIn: '15m' } // exemplu: 15 minute
     );
-    res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+
+    // generare Refresh Token cu durată mai lungă
+    const refreshToken = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_REFRESH_SECRET,
+      { expiresIn: '7d' } // exemplu: 7 zile
+    );
+
+    // stocare refreshToken în DB
+    user.refreshTokens.push(refreshToken);
+    await user.save();
+
+    // returnare ambele token-uri
+    res.json({
+      accessToken,
+      refreshToken,
+      user: { id: user._id, name: user.name, email: user.email },
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+
+// POST /auth/refresh
+router.post('/refresh', async (req, res) => {
+  const { refreshToken } = req.body; // sau req.cookies, dacă îl stochezi în cookie
+  if (!refreshToken) {
+    return res.status(401).json({ message: 'No refresh token provided' });
+  }
+
+  try {
+    const user = await User.findOne({ refreshTokens: refreshToken });
+    if (!user) {
+      return res.status(403).json({ message: 'Refresh token not valid' });
+    }
+
+    jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, async (err, decoded) => {
+      if (err) {
+        return res.status(403).json({ message: 'Refresh token expired or invalid' });
+      }
+
+      const newAccessToken = jwt.sign(
+        { userId: decoded.userId, email: decoded.email },
+        process.env.JWT_SECRET,
+        { expiresIn: '15m' }
+      );
+
+      // user.refreshTokens = user.refreshTokens.filter(rt => rt !== refreshToken);
+      // const newRefreshToken = jwt.sign(
+      //   { userId: decoded.userId, email: decoded.email },
+      //   process.env.JWT_REFRESH_SECRET,
+      //   { expiresIn: '7d' }
+      // );
+      // user.refreshTokens.push(newRefreshToken);
+      // await user.save();
+
+      res.json({
+        accessToken: newAccessToken,
+      });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 
 /**
  * @swagger
@@ -147,10 +211,25 @@ router.post('/login', async (req, res) => {
  */
 
 // POST /auth/logout
-router.post('/logout', (req, res) => {
-  res.clearCookie('token');
-  res.json({ message: 'Logged out successfully' });
+router.post('/logout', async (req, res) => {
+  const { refreshToken } = req.body; // sau cookie
+  if (!refreshToken) return res.status(400).json({ message: 'No token provided' });
+
+  try {
+    // scoate token-ul din DB
+    const user = await User.findOne({ refreshTokens: refreshToken });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid token' });
+    }
+    user.refreshTokens = user.refreshTokens.filter(rt => rt !== refreshToken);
+    await user.save();
+
+    res.json({ message: 'User logged out' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
 });
+
 
 // middleware pentru verificare
 const authenticateToken = (req, res, next) => {

@@ -1,0 +1,71 @@
+.header {
+  display: flex;
+  padding: 0 20px;
+  height: 64px;
+  background: #0e0e0e;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #1f1f1f;
+  margin: 0;
+  padding: 0;
+}
+
+.title {
+  /* font-weight: 400; */
+  /* font-size: 14px; */
+  line-height: 129%;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.subTitle,
+.user {
+  font-weight: 400;
+  /* font-size: 14px; */
+  line-height: 129%;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.logoutButton {
+  display: flex;
+  align-items: center;
+  background-color: #16161600;
+  text-decoration: none;
+  border: none;
+  font-weight: 500;
+  font-size: 16px;
+  color: #fff;
+  gap: 14px;
+  cursor: pointer;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  fill: #fff;
+}
