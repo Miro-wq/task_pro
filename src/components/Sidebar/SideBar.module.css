@@ -1,0 +1,25 @@
+.sidebar {
+    display: flex;
+    padding: 0 20px;
+    /* height: 64px; */
+    background: #0e0e0e;
+    height: 100vh;
+    align-items: flex-start;
+    width: 16rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+}

@@ -22,6 +22,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/api';
+import Sidebar from '../../components/Sidebar/SideBar';
 import styles from './HomePage.module.css';
 
 function HomePage() {
@@ -63,14 +64,8 @@ function HomePage() {
   }
 
   return (
-    <>
-      <div className={styles.header}>
-        <h1 className={styles.logo}>
-          <svg className={styles.icon}>
-            <use xlinkHref="/assets/icons/symbol-defs.svg#icon-black_icon" />
-          </svg>
-          Task Pro</h1>
-      </div>
+    <div className={styles.homePage}>
+      <Sidebar />
       <div className={styles.container}>
         <h1 className={styles.title}>Welcome, {user.name}!</h1>
         <p className={styles.subTitle}>Your email is: {user.email}</p>
@@ -89,7 +84,7 @@ function HomePage() {
           Logout
         </button>
       </div>
-    </>
+      </div>
   );
 }
 
