@@ -1,54 +1,21 @@
-// import React from 'react';
-// import Header from '../../components/header/Header';
-// import Sidebar from '../../components/SideBar/SideBar';
-// import ScreensPage from '../../components/ScreensPage/ScreensPage';
-
-// const HomePage = () => {
-//   return (
-//     <div className="home-page">
-//       <Header />
-//       <div className="main-content" style={{ display: 'flex' }}>
-//         <Sidebar />
-//         <ScreensPage />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default HomePage;
-
-
-// pagina de testare
-import React, { useEffect, useState } from 'react';
+// pagina de testare a userului
+import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getUserProfile } from '../../services/api';
+import { UserContext } from '../../context/UserContext';
+import Header from '../../components/header/Header';
 import Sidebar from '../../components/Sidebar/SideBar';
 import styles from './HomePage.module.css';
 
 function HomePage() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const { user, loading, error, logout } = useContext(UserContext);
+
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login');
-      return;
+    if (!loading && !user) {
+      navigate('/');
     }
-
-    getUserProfile(token)
-      .then((response) => {
-        setUser(response.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setError('Could not fetch user data. Please log in again.');
-        setLoading(false);
-      });
-  }, [navigate]);
+  }, [loading, user, navigate]);
 
   if (loading) {
     return <div>Loading user data...</div>;
@@ -64,27 +31,27 @@ function HomePage() {
   }
 
   return (
-    <div className={styles.homePage}>
-      <Sidebar />
-      <div className={styles.container}>
-        <h1 className={styles.title}>Welcome, {user.name}!</h1>
-        <p className={styles.subTitle}>Your email is: {user.email}</p>
-        <p className={styles.user}>User ID: {user._id}</p>
+    <>
+      <Header />
+      <div className={styles.homePage}>
+        <Sidebar />
+        <div className={styles.container}>
+          <h1 className={styles.title}>Welcome, {user?.name}</h1>
 
-        <button className={styles.logoutButton}
-          onClick={() => {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            navigate('/');
-          }}
-        >
-          <svg className={styles.icon}>
-            <use xlinkHref="/assets/icons/symbol-defs.svg#icon-logout" />
-          </svg>
-          Logout
-        </button>
+          <button className={styles.logoutButton}
+            onClick={() => {
+              logout();
+              // navigate('/');
+            }}
+          >
+            <svg className={styles.icon}>
+              <use xlinkHref="/assets/icons/symbol-defs.svg#icon-logout" />
+            </svg>
+            Log out
+          </button>
+        </div>
       </div>
-      </div>
+    </>
   );
 }
 

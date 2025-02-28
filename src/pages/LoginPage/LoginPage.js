@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../../services/api';
+import { UserContext } from '../../context/UserContext';
 import { Link } from 'react-router-dom';
 import styles from './LoginPage.module.css';
 
-
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { login } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState('');
 
   const formik = useFormik({
@@ -20,11 +21,10 @@ const LoginPage = () => {
     onSubmit: async (values) => {
       try {
         const response = await loginUser(values.email, values.password);
-        // din backend primesc { token, user: { ... } }
-        const { accessToken, refreshToken, user } = response.data;
-        localStorage.setItem('token', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
-        localStorage.setItem('user', JSON.stringify(user));
+
+        // serverul întoarce { accessToken, refreshToken, user }
+        const { accessToken, user } = response.data;
+        login(accessToken, user);
         navigate('/home');
       } catch (error) {
         if (error.response && error.response.data.message) {
@@ -43,7 +43,6 @@ const LoginPage = () => {
           <Link to="/register" className={styles.tabButton}>Registration</Link>
           <button className={`${styles.tabButton} ${styles.activeTab}`}>Log In</button>
         </div>
-
         <form onSubmit={formik.handleSubmit} className={styles.form}>
           <input
             className={styles.inputField}
