@@ -22,3 +22,34 @@ export const getUserProfile = async (token) => {
     },
   });
 };
+
+// board nou
+export const createBoard = async (token, boardName) => {
+  return API.post(
+    '/boards/create',
+    { name: boardName },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+// get la toate boardurile userului
+export const getBoards = async (token) => {
+  return API.get('/boards', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+// sterge board
+export const deleteBoard = async (token, boardId) => {
+  return API.delete(`/boards/${boardId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

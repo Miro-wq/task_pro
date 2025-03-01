@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const boardRoutes = require('./routes/boards');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
@@ -34,6 +35,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 const authRoutes = require('./routes/auth');
 
 app.use('/api/auth', authRoutes);
+app.use('/api/boards', boardRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
