@@ -5,7 +5,6 @@ const boardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // idul userului care a creat boardul (pt relația cu User)
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

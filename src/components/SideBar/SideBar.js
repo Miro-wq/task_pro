@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import styles from './SideBar.module.css';
 import cactus from '../../assets/images/cactus.png';
+import ModalCreateBoard from '../ModalCreateBoard/ModalCreateBoard';
+import { BoardContext } from '../../context/BoardContext';
 
 function Sidebar() {
+    const { boards } = useContext(BoardContext);
+    const [showModal, setShowModal] = useState(false);
+    // const openModal = () => setShowModal(true);
+    // const closeModal = () => setShowModal(false);
+
     return (
         <div className={styles.sidebar}>
             <h1 className={styles.logo}>
@@ -17,13 +24,17 @@ function Sidebar() {
 
                 <div className={styles.createBoardContainer}>
                     <span className={styles.createBoardText}>Create a new board</span>
-                    <button className={styles.createBoardButton}>
+                    <button className={styles.createBoardButton} onClick={() => setShowModal(true)}>
                         <span className={styles.plusSign}>+</span>
                     </button>
-
                 </div>
                 <hr className={styles.divider} />
 
+                {boards.map((b) => (
+                    <div className={styles.sideBoards} key={b._id}>{b.name}</div>
+                ))}
+
+                {showModal && <ModalCreateBoard onClose={() => setShowModal(false)} />}
             </div>
 
             <div className={styles.block}>

@@ -11,7 +11,7 @@ router.post('/create', authenticateToken, async (req, res) => {
       return res.status(400).json({ message: 'Board name is required' });
     }
 
-    // userId luat din authenticateToken (vezi routes/auth.js)
+    // userId luat din authenticateToken (vezi middleware/auth.js)
     const newBoard = new Board({
       name,
       userId: req.user.userId, 
