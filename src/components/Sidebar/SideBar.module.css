@@ -1,11 +1,12 @@
 .sidebar {
-    display: flex;
-    padding: 0 20px;
-    z-index: 1;
-    background: #0e0e0e;
-    height: 100vh;
-    align-items: flex-start;
-    width: 16rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  z-index: 1;
+  background: #0e0e0e;
+  height: 100vh;
+  align-items: flex-start;
+  width: 16rem;
 }
 
 .logo {
@@ -22,4 +23,112 @@
 .icon {
   width: 32px;
   height: 32px;
+}
+
+.myBoardsSection {
+  margin-top: 8em;
+  width: 100%;
+  flex: 1;
+}
+
+.myBoardsTitle {
+  font-size: 0.9rem;
+  margin: 0;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #444;
+  margin: 10px 0;
+}
+
+.createBoardContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.createBoardText {
+  font-size: 1rem;
+  color: #fff;
+  width: 40%;
+}
+
+.createBoardButton {
+  background-color: #a8df65;
+  border: none;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.createBoardButton:hover {
+  background-color: #92c05a;
+}
+
+.plusSign {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.block {
+  border-radius: 8px;
+  background: #1f1f1f;
+  margin-bottom: 5em;
+}
+
+.blockContent {
+  padding: 16px;
+}
+
+.blockDescription {
+  margin-top: 0;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 143%;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.task {
+  color: #a8df65;
+}
+
+.helpContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 1rem;
+}
+
+/* cercul cu "?" în interior */
+.helpIcon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #fff;
+  background-color: transparent;
+}
+
+/* textul "Need help?" */
+.helpText {
+  font-size: 1rem;
+  color: #fff;
 }
