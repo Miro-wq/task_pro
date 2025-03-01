@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Board = require('../models/Board');
-const { authenticateToken } = require('./auth'); 
-// ↑ Presupunem că `authenticateToken` e middleware-ul tău care validează JWT-ul
+const { authenticateToken } = require('../middleware/auth'); 
 
 // POST /api/boards/create
 router.post('/create', authenticateToken, async (req, res) => {
