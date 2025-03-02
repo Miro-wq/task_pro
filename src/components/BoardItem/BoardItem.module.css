@@ -1,0 +1,26 @@
+.boardItem {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.boardName {
+    width: 120px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 20px 8px;
+}
+
+.actions {
+
+}
+
+.editBtn {
+
+}
+
+.deleteBtn {
+
+}

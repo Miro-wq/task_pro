@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import styles from './SideBar.module.css';
 import cactus from '../../assets/images/cactus.png';
 import ModalCreateBoard from '../ModalCreateBoard/ModalCreateBoard';
+import BoardItem from '../BoardItem/BoardItem';
 import { BoardContext } from '../../context/BoardContext';
 
 
@@ -42,11 +43,13 @@ function Sidebar() {
                         return (
                             <div
                                 key={b._id}
-                                board={b}
                                 className={`${styles.sideBoards} ${isActive ? styles.active : ''}`}
-                                onClick={() => handleSelectBoard(b._id)}
                             >
-                                {b.name}
+                                <BoardItem
+                                    board={b}
+                                    isActive={isActive}
+                                    onSelect={handleSelectBoard}
+                                />
                             </div>
                         );
                     })}

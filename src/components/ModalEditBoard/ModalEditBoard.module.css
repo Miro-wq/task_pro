@@ -41,24 +41,6 @@
   margin-bottom: 1rem;
 }
 
-.modalIcons {
-  font-weight: 500;
-  font-size: 14px;
-  letter-spacing: -0.02em;
-  color: #fff;
-}
-
-.iconsContainer,
-.backgroundContainer {
-  display: flex;
-  gap: 8px;
-}
-
-.iconItem {
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
 .bgItem {
   width: 40px;
   height: 40px;
@@ -73,12 +55,12 @@
 }
 
 /* .buttonsRow {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1rem;
-} */
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  } */
 
-.createBtn {
+.editBtn {
   background-color: #a8df65;
   border: none;
   padding: 0.5rem 1rem;
@@ -93,8 +75,8 @@
   justify-content: center;
 }
 
-.createBtn:hover {
-  background-color: #92c05a;
+.editBtn:hover {
+  background-color: #8cc451;
 }
 
 .plusSignModal {
