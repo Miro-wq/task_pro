@@ -4,11 +4,16 @@ import cactus from '../../assets/images/cactus.png';
 import ModalCreateBoard from '../ModalCreateBoard/ModalCreateBoard';
 import { BoardContext } from '../../context/BoardContext';
 
+
+
 function Sidebar() {
     const { boards } = useContext(BoardContext);
     const [showModal, setShowModal] = useState(false);
-    // const openModal = () => setShowModal(true);
-    // const closeModal = () => setShowModal(false);
+    const [activeBoardId, setActiveBoardId] = useState(null);
+
+    const handleSelectBoard = (boardId) => {
+        setActiveBoardId(boardId);
+    };
 
     return (
         <div className={styles.sidebar}>
@@ -30,10 +35,24 @@ function Sidebar() {
                 </div>
                 <hr className={styles.divider} />
 
-                {boards.map((b) => (
-                    <div className={styles.sideBoards} key={b._id}>{b.name}</div>
-                ))}
+                {/* lista de boards cu activ */}
+                <div className={styles.boardsList}>
+                    {boards.map((b) => {
+                        const isActive = b._id === activeBoardId;
+                        return (
+                            <div
+                                key={b._id}
+                                board={b}
+                                className={`${styles.sideBoards} ${isActive ? styles.active : ''}`}
+                                onClick={() => handleSelectBoard(b._id)}
+                            >
+                                {b.name}
+                            </div>
+                        );
+                    })}
+                </div>
 
+                {/* modal pt creare board */}
                 {showModal && <ModalCreateBoard onClose={() => setShowModal(false)} />}
             </div>
 

@@ -53,3 +53,13 @@ export const deleteBoard = async (token, boardId) => {
     },
   });
 };
+
+// update board
+export const updateBoard = async (token, boardId, newName) => {
+  return API.put(`/boards/${boardId}`,
+    { name: newName },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+};

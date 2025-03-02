@@ -16,7 +16,7 @@ function ModalCreateBoard({ onClose }) {
         createBoard(boardName);
         onClose();
     };
-// momentan pagiane/modalu e pentru test, trebuie mai modificata
+    // momentan pagiane/modalu e pentru test, trebuie mai modificata
     return (
         <div className={styles.overlay}>
             <div className={styles.modal}>
@@ -31,7 +31,7 @@ function ModalCreateBoard({ onClose }) {
                 />
 
                 <div className={styles.section}>
-                    <h3>Icons</h3>
+                    <h3 className={styles.modalIcons}>Icons</h3>
                     <div className={styles.iconsContainer}>
                         {/* se pute un array de icoane și un .map */}
                         <span
@@ -70,13 +70,14 @@ function ModalCreateBoard({ onClose }) {
                             style={{ backgroundImage: `url('/assets/bg2.jpg')` }}
                             onClick={() => setSelectedBg('bg2')}
                         />
-                        {/* ...etc */}
+                        {/* ...etc, trebuie adaugate cele 5 imagini, e doar de test */}
                     </div>
                 </div>
 
                 <div className={styles.buttonsRow}>
                     <button className={styles.createBtn} onClick={handleCreate}>
-                        + Create
+                        <span className={styles.plusSignModal}>+</span>
+                        Create
                     </button>
                     <button className={styles.closeBtn} onClick={onClose}>
                         X

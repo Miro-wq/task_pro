@@ -82,8 +82,33 @@
   color: #000;
 }
 
+.boardsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .sideBoards {
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  padding: 20px 8px;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.sideBoards:hover {
+  background-color: #222;
   color: #fff;
+}
+
+.sideBoards.active {
+  color: #fff;
+  background: #1f1f1f;
+  border-right: 4px solid #a8df65;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .block {

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { getBoards, createBoard as apiCreateBoard, deleteBoard as apiDeleteBoard } from '../services/api';
+import { getBoards, createBoard as apiCreateBoard, updateBoard as apiUpdateBoard, deleteBoard as apiDeleteBoard } from '../services/api';
 
 export const BoardContext = createContext();
 
@@ -28,7 +28,7 @@ export const BoardProvider = ({ children }) => {
       });
   }, []);
 
-  // pentru a crea un board nou
+  // pentru board nou
   const createBoard = async (boardName) => {
     try {
       const token = localStorage.getItem('token');
@@ -36,7 +36,6 @@ export const BoardProvider = ({ children }) => {
         throw new Error('No token found');
       }
       const response = await apiCreateBoard(token, boardName);
-      // adauga nou board în lista curentă, fără să mai faca tot request-ul
       setBoards((prev) => [...prev, response.data.board]);
     } catch (err) {
       console.error('Error creating board:', err);
@@ -44,7 +43,22 @@ export const BoardProvider = ({ children }) => {
     }
   };
 
-  // șterge board
+  // actualizare board (doar numele)
+  const updateBoard = async (boardId, newName) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await apiUpdateBoard(token, boardId, newName);
+      const updatedBoard = response.data.board;
+
+      setBoards((prevBoards) =>
+        prevBoards.map((b) => (b._id === boardId ? updatedBoard : b))
+      );
+    } catch (err) {
+      console.error('Error updating board:', err);
+    }
+  };
+
+  // sterge board
   const deleteBoard = async (boardId) => {
     try {
       const token = localStorage.getItem('token');
@@ -52,7 +66,6 @@ export const BoardProvider = ({ children }) => {
         throw new Error('No token found');
       }
       await apiDeleteBoard(token, boardId);
-      // elimina boardul din state
       setBoards((prev) => prev.filter((b) => b._id !== boardId));
     } catch (err) {
       console.error('Error deleting board:', err);
@@ -61,7 +74,8 @@ export const BoardProvider = ({ children }) => {
   };
 
   return (
-    <BoardContext.Provider value={{ boards, loading, error, createBoard, deleteBoard }}>
+
+    <BoardContext.Provider value={{ boards, loading, error, createBoard, updateBoard, deleteBoard }}>
       {children}
     </BoardContext.Provider>
   );
