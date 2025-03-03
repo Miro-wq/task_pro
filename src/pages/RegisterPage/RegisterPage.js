@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext  } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { registerUser, loginUser } from '../../services/api';
 import { Link } from 'react-router-dom';
 import styles from './RegisterPage.module.css';
+import { UserContext } from '../../context/UserContext'; // pt login direct dupa register
 
 const RegisterPage = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
+
+  const { login } = useContext(UserContext); // pt login direct dupa register
 
   const formik = useFormik({
     initialValues: { name: '', email: '', password: '' },
@@ -28,8 +31,12 @@ const RegisterPage = () => {
         localStorage.setItem('token', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('user', JSON.stringify(user));
+        login(accessToken, user); // pt login direct dupa register (daca stergem cele 3 linii de mai sus se duce in login dupa register pentru ca uesrul este null in HomePage)
+        // - login(accessToken, user); il ia direct din context/UserContext.js
 
         navigate('/home');
+        console.log('Register success, now logging in...');
+
       } catch (error) {
         if (error.response && error.response.data.message) {
           setErrorMessage(error.response.data.message);
