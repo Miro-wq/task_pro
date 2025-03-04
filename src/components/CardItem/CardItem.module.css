@@ -1,0 +1,35 @@
+.card {
+  background-color: #222;
+  border-radius: 6px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.cardDescription {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #bbb;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+
+.priority {
+  color: #f5c542; /* doar pt exemplu */
+}
+
+.dueDate {
+  color: #888;
+}

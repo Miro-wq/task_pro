@@ -63,3 +63,28 @@ export const updateBoard = async (token, boardId, newName) => {
     }
   );
 };
+
+// endpoint taskuri
+export const getTasks = (token, boardId) => {
+  return API.get(`/boards/${boardId}/tasks`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+export const createTask = (token, boardId, taskData) => {
+  return API.post(`/boards/${boardId}/tasks`, taskData, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+export const updateTask = (token, boardId, taskId, taskData) => {
+  return API.put(`/boards/${boardId}/tasks/${taskId}`, taskData, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+export const deleteTask = (token, boardId, taskId) => {
+  return API.delete(`/boards/${boardId}/tasks/${taskId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};

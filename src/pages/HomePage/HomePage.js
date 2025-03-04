@@ -1,14 +1,15 @@
-// pagina de testare a userului
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import Header from '../../components/header/Header';
 import Sidebar from '../../components/Sidebar/SideBar';
 import styles from './HomePage.module.css';
+import ScreensPage from '../../components/ScreensPage/ScreensPage';
 
 function HomePage() {
   const navigate = useNavigate();
   const { user, loading, error, logout } = useContext(UserContext);
+  const [selectedBoardId, setSelectedBoardId] = useState(null);
 
 
   useEffect(() => {
@@ -30,14 +31,16 @@ function HomePage() {
     );
   }
 
+  const handleSelectBoard = (boardId) => {
+    setSelectedBoardId(boardId);
+  };
+
   return (
     <>
       <Header />
       <div className={styles.homePage}>
-        <Sidebar />
+        <Sidebar onSelectBoard={handleSelectBoard} />
         <div className={styles.container}>
-          {/* <h1 className={styles.title}>Welcome, {user?.name}</h1> */}
-          <p className={styles.description}>Before starting your project, it is essential <span className={styles.green}>to create a board</span> to visualize and track all the necessary tasks and milestones. This board serves as a powerful tool to organize the workflow and ensure effective collaboration among team members.</p>
 
           <button className={styles.logoutButton}
             onClick={() => {
@@ -50,6 +53,7 @@ function HomePage() {
             </svg>
             Log out
           </button>
+          <ScreensPage boardId={selectedBoardId} />
         </div>
       </div>
     </>

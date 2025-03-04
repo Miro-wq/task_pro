@@ -7,13 +7,16 @@ import { BoardContext } from '../../context/BoardContext';
 
 
 
-function Sidebar() {
+function Sidebar({ onSelectBoard }) {
     const { boards } = useContext(BoardContext);
     const [showModal, setShowModal] = useState(false);
     const [activeBoardId, setActiveBoardId] = useState(null);
 
     const handleSelectBoard = (boardId) => {
         setActiveBoardId(boardId);
+        if (onSelectBoard) {
+            onSelectBoard(boardId);
+        }
     };
 
     return (
