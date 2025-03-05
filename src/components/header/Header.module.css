@@ -6,14 +6,56 @@
   width: 100%;
   height: 4em;
   justify-content: flex-end;
+  align-items: center;
 }
 
-.userName {
-  font-weight: 500;
+.dropdown {
+  position: relative;
+}
+
+.dropdownMenu {
+  position: absolute;
+  background: #161616;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.dropdownMenu li {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.dropdownMenu li:hover {
+  color: #BEDBB0;
+}
+
+.username {
+  color: white;
+  margin: 1em;
+  font-size: 14px;
+}
+
+.themeButton {
+  background: none;
+  border: none;
+  color: inherit;
   font-size: 16px;
-  letter-spacing: -0.02em;
-  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  padding: 0;
+}
+
+.arrow {
+  margin-left: 8px; /* Spațiu între text și săgeată */
+  transition: transform 0.3s ease; /* Adaugă tranziție pentru rotirea săgeții */
+}
+
+/* Dacă dropdown-ul este deschis, rotește săgeata */
+.dropdownOpen .arrow {
+  transform: rotate(180deg);
 }
