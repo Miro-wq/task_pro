@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import Header from '../../components/header/Header';
-import Sidebar from '../../components/Sidebar/SideBar';
+import Sidebar from '../../components/SideBar/SideBar';
 import styles from './HomePage.module.css';
 import ScreensPage from '../../components/ScreensPage/ScreensPage';
 

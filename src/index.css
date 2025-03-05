@@ -1,13 +1,22 @@
-body {
+html, body {
+  height: 100%;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.app-container {
+  min-height: 100vh; /* Aplicăm tema pe toată pagina */
+  transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Stiluri pentru tema Light */
+.app-container.light {
+  background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);
+  color: #000;
+}
+
+/* Stiluri pentru tema Dark */
+.app-container.dark {
+  background: linear-gradient(to right, #434343, #000000);
+  color: #fff;
 }
