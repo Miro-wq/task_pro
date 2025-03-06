@@ -26,4 +26,19 @@ const createTask = async (req, res) => {
   }
 };
 
-module.exports = { createTask };
+const moveTask = async (req, res) => {
+  try {
+    const { taskId, newColumnId } = req.body;
+    const task = await Task.findById(taskId);
+    if (!task) return res.status(404).json({ error: "Task not found ^_^" });
+
+    task.columnId = newColumnId;
+    await task.save();
+
+    res.status(200).json({ message: "Task moved succesfully ^_^", task });
+  } catch (error) {
+    res.status(500).json({ error: "Server error ^_^" });
+  }
+};
+
+module.exports = { createTask, moveTask };
