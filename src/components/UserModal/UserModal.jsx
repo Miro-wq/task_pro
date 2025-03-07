@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FiX, FiEye, FiEyeOff } from "react-icons/fi";
 import styles from "./UserModal.module.css";
 
@@ -17,26 +17,6 @@ const UserModal = ({
   const [email, setEmail] = useState(currentEmail || ""); // Setează email-ul
   const [password, setPassword] = useState(currentPassword || ""); // Setează parola
 
-  useEffect(() => {
-    // Dacă avem date în localStorage, le încărcăm
-    const storedAvatar = localStorage.getItem("avatar");
-    const storedName = localStorage.getItem("name");
-    const storedEmail = localStorage.getItem("email");
-    const storedPassword = localStorage.getItem("password");
-
-    // Log pentru debugging
-    console.log("Avatar:", storedAvatar);
-    console.log("Name:", storedName);
-    console.log("Email:", storedEmail);
-    console.log("Password:", storedPassword);
-
-    // Setează datele în state dacă există în localStorage, altfel lasă valorile implicite
-    setAvatar(storedAvatar || currentAvatar || "");
-    setName(storedName || currentName || "");
-    setEmail(storedEmail || currentEmail || "");
-    setPassword(storedPassword || currentPassword || "");
-  }, [currentAvatar, currentName, currentEmail, currentPassword]);
-
   const handleAvatarChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -51,12 +31,8 @@ const UserModal = ({
   };
 
   const handleSave = () => {
-    // Salvează datele în localStorage
-    localStorage.setItem("name", name);
-    localStorage.setItem("email", email);
-    localStorage.setItem("password", password);
-
-    onUserInfoChange(name, email, password); // Trimite datele actualizate
+    // Trimite noile date la componenta părinte
+    onUserInfoChange(name, email, password);
     onClose(); // Închide modalul
   };
 
@@ -69,7 +45,7 @@ const UserModal = ({
         <h2 className={styles.title}>Edit profile</h2>
         <div className={styles.avatarContainer}>
           <img
-            src={avatar || "/assets/default-avatar.png"} // Folosește avatarul din state
+            src={avatar || "/assets/icons/icons.svg"} // Folosește avatarul din state
             alt="User Avatar"
             className={styles.avatar}
           />
@@ -112,7 +88,7 @@ const UserModal = ({
           </button>
         </div>
         <button className={styles.sendButton} onClick={handleSave}>
-          Save Changes
+          Send
         </button>
       </div>
     </div>
