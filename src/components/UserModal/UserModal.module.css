@@ -35,7 +35,10 @@
   }
   
   .closeButton:hover {
-    color: #BEDBB0;
+    color: #BEDBB0; 
+    transform: scale(1.1);
+
+
   }
   .title {
     font-size: 20px;
@@ -71,6 +74,13 @@
     line-height: 24px;
     cursor: pointer;
     z-index: 1;
+  }
+
+  .editAvatar:hover {
+    background-color: #5C8A52; /* Culoare de fundal mai intensă la hover */
+    color: #fff; /* Text alb la hover */
+    
+    
   }
 
   input[type="file"] {
@@ -116,3 +126,9 @@
     margin-top: 10px;
   }
   
+  .sendButton:hover {
+    background-color: #5C8A52; /* Culoare de fundal mai intensă la hover */
+    color: #fff; /* Text alb la hover */
+    transform: scale(1.05); /* Mărire ușoară a butonului pentru efect vizual */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adăugăm o umbră subtilă pentru adâncire */
+  }

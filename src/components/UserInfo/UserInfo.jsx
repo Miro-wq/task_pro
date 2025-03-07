@@ -6,8 +6,8 @@ function UserInfo() {
   const [isModalOpen, setModalOpen] = useState(false);
 
   // Încarcă datele din localStorage sau folosește valori default
-  const [avatar, setAvatar] = useState(localStorage.getItem("avatar") || "/assets/default-avatar.png");
-  const [name, setName] = useState(localStorage.getItem("name") || "Guest");
+  const [avatar, setAvatar] = useState(localStorage.getItem("avatar") || "/assets/icons/icons.svg");
+  const [name, setName] = useState(localStorage.getItem("name") || "");
   const [email, setEmail] = useState(localStorage.getItem("email") || "");
   const [password, setPassword] = useState(localStorage.getItem("password") || "");
 

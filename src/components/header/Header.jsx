@@ -7,16 +7,16 @@ import styles from "./Header.module.css";
 
 function Header() {
   const { user } = useContext(UserContext);
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme, switchTheme } = useContext(ThemeContext);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
-  const handleThemeChange = (newTheme) => {
-    setTheme(newTheme); // Acum actualizăm tema corect
+  const handleThemeChange = (themeName) => {
+    switchTheme(themeName);
     setDropdownOpen(false);
   };
 
   return (
-    <header className={`${styles.header} ${styles[theme]}`}>
+    <header className={styles.header} style={{ background: theme.background, color: theme.text }}>
       <div className={styles.dropdown}>
         <button
           onClick={() => setDropdownOpen(!isDropdownOpen)}
@@ -27,17 +27,14 @@ function Header() {
         {isDropdownOpen && (
           <ul className={styles.dropdownMenu}>
             <li onClick={() => handleThemeChange("light")}>Light</li>
+            <li onClick={() => handleThemeChange("violet")}>Violet</li>
             <li onClick={() => handleThemeChange("dark")}>Dark</li>
           </ul>
         )}
       </div>
 
       <div className={styles.userInfo}>
-        {user && user.name ? (
-          <p className={styles.username}> {user.name}</p>
-        ) : (
-          <p>Welcome, Guest!</p>
-        )}
+        {user && user.name ? <p className={styles.username}> {user.name}</p> : <p>Welcome, Guest!</p>}
       </div>
 
       <UserInfo />
@@ -46,4 +43,5 @@ function Header() {
 }
 
 export default Header;
+
 

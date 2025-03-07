@@ -1,21 +1,27 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ThemeProviderWrapper } from "../src/context/ThemeContext/ThemeContext";
+import { GlobalStyles } from "./components/styles/GlobalStyles";
+
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { UserProvider } from "./context/UserContext";
 import { BoardProvider } from "./context/BoardContext";
-import "./index.css"; // Stiluri generale
+import { ThemeProviderWrapper } from "./context/ThemeContext/ThemeContext.jsx";
+import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ThemeProviderWrapper>
     <UserProvider>
       <BoardProvider>
-        <App />
+        <ThemeProviderWrapper>
+          <GlobalStyles />
+          <App />
+        </ThemeProviderWrapper>
       </BoardProvider>
     </UserProvider>
   </ThemeProviderWrapper>
 );
 
 reportWebVitals();
+
