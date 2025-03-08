@@ -16,7 +16,7 @@ function Header() {
   };
 
   return (
-    <header className={styles.header} style={{ background: theme.background, color: theme.text }}>
+    <header className={styles.header} style={{ background: theme.headerBackground, color: theme.text }}>
       <div className={styles.dropdown}>
         <button
           onClick={() => setDropdownOpen(!isDropdownOpen)}
@@ -25,7 +25,7 @@ function Header() {
           Theme <FiChevronDown className={styles.arrow} />
         </button>
         {isDropdownOpen && (
-          <ul className={styles.dropdownMenu}>
+          <ul className={styles.dropdownMenu} style={{ background: theme.headerDropdownMenu }}>
             <li onClick={() => handleThemeChange("light")}>Light</li>
             <li onClick={() => handleThemeChange("violet")}>Violet</li>
             <li onClick={() => handleThemeChange("dark")}>Dark</li>
@@ -34,7 +34,7 @@ function Header() {
       </div>
 
       <div className={styles.userInfo}>
-        {user && user.name ? <p className={styles.username}> {user.name}</p> : <p>Welcome, Guest!</p>}
+        {user && user.name ? <p className={styles.username} style={{ color: theme.headerUsername }}> {user.name}</p> : <p>Welcome, Guest!</p>}
       </div>
 
       <UserInfo />
