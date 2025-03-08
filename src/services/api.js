@@ -66,26 +66,26 @@ export const updateBoard = async (token, boardId, newName) => {
 };
 
 // endpoint taskuri
-export const getTasks = (token, boardId) => {
-  return API.get(`/boards/${boardId}/tasks`, {
+export const getTasks = (token, columnId) => {
+  return API.get(`/columns/${columnId}/tasks`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
 
-export const createTask = (token, boardId, taskData) => {
-  return API.post(`/boards/${boardId}/tasks`, taskData, {
+export const createTask = (token, columnId, taskData) => {
+  return API.post(`/columns/${columnId}/tasks`, taskData, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
 
-export const updateTask = (token, boardId, taskId, taskData) => {
-  return API.put(`/boards/${boardId}/tasks/${taskId}`, taskData, {
+export const updateTask = (token, taskId, taskData) => {
+  return API.put(`/tasks/${taskId}`, taskData, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
 
-export const deleteTask = (token, boardId, taskId) => {
-  return API.delete(`/boards/${boardId}/tasks/${taskId}`, {
+export const deleteTask = (token, taskId) => {
+  return API.delete(`/tasks/${taskId}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
@@ -103,13 +103,13 @@ export const createColumn = (token, boardId, columnData) => {
   });
 };
 
-export const updateColumn = (token, boardId, columnId, columnData) => {
-  return API.put(`/boards/${boardId}/columns/${columnId}`, columnData, {
+export const updateColumn = (token, columnId, columnData) => {
+  return API.put(`/columns/${columnId}`, columnData, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
 
-export const deleteCloumn = (token, boardId, columnId) => {
+export const deleteColumn = (token, boardId, columnId) => {
   return API.delete(`/boards/${boardId}/columns/${columnId}`, {
     headers: { Authorization: `Bearer ${token}` },
   });

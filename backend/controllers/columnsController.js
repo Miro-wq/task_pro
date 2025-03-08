@@ -23,4 +23,47 @@ const createColumn = async (req, res) => {
   }
 };
 
-module.exports = { createColumn };
+const updateColumn = async (req, res) => {
+  try {
+    const { columnId } = req.params;
+    const { title } = req.body;
+
+    if (!title) {
+      return res.status(400).json({ message: "Title is required ^_^" });
+    }
+
+    const updatedColumn = await Column.findOneAndUpdate(
+      columnId,
+      { title },
+      { new: true }
+    );
+    if (!updatedColumn) {
+      return res.status(404).json({ message: "Column not found ^_^" });
+    }
+    res.status(200).json(updateColumn);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error ^_^" });
+  }
+};
+
+const getColumns = async (req, res) => {
+  try {
+    // 1. Verificăm dacă boardul aparține userului logat
+    const board = await Board.findOne({
+      _id: req.params.boardId,
+      userId: req.user.userId,
+    });
+    if (!board) {
+      return res.status(404).json({ message: "Board not found or not yours" });
+    }
+
+    const columns = await Column.find({ boardId: board._id });
+    res.status(200).json(columns);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = { createColumn, updateColumn, getColumns };

@@ -1,27 +1,30 @@
 .boardItem {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .boardName {
-    width: 120px;
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 20px 8px;
+  width: 120px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 20px 8px;
 }
 
 .actions {
-
 }
 
 .editBtn {
-
+  background-color: black;
+  color: gray;
+  cursor: pointer;
 }
 
 .deleteBtn {
-
+  background-color: black;
+  color: gray;
+  cursor: pointer;
 }

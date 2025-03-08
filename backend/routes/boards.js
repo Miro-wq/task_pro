@@ -53,121 +53,6 @@ router.get("/", authenticateToken, async (req, res) => {
   }
 });
 
-// GET /api/boards/:boardId/tasks
-// pt sarcinile (tasks) din boardul specificat
-router.get("/:boardId/tasks", authenticateToken, async (req, res) => {
-  try {
-    // 1. Verificăm dacă boardul aparține userului logat
-    const board = await Board.findOne({
-      _id: req.params.boardId,
-      userId: req.user.userId,
-    });
-    if (!board) {
-      return res.status(404).json({ message: "Board not found or not yours" });
-    }
-
-    const tasks = await Task.find({ boardId: board._id });
-    res.json(tasks);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
-// POST /api/boards/:boardId/tasks
-// sarcina noua pentru boardul specificat
-router.post("/:boardId/tasks", authenticateToken, async (req, res) => {
-  try {
-    const board = await Board.findOne({
-      _id: req.params.boardId,
-      userId: req.user.userId,
-    });
-    if (!board) {
-      return res.status(404).json({ message: "Board not found or not yours" });
-    }
-
-    const { title, description, status, priority, dueDate } = req.body;
-
-    // creeare task
-    const newTask = new Task({
-      boardId: board._id,
-      title,
-      description,
-      status,
-      priority,
-      dueDate,
-    });
-
-    await newTask.save();
-    res.status(201).json(newTask);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
-// PUT /api/boards/:boardId/tasks/:taskId
-// actualizare task (schimbă statusul sau etc.)
-router.put("/:boardId/tasks/:taskId", authenticateToken, async (req, res) => {
-  try {
-    const board = await Board.findOne({
-      _id: req.params.boardId,
-      userId: req.user.userId,
-    });
-    if (!board) {
-      return res.status(404).json({ message: "Board not found or not yours" });
-    }
-
-    // actualizare task
-    const updatedTask = await Task.findOneAndUpdate(
-      { _id: req.params.taskId, boardId: board._id },
-      req.body, // conține {title, description, status, samd}
-      { new: true }
-    );
-
-    if (!updatedTask) {
-      return res.status(404).json({ message: "Task not found" });
-    }
-    res.json(updatedTask);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
-// DELETE /api/boards/:boardId/tasks/:taskId
-router.delete(
-  "/:boardId/tasks/:taskId",
-  authenticateToken,
-  async (req, res) => {
-    try {
-      const board = await Board.findOne({
-        _id: req.params.boardId,
-        userId: req.user.userId,
-      });
-      if (!board) {
-        return res
-          .status(404)
-          .json({ message: "Board not found or not yours" });
-      }
-
-      const deletedTask = await Task.findOneAndDelete({
-        _id: req.params.taskId,
-        boardId: board._id,
-      });
-
-      if (!deletedTask) {
-        return res.status(404).json({ message: "Task not found" });
-      }
-
-      res.json({ message: "Task deleted successfully" });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Server error" });
-    }
-  }
-);
-
 // DELETE /api/boards/:boardId
 router.delete("/:boardId", authenticateToken, async (req, res) => {
   try {
@@ -180,7 +65,11 @@ router.delete("/:boardId", authenticateToken, async (req, res) => {
     if (!deletedBoard) {
       return res.status(404).json({ message: "Board not found or not yours" });
     }
-    res.json({ message: "Board deleted successfully", board: deletedBoard });
+    // Ștergerea coloanelor și task-urilor aferente
+    await Column.deleteMany({ boardId });
+    await Task.deleteMany({ boardId });
+
+    res.json({ message: "Board and related data deleted successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });

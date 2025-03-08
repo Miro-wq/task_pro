@@ -1,15 +1,11 @@
-import React from 'react';
-import CardItem from '../CardItem/CardItem';
-import styles from './Column.module.css';
+import React from "react";
+import CardItem from "../CardItem/CardItem";
+import styles from "./Column.module.css";
 
-function Column({ title, tasks, status, boardId }) {
-  // `status` pt a sti ce coloană este
+function Column({ title, tasks, boardId }) {
   // `boardId` se pote folosi pt un nou task direct în coloana
 
-  const handleAddTask = () => {
-    // luat din POST /boards/:boardId/tasks
-    console.log(`Add task in column: ${status} for board ${boardId}`);
-  };
+  const handleAddTask = () => {};
 
   return (
     <div className={styles.column}>

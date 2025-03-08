@@ -41,4 +41,23 @@ const moveTask = async (req, res) => {
   }
 };
 
-module.exports = { createTask, moveTask };
+const getTasks = async (req, res) => {
+  try {
+    const { columnId } = req.params;
+    if (!columnId) {
+      return res.status(400).json({ message: "No columnId provided ^_^" });
+    }
+
+    const tasks = await Task.find({ columnId });
+
+    if (!tasks.length) {
+      console.log("No tasks to show ^_^");
+      return res.json([]);
+    }
+    res.status(200).json(tasks);
+  } catch (error) {
+    res.status(500).json({ message: "Server error ^_^", error });
+  }
+};
+
+module.exports = { createTask, moveTask, getTasks };
