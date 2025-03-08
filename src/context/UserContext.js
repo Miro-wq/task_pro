@@ -4,7 +4,10 @@ import { getUserProfile } from '../services/api';
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(() => {
+        const storedUser = localStorage.getItem('user');
+        return storedUser ? JSON.parse(storedUser) : null;
+    });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -18,6 +21,7 @@ export const UserProvider = ({ children }) => {
         getUserProfile(token)
             .then((res) => {
                 setUser(res.data);
+                localStorage.setItem('user', JSON.stringify(res.data)); // Salvăm în localStorage
                 setLoading(false);
             })
             .catch((err) => {
@@ -27,7 +31,6 @@ export const UserProvider = ({ children }) => {
             });
     }, []);
 
-    // pentru login (nu sterge, este pentru token)
     const login = (accessToken, userData) => {
         localStorage.setItem('token', accessToken);
         localStorage.setItem('user', JSON.stringify(userData));
