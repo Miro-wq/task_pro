@@ -3,7 +3,7 @@ import Column from "../Column/Column";
 import styles from "./ScreensPage.module.css";
 import { getTasks, getColumns, createColumn } from "../../services/api";
 import { BoardContext } from "../../context/BoardContext";
-import AddColumnModal from "../Modal/AddColumnModal";
+import AddColumnModal from "../Modals/AddColumnModal";
 
 function ScreensPage({ boardId }) {
   const [columns, setColumns] = useState([]);

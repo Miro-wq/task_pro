@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CardItem from "../CardItem/CardItem";
 import styles from "./Column.module.css";
-import AddTaskModal from "../Modal/AddTaskModal";
+import AddTaskModal from "../Modals/AddTaskModal";
 import { createTask } from "../../services/api";
 
 function Column({ title, tasks, columnId, boardId, onTaskAdded }) {
