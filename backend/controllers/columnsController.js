@@ -3,7 +3,8 @@ const Board = require("../models/Board");
 
 const createColumn = async (req, res) => {
   try {
-    const { title, boardId } = req.body;
+    const { boardId } = req.params;
+    const { title } = req.body;
 
     if (!title || !boardId) {
       return res.status(400).json({ message: "All fields are required" });

@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import CardItem from "../CardItem/CardItem";
 import styles from "./Column.module.css";
+import AddTaskModal from "../Modal/AddTaskModal";
+import { createTask } from "../../services/api";
 
-function Column({ title, tasks, boardId }) {
-  // `boardId` se pote folosi pt un nou task direct în coloana
+function Column({ title, tasks, columnId, boardId, onTaskAdded }) {
+  const [showAddTaskModal, setShowAddTaskModal] = useState(false);
 
-  const handleAddTask = () => {};
+  const handleAddTask = () => {
+    setShowAddTaskModal(true);
+  };
+
+  const handleTaskAdded = async (token, columnId, taskData) => {
+    try {
+      const response = await createTask(token, columnId, taskData);
+      if (onTaskAdded) {
+        onTaskAdded(response.data);
+      }
+    } catch (error) {
+      console.error("Error adding task:", error);
+    }
+  };
 
   return (
     <div className={styles.column}>
@@ -21,6 +36,14 @@ function Column({ title, tasks, boardId }) {
         <span className={styles.plusSignModal}>+</span>
         Add another card
       </button>
+
+      {showAddTaskModal && (
+        <AddTaskModal
+          onClose={() => setShowAddTaskModal(false)}
+          onAdd={handleTaskAdded}
+          columnId={columnId}
+        />
+      )}
     </div>
   );
 }

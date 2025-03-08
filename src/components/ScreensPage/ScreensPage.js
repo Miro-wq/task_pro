@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
-// import { useParams } from 'react-router-dom';
 import Column from "../Column/Column";
 import styles from "./ScreensPage.module.css";
 import { getTasks, getColumns, createColumn } from "../../services/api";
 import { BoardContext } from "../../context/BoardContext";
+import AddColumnModal from "../Modal/AddColumnModal";
 
 function ScreensPage({ boardId }) {
   const [columns, setColumns] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showAddColumnModal, setShowAddColumnModal] = useState(false);
   const { boards } = useContext(BoardContext);
 
   useEffect(() => {
@@ -28,8 +29,12 @@ function ScreensPage({ boardId }) {
         setColumns(columnsResponse.data);
 
         //luam taskurile
-        const tasksResponse = await getTasks(token, boardId);
-        setTasks(tasksResponse.data);
+        let allTasks = [];
+        for (const column of columnsResponse.data) {
+          const tasksResponse = await getTasks(token, column._id);
+          allTasks = [...allTasks, ...tasksResponse.data];
+        }
+        setTasks(allTasks);
       } catch (err) {
         console.error(err);
         setError("Could not fetch data");
@@ -40,6 +45,19 @@ function ScreensPage({ boardId }) {
 
     fetchData();
   }, [boardId]);
+
+  const handleAddColumn = async (token, boardId, columnData) => {
+    try {
+      const response = await createColumn(token, boardId, columnData);
+      setColumns([...columns, response.data]);
+    } catch (error) {
+      console.error("Error adding column:", error);
+    }
+  };
+
+  const handleTaskAdded = (newTask) => {
+    setTasks([...tasks, newTask]);
+  };
 
   if (!boardId) {
     return (
@@ -75,17 +93,29 @@ function ScreensPage({ boardId }) {
             key={column._id}
             title={column.title}
             tasks={tasks.filter((task) => task.columnId === column._id)}
+            columnId={column._id}
             boardId={boardId}
+            onTaskAdded={handleTaskAdded}
           />
         ))}
         <div className={styles.addColumnContainer}>
-          {/* Buton pentru adăugarea unei noi coloane */}
-          <button className={styles.addColumnButton} onClick={createColumn}>
+          <button
+            className={styles.addColumnButton}
+            onClick={() => setShowAddColumnModal(true)}
+          >
             <span className={styles.plusSignModal}>+</span>
             Add new column
           </button>
         </div>
       </div>
+
+      {showAddColumnModal && (
+        <AddColumnModal
+          onClose={() => setShowAddColumnModal(false)}
+          onAdd={handleAddColumn}
+          boardId={boardId}
+        />
+      )}
     </>
   );
 }

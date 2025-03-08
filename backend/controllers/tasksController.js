@@ -2,7 +2,8 @@ const Task = require("../models/Task");
 
 const createTask = async (req, res) => {
   try {
-    const { title, columnId, description, dueDate, priority } = req.body;
+    const { columnId } = req.params;
+    const { title, description, dueDate, priority } = req.body;
 
     if (!title || !columnId) {
       return res
