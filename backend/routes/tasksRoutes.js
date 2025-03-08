@@ -9,6 +9,6 @@ const { authenticateToken } = require("../middleware/auth");
 const router = express.Router();
 
 router.post("/:columnId/tasks", authenticateToken, createTask);
-router.put("/:columnId/tasks/move", authenticateToken, moveTask);
+router.put("/tasks/:taskId/move", authenticateToken, moveTask);
 router.get("/:columnId/tasks", authenticateToken, getTasks);
 module.exports = router;

@@ -114,3 +114,13 @@ export const deleteColumn = (token, boardId, columnId) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+export const moveTask = (token, taskId, newColumnId) => {
+  return API.patch(
+    `/tasks/${taskId}/move`,
+    { columnId: newColumnId },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+};

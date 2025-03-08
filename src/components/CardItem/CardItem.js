@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import styles from "./CardItem.module.css";
 import EditTaskModal from "../Modals/EditTaskModal/EditTaskModal";
+import MoveTaskModal from "../Modals/MoveTaskModal/MoveTaskModal";
 import { deleteTask } from "../../services/api";
 import sprite from "../../assets/images/icons.svg";
 
-function CardItem({ task, onTaskUpdated, onTaskDeleted }) {
+function CardItem({ task, columns, onTaskUpdated, onTaskDeleted }) {
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showMoveModal, setShowMoveModal] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
 
   // Formatare dată
@@ -61,14 +63,24 @@ function CardItem({ task, onTaskUpdated, onTaskDeleted }) {
               task.priority
             )}`}
           ></div>
-          <button
-            className={styles.optionsButton}
-            onClick={() => setShowOptions(!showOptions)}
-          >
-            <svg width="16" height="16">
-              <use href={`${sprite}#icon-more`}></use>
-            </svg>
-          </button>
+          <div className={styles.cardActions}>
+            <button
+              className={styles.actionButton}
+              onClick={() => setShowMoveModal(true)}
+            >
+              <svg width="16" height="16">
+                <use href={`${sprite}#icon-arrow-circle-right`}></use>
+              </svg>
+            </button>
+            <button
+              className={styles.optionsButton}
+              onClick={() => setShowOptions(!showOptions)}
+            >
+              <svg width="16" height="16">
+                <use href={`${sprite}#icon-more`}></use>
+              </svg>
+            </button>
+          </div>
 
           {showOptions && (
             <div className={styles.optionsMenu}>
@@ -133,6 +145,15 @@ function CardItem({ task, onTaskUpdated, onTaskDeleted }) {
           task={task}
           onClose={() => setShowEditModal(false)}
           onTaskUpdated={handleTaskUpdated}
+        />
+      )}
+
+      {showMoveModal && (
+        <MoveTaskModal
+          task={task}
+          columns={columns}
+          onClose={() => setShowMoveModal(false)}
+          onTaskMoved={handleTaskUpdated}
         />
       )}
     </>

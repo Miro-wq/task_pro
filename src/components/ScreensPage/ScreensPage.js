@@ -55,8 +55,31 @@ function ScreensPage({ boardId }) {
     }
   };
 
+  const handleColumnUpdated = (updatedColumn) => {
+    setColumns(
+      columns.map((col) =>
+        col._id === updatedColumn._id ? updatedColumn : col
+      )
+    );
+  };
+
+  const handleColumnDeleted = (columnId) => {
+    setColumns(columns.filter((col) => col._id !== columnId));
+    setTasks(tasks.filter((task) => task.columnId !== columnId));
+  };
+
   const handleTaskAdded = (newTask) => {
     setTasks([...tasks, newTask]);
+  };
+
+  const handleTaskUpdated = (updatedTask) => {
+    setTasks(
+      tasks.map((task) => (task._id === updatedTask._id ? updatedTask : task))
+    );
+  };
+
+  const handleTaskDeleted = (taskId) => {
+    setTasks(tasks.filter((task) => task._id !== taskId));
   };
 
   if (!boardId) {
@@ -95,7 +118,12 @@ function ScreensPage({ boardId }) {
             tasks={tasks.filter((task) => task.columnId === column._id)}
             columnId={column._id}
             boardId={boardId}
+            columns={columns}
             onTaskAdded={handleTaskAdded}
+            onTaskUpdated={handleTaskUpdated}
+            onTaskDeleted={handleTaskDeleted}
+            onColumnUpdated={handleColumnUpdated}
+            onColumnDeleted={handleColumnDeleted}
           />
         ))}
         <div className={styles.addColumnContainer}>
@@ -104,7 +132,7 @@ function ScreensPage({ boardId }) {
             onClick={() => setShowAddColumnModal(true)}
           >
             <span className={styles.plusSignModal}>+</span>
-            Add new column
+            Add another column
           </button>
         </div>
       </div>
