@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { moveTask } from "../../../services/api";
 import styles from "./MoveTaskModal.module.css";
-import sprite from "../../../assets/images/icons.svg";
+import sprite from "../../../assets/icons/icons.svg";
 
 function MoveTaskModal({ task, columns, onClose, onTaskMoved }) {
   const [selectedColumnId, setSelectedColumnId] = useState("");

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { updateTask } from "../../../services/api";
 import styles from "./EditTaskModal.module.css";
-import sprite from "../../../assets/images/icons.svg";
+import sprite from "../../../assets/icons/icons.svg";
 
 function EditTaskModal({ task, onClose, onTaskUpdated }) {
   const [title, setTitle] = useState(task.title || "");

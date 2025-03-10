@@ -4,7 +4,7 @@ import styles from "./Column.module.css";
 import AddTaskModal from "../Modals/AddTaskModal";
 import EditColumnModal from "../Modals/EditColumnModal/EditColumnModal";
 import { createTask, deleteColumn } from "../../services/api";
-import sprite from "../../assets/images/icons.svg";
+import sprite from "../../assets/icons/icons.svg";
 
 function Column({
   title,

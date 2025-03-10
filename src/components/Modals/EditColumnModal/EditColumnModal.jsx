@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { updateColumn } from "../../../services/api";
 import styles from "./EditColumnModal.module.css";
-import sprite from "../../../assets/images/icons.svg";
+import sprite from "../../../assets/icons/icons.svg";
 
 function EditColumnModal({ column, onClose, onColumnUpdated }) {
   const [title, setTitle] = useState(column.title || "");
