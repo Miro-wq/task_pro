@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import styles from "./ModalCreateBoard.module.css";
 import { BoardContext } from "../../context/BoardContext";
+import backgrounds from "../../constants/backgroundsData";
 
 function ModalCreateBoard({ onClose }) {
   const { createBoard } = useContext(BoardContext);
@@ -35,25 +36,22 @@ function ModalCreateBoard({ onClose }) {
           <div className={styles.iconsContainer}>
             {/* se pute un array de icoane și un .map */}
             <span
-              className={`${styles.iconItem} ${
-                selectedIcon === "⚙️" ? styles.selected : ""
-              }`}
+              className={`${styles.iconItem} ${selectedIcon === "⚙️" ? styles.selected : ""
+                }`}
               onClick={() => setSelectedIcon("⚙️")}
             >
               ⚙️
             </span>
             <span
-              className={`${styles.iconItem} ${
-                selectedIcon === "⚡️" ? styles.selected : ""
-              }`}
+              className={`${styles.iconItem} ${selectedIcon === "⚡️" ? styles.selected : ""
+                }`}
               onClick={() => setSelectedIcon("⚡️")}
             >
               ⚡️
             </span>
             <span
-              className={`${styles.iconItem} ${
-                selectedIcon === "🌎" ? styles.selected : ""
-              }`}
+              className={`${styles.iconItem} ${selectedIcon === "🌎" ? styles.selected : ""
+                }`}
               onClick={() => setSelectedIcon("🌎")}
             >
               🌎
@@ -65,22 +63,14 @@ function ModalCreateBoard({ onClose }) {
         <div className={styles.section}>
           <h3>Background</h3>
           <div className={styles.backgroundContainer}>
-            {/* array de imagini afisate cu .map */}
-            <div
-              className={`${styles.bgItem} ${
-                selectedBg === "bg1" ? styles.selected : ""
-              }`}
-              style={{ backgroundImage: `url('/assets/bg1.jpg')` }}
-              onClick={() => setSelectedBg("bg1")}
-            />
-            <div
-              className={`${styles.bgItem} ${
-                selectedBg === "bg2" ? styles.selected : ""
-              }`}
-              style={{ backgroundImage: `url('/assets/bg2.jpg')` }}
-              onClick={() => setSelectedBg("bg2")}
-            />
-            {/* ...etc, trebuie adaugate cele 5 imagini, e doar de test */}
+            {backgrounds.map((bg) => (
+              <div
+                key={bg.id}
+                className={`${styles.bgItem} ${selectedBg === bg.id ? styles.selected : ''}`}
+                style={{ backgroundImage: `url(${bg.url})` }}
+                onClick={() => setSelectedBg(bg.id)}
+              />
+            ))}
           </div>
         </div>
 

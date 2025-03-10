@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import styles from './SideBar.module.css';
-import cactus from '../../assets/images/cactus.png';
+import cactus from '../../assets/logo/cactus.png';
 import ModalCreateBoard from '../ModalCreateBoard/ModalCreateBoard';
 import BoardItem from '../BoardItem/BoardItem';
 import { BoardContext } from '../../context/BoardContext';
