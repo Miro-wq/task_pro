@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const boardRoutes = require("./routes/boards");
 const columnsRoutes = require("./routes/columnsRoutes");
 const tasksRoutes = require("./routes/tasksRoutes");
+const moveRoute = require("./routes/moveRoute");
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");
@@ -41,6 +42,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/boards", boardRoutes);
 app.use("/api/boards", columnsRoutes);
 app.use("/api/columns", tasksRoutes);
+app.use("/api/tasks", moveRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

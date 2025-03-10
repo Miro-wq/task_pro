@@ -1,20 +1,3 @@
-.column {
-  width: 100%;
-  padding-top: 1em;
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* .column {
-  width: 100%;
-  padding-top: 1em;
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-} */
-
 .columnHeader {
   display: flex;
   justify-content: space-between;
@@ -24,11 +7,6 @@
   border-radius: 6px;
   margin-bottom: 0.5rem;
 }
-
-/* .columnTitle {
-  margin: 0;
-  font-size: 1.2rem;
-} */
 
 .optionsButton {
   background: none;
@@ -69,6 +47,14 @@
 
 .optionItem:hover {
   background-color: #333;
+}
+
+.column {
+  width: 100%;
+  padding-top: 1em;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
 }
 
 .columnTitle {
