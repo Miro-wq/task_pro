@@ -287,4 +287,23 @@ router.get('/me', authenticateToken, async (req, res) => {
   }
 });
 
+// enpoint actualizare date utilizator
+// PUT /api/auth/me
+router.put('/me', authenticateToken, async (req, res) => {
+  try {
+    const { name } = req.body;
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    user.name = name;
+    await user.save();
+    res.json({ message: 'Name updated successfully', user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
 module.exports = router;
