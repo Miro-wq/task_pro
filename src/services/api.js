@@ -124,3 +124,23 @@ export const moveTask = (token, taskId, newColumnId) => {
     }
   );
 };
+
+// NU STERGE AASTA CA TESTEZ CEVA 
+// export const updateTaskPosition = (token, boardId, taskId, newPosition) => {
+//   return API.put(`/boards/${boardId}/tasks/${taskId}/position`, newPosition, {
+//     headers: { Authorization: `Bearer ${token}` },
+//   });
+// };
+
+// update user name
+export const updateUserName = async (token, newName) => {
+  return API.put(
+    '/auth/me',
+    { name: newName },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};

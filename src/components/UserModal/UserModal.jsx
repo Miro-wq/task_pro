@@ -6,8 +6,8 @@ import { UserContext } from "../../context/UserContext";
 
 function UserModal({ onClose, onAvatarChange }) {
   const { theme } = useContext(ThemeContext);
-  const { user, updateName, setUser } = useContext(UserContext);
-  const [newName, setNewName] = useState(user?.name || "");
+  const { user, updateName, setUser } = useContext(UserContext); // updateName din UserContext.js
+  const [newName, setNewName] = useState(user?.name || ""); // seteaza numele userului
 
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
@@ -34,6 +34,7 @@ function UserModal({ onClose, onAvatarChange }) {
     onClose();
   };
 
+  // handleSave ca sa salveze numele userului in DB
   const handleSave = () => {
     updateName(newName);
   };
@@ -70,6 +71,7 @@ function UserModal({ onClose, onAvatarChange }) {
           />
         </div>
         <form onSubmit={handleSubmit}>
+          {/* onChange pentru newName de mai sus */}
           <input
             type="text"
             placeholder="New Name"
