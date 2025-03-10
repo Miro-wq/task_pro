@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/users');
+const User = require('../models/Users'); // s-ar putea sa nu merga la toti cu User cu U mare
 const { authenticateToken } = require('../middleware/auth');
 
 /**

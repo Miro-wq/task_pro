@@ -144,3 +144,38 @@ export const updateUserName = async (token, newName) => {
     }
   );
 };
+
+// interceptor Axios pentru refresh token
+API.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    // trebuie sa primeasca 401 (unauthorized) din server (middleware/auth.js "res.sendStatus(401)")
+    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (!refreshToken) {
+        return Promise.reject(error);
+      }
+
+      // apel /auth/refresh
+      try {
+        const { data } = await axios.post('http://localhost:5000/api/auth/refresh', {
+          refreshToken,
+        });
+        localStorage.setItem('token', data.accessToken);
+
+        originalRequest.headers['Authorization'] = `Bearer ${data.accessToken}`;
+
+        // reface alta cerere cu tokenul nou
+        return API(originalRequest);
+      } catch (err) {
+        console.error('Refresh token failed', err);
+        return Promise.reject(error);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
