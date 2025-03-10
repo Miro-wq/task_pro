@@ -1,18 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { UserProvider } from './context/UserContext';
-import { BoardProvider } from './context/BoardContext';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { GlobalStyles } from "./components/styles/GlobalStyles";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { UserProvider } from "./context/UserContext";
+import { BoardProvider } from "./context/BoardContext";
+import { ThemeProviderWrapper } from "./context/ThemeContext/ThemeContext.jsx";
+import "./index.css";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <UserProvider>
-    <BoardProvider>
-    <App />
-    </BoardProvider>
-  </UserProvider>
+  <ThemeProviderWrapper>
+    <UserProvider>
+      <BoardProvider>
+        <ThemeProviderWrapper>
+          <GlobalStyles />
+          <App />
+        </ThemeProviderWrapper>
+      </BoardProvider>
+    </UserProvider>
+  </ThemeProviderWrapper>
 );
 
 reportWebVitals();
+

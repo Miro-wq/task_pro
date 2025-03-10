@@ -1,0 +1,21 @@
+.userInfo {
+    display: flex;
+    align-items: center;
+    margin-right: 24px;
+  }
+  
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    
+  }
+  
+  .avatar:hover {
+    transform: scale(1.1); /* Mărire ușoară la hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adăugăm o umbră subtilă la hover */
+    border: 2px solid #BEDBB0; /* Culoare de border schimbată la hover */
+  }
+  
+  
