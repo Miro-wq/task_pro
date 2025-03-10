@@ -1,0 +1,135 @@
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: #161616;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #333;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.25rem;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.closeButton:hover {
+  color: #fff;
+}
+
+.form {
+  padding: 16px;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 12px;
+  color: #bbb;
+  font-size: 0.9rem;
+}
+
+.columnsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.columnButton {
+  padding: 12px;
+  background-color: #222;
+  border: 1px solid #333;
+  border-radius: 4px;
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.columnButton:hover:not(:disabled) {
+  background-color: #333;
+}
+
+.columnButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.selectedColumn {
+  background-color: #a8df65;
+  color: #000;
+  border-color: #a8df65;
+}
+
+.error {
+  color: #ff6b6b;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.cancelButton {
+  padding: 10px 16px;
+  background-color: transparent;
+  border: 1px solid #444;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  background-color: #333;
+}
+
+.moveButton {
+  padding: 10px 16px;
+  background-color: #a8df65;
+  border: none;
+  border-radius: 4px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.moveButton:hover {
+  background-color: #92c05a;
+}

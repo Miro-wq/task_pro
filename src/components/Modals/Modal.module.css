@@ -1,0 +1,118 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: #1f1f1f;
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 400px;
+  width: 100%;
+  color: white;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+}
+
+.input,
+.textarea,
+.dateInput {
+  width: 100%;
+  padding: 12px;
+  background-color: #2b2b2b;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+}
+
+.textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.priorityOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.priorityOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.priorityColor {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.noPriority {
+  background-color: #888;
+}
+
+.lowPriority {
+  background-color: #3498db;
+}
+
+.mediumPriority {
+  background-color: #f1c40f;
+}
+
+.highPriority {
+  background-color: #e74c3c;
+}
+
+.addButton {
+  width: 100%;
+  padding: 12px;
+  background-color: #a9dd9c;
+  border: none;
+  border-radius: 8px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.plusSign {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.addButton:hover {
+  background-color: #8cce7c;
+}

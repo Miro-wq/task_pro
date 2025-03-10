@@ -1,45 +1,48 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { getUserProfile } from '../services/api';
+import React, { createContext, useState, useEffect } from "react";
+import { getUserProfile } from "../services/api";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(() => {
-        const storedUser = localStorage.getItem('user');
+        const storedUser = localStorage.getItem("user");
         return storedUser ? JSON.parse(storedUser) : null;
     });
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
+    const [error, setError] = useState("");
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            setLoading(false);
-            return;
-        }
+        const fetchUser = async () => {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                setLoading(false);
+                return;
+            }
 
-        getUserProfile(token)
-            .then((res) => {
+            try {
+                const res = await getUserProfile(token);
                 setUser(res.data);
-                localStorage.setItem('user', JSON.stringify(res.data)); // Salvăm în localStorage
+                localStorage.setItem("user", JSON.stringify(res.data)); // Salvăm în localStorage
+            } catch (err) {
+                console.error("Error fetching user:", err);
+                setError("Could not fetch user data. Please log in again.");
+            } finally {
                 setLoading(false);
-            })
-            .catch((err) => {
-                console.error(err);
-                setError('Could not fetch user data. Please log in again.');
-                setLoading(false);
-            });
+            }
+        };
+
+        setTimeout(fetchUser, 1000);
     }, []);
 
     const login = (accessToken, userData) => {
-        localStorage.setItem('token', accessToken);
-        localStorage.setItem('user', JSON.stringify(userData));
+        localStorage.setItem("token", accessToken);
+        localStorage.setItem("user", JSON.stringify(userData));
         setUser(userData);
     };
 
     const logout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
         setUser(null);
     };
 

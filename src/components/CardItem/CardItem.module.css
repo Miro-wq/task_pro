@@ -1,10 +1,84 @@
 .card {
   background-color: #222;
-  border-radius: 6px;
-  padding: 0.75rem;
+  border-radius: 8px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 8px;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardActions {
+  display: flex;
+  gap: 4px;
+}
+
+.actionButton,
+.optionsButton {
+  background-color: #161616;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.actionButton:hover,
+.optionsButton:hover {
+  color: #fff;
+}
+
+.priorityIndicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.lowPriority {
+  background-color: #8fa1d0;
+}
+
+.mediumPriority {
+  background-color: #e09cb5;
+}
+
+.highPriority {
+  background-color: #f5c542;
+}
+
+.optionsMenu {
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  background-color: #161616;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  overflow: hidden;
+}
+
+.optionItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  color: #fff;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.optionItem:hover {
+  background-color: #333;
 }
 
 .cardTitle {
@@ -18,18 +92,30 @@
   margin: 0;
   font-size: 0.9rem;
   color: #bbb;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .cardFooter {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 0.8rem;
+  margin-top: 4px;
 }
 
 .priority {
-  color: #f5c542; /* doar pt exemplu */
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #000;
+  font-weight: 500;
 }
 
 .dueDate {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   color: #888;
 }
