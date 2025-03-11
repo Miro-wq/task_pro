@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { updateTask } from "../../../services/api";
 import styles from "./EditTaskModal.module.css";
 import sprite from "../../../assets/images/icons.svg";

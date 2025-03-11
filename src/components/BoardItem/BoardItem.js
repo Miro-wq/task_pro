@@ -24,6 +24,7 @@ function BoardItem({ board, isActive, onSelect }) {
       className={`${styles.boardItem} ${isActive ? styles.active : ""}`}
       onClick={() => onSelect(board._id)}
     >
+      {board.icon && <span className={styles.boardIcon}>{board.icon}</span>}
       <span className={styles.boardName}>{board.name}</span>
 
       <div className={styles.actions}>

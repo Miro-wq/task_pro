@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./FilterModal.module.css";
-import sprite from "../....//assets/images/icons.svg";
+import sprite from "../../../assets/images/icons.svg";
 
 function FilterModal({ onClose, onApplyFilters }) {
   const [filters, setFilters] = useState({

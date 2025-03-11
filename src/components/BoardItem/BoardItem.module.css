@@ -28,3 +28,7 @@
   color: gray;
   cursor: pointer;
 }
+
+.boardIcon {
+  margin-right: 8px;
+}
