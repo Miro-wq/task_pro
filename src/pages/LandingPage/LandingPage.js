@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './LandingPage.module.css';
-import taskProLogo from '../../assets/images/task_pro_logo.png';
+import taskProLogo from '../../assets/logo/task_pro_logo.png';
 
 function LandingPage() {
     return (

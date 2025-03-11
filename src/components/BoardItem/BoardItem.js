@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { BoardContext } from "../../context/BoardContext";
 import styles from "./BoardItem.module.css";
 import ModalEditBoard from "../ModalEditBoard/ModalEditBoard";
-import sprite from "../../assets/images/icons.svg";
+import sprite from "../../assets/icons/icons.svg";
 
 function BoardItem({ board, isActive, onSelect }) {
   const { deleteBoard } = useContext(BoardContext);

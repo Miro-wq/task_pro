@@ -21,11 +21,11 @@ const LoginPage = () => {
     onSubmit: async (values) => {
       try {
         const response = await loginUser(values.email, values.password);
-
-        // serverul întoarce { accessToken, refreshToken, user }
-        const { accessToken, user } = response.data;
+        const { accessToken, refreshToken, user } = response.data;
         login(accessToken, user);
+        localStorage.setItem('refreshToken', refreshToken); // salvează refresh token si in localStorage
         navigate('/home');
+
       } catch (error) {
         if (error.response && error.response.data.message) {
           setErrorMessage(error.response.data.message);

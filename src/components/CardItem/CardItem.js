@@ -3,7 +3,7 @@ import styles from "./CardItem.module.css";
 import EditTaskModal from "../Modals/EditTaskModal/EditTaskModal";
 import MoveTaskModal from "../Modals/MoveTaskModal/MoveTaskModal";
 import { deleteTask } from "../../services/api";
-import sprite from "../../assets/images/icons.svg";
+import sprite from "../../assets/icons/icons.svg";
 
 function CardItem({ task, columns, onTaskUpdated, onTaskDeleted }) {
   const [showEditModal, setShowEditModal] = useState(false);
