@@ -1,15 +1,17 @@
 const express = require("express");
-const { createTask, getTasks } = require("../controllers/tasksController");
 const {
-  deleteColumn,
-  updateColumn,
-} = require("../controllers/columnsController");
+  createTask,
+  getTasks,
+  updateTask,
+  deleteTask,
+} = require("../controllers/tasksController");
+
 const { authenticateToken } = require("../middleware/auth");
 
 const router = express.Router();
 
 router.post("/:columnId/tasks", authenticateToken, createTask);
 router.get("/:columnId/tasks", authenticateToken, getTasks);
-router.delete("/:columnId", authenticateToken, deleteColumn);
-router.put("/:columnId", authenticateToken, updateColumn);
+router.put("/:columnId/tasks/:taskId", authenticateToken, updateTask);
+router.delete("/:columnId/tasks/:taskId", authenticateToken, deleteTask);
 module.exports = router;

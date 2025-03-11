@@ -70,14 +70,14 @@ export const createTask = (token, columnId, taskData) => {
   });
 };
 
-export const updateTask = (token, taskId, taskData) => {
-  return API.put(`/tasks/${taskId}`, taskData, {
+export const updateTask = (token, columnId, taskId, taskData) => {
+  return API.put(`/columns/${columnId}/tasks/${taskId}`, taskData, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
 
-export const deleteTask = (token, taskId) => {
-  return API.delete(`/tasks/${taskId}`, {
+export const deleteTask = (token, columnId, taskId) => {
+  return API.delete(`/columns/${columnId}/tasks/${taskId}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
@@ -117,7 +117,7 @@ export const moveTask = (token, taskId, newColumnId) => {
   );
 };
 
-// NU STERGE AASTA CA TESTEZ CEVA 
+// NU STERGE AASTA CA TESTEZ CEVA
 // export const updateTaskPosition = (token, boardId, taskId, newPosition) => {
 //   return API.put(`/boards/${boardId}/tasks/${taskId}/position`, newPosition, {
 //     headers: { Authorization: `Bearer ${token}` },
@@ -127,7 +127,7 @@ export const moveTask = (token, taskId, newColumnId) => {
 // update user name
 export const updateUserName = async (token, newName) => {
   return API.put(
-    '/auth/me',
+    "/auth/me",
     { name: newName },
     {
       headers: {
@@ -143,27 +143,34 @@ API.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     // trebuie sa primeasca 401 (unauthorized) din server (middleware/auth.js "res.sendStatus(401)")
-    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
 
-      const refreshToken = localStorage.getItem('refreshToken');
+      const refreshToken = localStorage.getItem("refreshToken");
       if (!refreshToken) {
         return Promise.reject(error);
       }
 
       // apel /auth/refresh
       try {
-        const { data } = await axios.post('http://localhost:5000/api/auth/refresh', {
-          refreshToken,
-        });
-        localStorage.setItem('token', data.accessToken);
+        const { data } = await axios.post(
+          "http://localhost:5000/api/auth/refresh",
+          {
+            refreshToken,
+          }
+        );
+        localStorage.setItem("token", data.accessToken);
 
-        originalRequest.headers['Authorization'] = `Bearer ${data.accessToken}`;
+        originalRequest.headers["Authorization"] = `Bearer ${data.accessToken}`;
 
         // reface alta cerere cu tokenul nou
         return API(originalRequest);
       } catch (err) {
-        console.error('Refresh token failed', err);
+        console.error("Refresh token failed", err);
         return Promise.reject(error);
       }
     }
