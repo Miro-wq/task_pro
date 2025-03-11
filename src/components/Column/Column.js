@@ -39,7 +39,7 @@ function Column({
   const handleDeleteColumn = async () => {
     try {
       const token = localStorage.getItem("token");
-      await deleteColumn(token, boardId, columnId);
+      await deleteColumn(token, columnId);
       if (onColumnDeleted) {
         onColumnDeleted(columnId);
       }

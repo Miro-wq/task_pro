@@ -1,5 +1,6 @@
 const Column = require("../models/Column");
 const Board = require("../models/Board");
+const Task = require("../models/Task");
 
 const createColumn = async (req, res) => {
   try {
@@ -82,6 +83,7 @@ const deleteColumn = async (req, res) => {
 
     // Ștergem coloana
     const column = await Column.findByIdAndDelete(columnId);
+    await Task.deleteMany({ boardId });
     if (!column) {
       return res.status(404).json({ message: "Column not found ^_^" });
     }

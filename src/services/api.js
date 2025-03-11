@@ -95,14 +95,14 @@ export const createColumn = (token, boardId, columnData) => {
   });
 };
 
-export const updateColumn = (token, boardId, columnId, columnData) => {
-  return API.put(`/boards/${boardId}/columns/${columnId}`, columnData, {
+export const updateColumn = (token, columnId, columnData) => {
+  return API.put(`/columns/${columnId}`, columnData, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
 
-export const deleteColumn = (token, boardId, columnId) => {
-  return API.delete(`/boards/${boardId}/columns/${columnId}`, {
+export const deleteColumn = (token, columnId) => {
+  return API.delete(`/columns/${columnId}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
