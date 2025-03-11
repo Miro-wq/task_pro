@@ -20,7 +20,6 @@ function Column({
 }) {
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
   const [showEditColumnModal, setShowEditColumnModal] = useState(false);
-  const [showOptions, setShowOptions] = useState(false);
 
   const handleAddTask = () => {
     setShowAddTaskModal(true);
@@ -53,43 +52,26 @@ function Column({
     <div className={styles.column}>
       <div className={styles.columnHeader}>
         <h2 className={styles.columnTitle}>{title}</h2>
-        <button
-          className={styles.optionsButton}
-          onClick={() => setShowOptions(!showOptions)}
-        >
-          <svg width="16" height="16">
-            <use href={`${sprite}#icon-more`}></use>
-          </svg>
-        </button>
-
-        {showOptions && (
-          <div className={styles.optionsMenu}>
-            <button
-              className={styles.optionItem}
-              onClick={() => {
-                setShowOptions(false);
-                setShowEditColumnModal(true);
-              }}
-            >
-              <svg width="16" height="16">
-                <use href={`${sprite}#icon-pencil`}></use>
-              </svg>
-              Edit
-            </button>
-            <button
-              className={styles.optionItem}
-              onClick={() => {
-                setShowOptions(false);
-                handleDeleteColumn();
-              }}
-            >
-              <svg width="16" height="16">
-                <use href={`${sprite}#icon-trash`}></use>
-              </svg>
-              Delete
-            </button>
-          </div>
-        )}
+        <div className={styles.columnActions}>
+          <button
+            className={styles.actionButton}
+            onClick={() => setShowEditColumnModal(true)}
+            title="Edit Column"
+          >
+            <svg width="18" height="18">
+              <use href={`${sprite}#icon-pencil`}></use>
+            </svg>
+          </button>
+          <button
+            className={styles.actionButton}
+            onClick={handleDeleteColumn}
+            title="Delete Column"
+          >
+            <svg width="18" height="18">
+              <use href={`${sprite}#icon-trash`}></use>
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div className={styles.cardsContainer}>

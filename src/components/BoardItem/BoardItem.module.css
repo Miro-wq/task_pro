@@ -1,12 +1,12 @@
 .boardItem {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
 .boardName {
-  width: 120px;
+  width: 100px;
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;
@@ -15,6 +15,7 @@
 }
 
 .actions {
+  display: flex;
 }
 
 .editBtn {
@@ -27,4 +28,8 @@
   background-color: rgba(0, 0, 0, 0);
   color: gray;
   cursor: pointer;
+}
+
+.boardIcon {
+  margin-right: 8px;
 }

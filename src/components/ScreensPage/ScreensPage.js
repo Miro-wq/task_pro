@@ -100,6 +100,7 @@ function ScreensPage({ boardId }) {
   if (error) return <div>{error}</div>;
 
   const currentBoard = boards.find((b) => b._id === boardId);
+  console.log(currentBoard.background);
 
   if (!currentBoard) {
     return <p>Board not found</p>;
@@ -110,7 +111,19 @@ function ScreensPage({ boardId }) {
       <div className={styles.nameBoard}>
         <h2 className={styles.screensTitle}>{currentBoard.name}</h2>
       </div>
-      <div className={styles.screensPage}>
+      <div
+        className={styles.screensPage}
+        style={
+          currentBoard.background
+            ? {
+                backgroundImage: `url("/assets/images/${currentBoard.background}.png")`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }
+            : {}
+        }
+      >
         {columns.map((column) => (
           <Column
             key={column._id}

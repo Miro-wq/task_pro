@@ -14,7 +14,8 @@
 .modal {
   background-color: #000;
   color: #fff;
-  width: 400px;
+  width: 90%;
+  max-width: 400px;
   padding: 1.5rem;
   border-radius: 8px;
   position: relative;
@@ -28,61 +29,99 @@
 }
 
 .inputTitle {
-  width: 95%;
-  padding: 0.5rem;
+  width: 100%;
+  padding: 0.8rem;
   background: #222;
   border: 1px solid #444;
   border-radius: 4px;
   color: #fff;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  box-sizing: border-box;
 }
 
 .section {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-.modalIcons {
+.sectionTitle {
   font-weight: 500;
   font-size: 14px;
   letter-spacing: -0.02em;
   color: #fff;
+  margin-bottom: 0.8rem;
 }
 
-.iconsContainer,
+.iconsContainer {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
 .backgroundContainer {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
   gap: 8px;
 }
 
+@media (max-width: 768px) {
+  .backgroundContainer {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .iconsContainer {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .backgroundContainer {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+
 .iconItem {
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: #222;
+  color: gray;
+  border-radius: 6px;
   cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s, border-color 0.2s, background-color 0.2s;
+  padding: 0;
+}
+
+.iconItem:hover {
+  transform: scale(1.1);
+  background-color: #333;
 }
 
 .bgItem {
-  width: 40px;
-  height: 40px;
+  width: 100%;
+  aspect-ratio: 1/1;
   background-size: cover;
-  border-radius: 4px;
+  background-position: center;
+  border-radius: 8px;
   cursor: pointer;
-  border: 2px solid transparent;
+  transition: transform 0.2s;
+}
+
+.bgItem:hover {
+  transform: scale(1.05);
 }
 
 .selected {
   border-color: #a8df65;
 }
 
-/* .buttonsRow {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1rem;
-} */
-
 .createBtn {
   background-color: #a8df65;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.8rem 1rem;
   color: #000;
   font-weight: 600;
   border-radius: 4px;
@@ -102,20 +141,22 @@
   font-size: 1.2rem;
   font-weight: bold;
   color: #a8df65;
-  background: bisque;
+  background: #000;
   padding: 1px 9px;
   margin-right: 11px;
   border-radius: 5px;
-  background: #000;
 }
 
 .closeBtn {
   background-color: transparent;
-  padding: 1.3rem;
   color: #fff;
   cursor: pointer;
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 10px;
+  top: 10px;
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
 }

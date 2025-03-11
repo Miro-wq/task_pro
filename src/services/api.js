@@ -24,16 +24,12 @@ export const getUserProfile = async (token) => {
 };
 
 // board nou
-export const createBoard = async (token, boardName) => {
-  return API.post(
-    "/boards/create",
-    { name: boardName },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+export const createBoard = async (token, boardData) => {
+  return API.post("/boards/create", boardData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };
 
 // get la toate boardurile userului
@@ -55,14 +51,10 @@ export const deleteBoard = async (token, boardId) => {
 };
 
 // update board
-export const updateBoard = async (token, boardId, newName) => {
-  return API.put(
-    `/boards/${boardId}`,
-    { name: newName },
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    }
-  );
+export const updateBoard = async (token, boardId, updateData) => {
+  return API.put(`/boards/${boardId}`, updateData, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
 };
 
 // endpoint taskuri
@@ -109,8 +101,8 @@ export const updateColumn = (token, columnId, columnData) => {
   });
 };
 
-export const deleteColumn = (token, boardId, columnId) => {
-  return API.delete(`/boards/${boardId}/columns/${columnId}`, {
+export const deleteColumn = (token, columnId) => {
+  return API.delete(`/columns/${columnId}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };

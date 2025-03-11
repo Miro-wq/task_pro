@@ -20,18 +20,22 @@
   gap: 4px;
 }
 
-.actionButton,
-.optionsButton {
+.actionButton {
   background-color: #161616;
   border: none;
   color: #888;
   cursor: pointer;
   padding: 4px;
+  border-radius: 4px;
 }
 
-.actionButton:hover,
-.optionsButton:hover {
+.actionButton:hover {
   color: #fff;
+  background-color: #333;
+}
+
+.icon {
+  display: block;
 }
 
 .priorityIndicator {
@@ -50,35 +54,6 @@
 
 .highPriority {
   background-color: #f5c542;
-}
-
-.optionsMenu {
-  position: absolute;
-  top: 30px;
-  right: 10px;
-  background-color: #161616;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-  z-index: 10;
-  overflow: hidden;
-}
-
-.optionItem {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: none;
-  border: none;
-  color: #fff;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.optionItem:hover {
-  background-color: #333;
 }
 
 .cardTitle {

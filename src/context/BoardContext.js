@@ -38,13 +38,20 @@ export const BoardProvider = ({ children }) => {
   }, []);
 
   // pentru board nou
-  const createBoard = async (boardName) => {
+  const createBoard = async (boardName, icon, background) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("No token found");
       }
-      const response = await apiCreateBoard(token, boardName);
+      //ca sa preia icon-ul si background-ul
+      const boardData = {
+        name: boardName,
+        icon: icon || null,
+        background: background || null,
+      };
+
+      const response = await apiCreateBoard(token, boardData);
       setBoards((prev) => [...prev, response.data.board]);
     } catch (err) {
       console.error("Error creating board:", err);
@@ -52,11 +59,27 @@ export const BoardProvider = ({ children }) => {
     }
   };
 
-  // actualizare board (doar numele)
-  const updateBoard = async (boardId, newName) => {
+  // actualizare board (doar numele) acum si icon si background
+  const updateBoard = async (boardId, newName, icon, background) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await apiUpdateBoard(token, boardId, newName);
+      if (!token) {
+        throw new Error("No token found ^_^");
+      }
+      //obiect pentru datele board-ului
+      const updateData = {
+        name: newName,
+      };
+
+      //includ icon si background doar daca sunt modificate
+      if (icon !== undefined) {
+        updateData.icon = icon;
+      }
+
+      if (background !== undefined) {
+        updateData.background = background;
+      }
+      const response = await apiUpdateBoard(token, boardId, updateData);
       const updatedBoard = response.data.board;
 
       setBoards((prevBoards) =>
@@ -64,6 +87,7 @@ export const BoardProvider = ({ children }) => {
       );
     } catch (err) {
       console.error("Error updating board:", err);
+      setError("Could not update board");
     }
   };
 

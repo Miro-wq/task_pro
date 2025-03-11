@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styles from "./ModalCreateBoard.module.css";
 import { BoardContext } from "../../context/BoardContext";
-import backgrounds from "../../constants/backgroundsData";
+import sprite from "../../assets/images/icons.svg";
 
 function ModalCreateBoard({ onClose }) {
   const { createBoard } = useContext(BoardContext);
@@ -9,18 +9,53 @@ function ModalCreateBoard({ onClose }) {
   const [selectedIcon, setSelectedIcon] = useState(null);
   const [selectedBg, setSelectedBg] = useState(null);
 
+  const icons = [
+    "icon-fourCircles",
+    "icon-star",
+    "icon-loading",
+    "icon-puzzlePiece",
+    "icon-lightning",
+    "icon-threeCircles",
+    "icon-hexagon",
+  ];
+
+  const backgrounds = [
+    "abstract",
+    "baloon-2",
+    "baloon",
+    "blue-water",
+    "cactus",
+    "canyon",
+    "diego-night",
+    "diego",
+    "flowers",
+    "green",
+    "moon-2",
+    "moon",
+    "night",
+    "sail",
+    "shore",
+    "sky",
+  ];
+
   const handleCreate = () => {
     if (!boardName.trim()) {
       alert("Please enter a board title");
       return;
     }
-    createBoard(boardName);
+    createBoard(boardName, selectedIcon, selectedBg);
     onClose();
   };
   // momentan pagiane/modalu e pentru test, trebuie mai modificata
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
+    <div className={styles.overlay} onClick={onClose}>
+      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <button className={styles.closeBtn} onClick={onClose}>
+          <svg width="18" height="18">
+            <use href={`${sprite}#icon-closeBtn`}></use>
+          </svg>
+        </button>
+
         <h2 className={styles.title}>New board</h2>
 
         <input
@@ -32,57 +67,47 @@ function ModalCreateBoard({ onClose }) {
         />
 
         <div className={styles.section}>
-          <h3 className={styles.modalIcons}>Icons</h3>
+          <h3 className={styles.sectionTitle}>Icons</h3>
           <div className={styles.iconsContainer}>
-            {/* se pute un array de icoane și un .map */}
-            <span
-              className={`${styles.iconItem} ${selectedIcon === "⚙️" ? styles.selected : ""
+            {icons.map((icon) => (
+              <button
+                key={icon}
+                className={`${styles.iconItem} ${
+                  selectedIcon === icon ? styles.selected : ""
                 }`}
-              onClick={() => setSelectedIcon("⚙️")}
-            >
-              ⚙️
-            </span>
-            <span
-              className={`${styles.iconItem} ${selectedIcon === "⚡️" ? styles.selected : ""
-                }`}
-              onClick={() => setSelectedIcon("⚡️")}
-            >
-              ⚡️
-            </span>
-            <span
-              className={`${styles.iconItem} ${selectedIcon === "🌎" ? styles.selected : ""
-                }`}
-              onClick={() => setSelectedIcon("🌎")}
-            >
-              🌎
-            </span>
-            {/* ......etc plm */}
+                onClick={() => setSelectedIcon(icon)}
+                type="button"
+              >
+                <svg width="18" height="18">
+                  <use href={`${sprite}#${icon}`}></use>
+                </svg>
+              </button>
+            ))}
           </div>
         </div>
 
         <div className={styles.section}>
-          <h3>Background</h3>
+          <h3 className={styles.sectionTitle}>Background</h3>
           <div className={styles.backgroundContainer}>
             {backgrounds.map((bg) => (
               <div
-                key={bg.id}
-                className={`${styles.bgItem} ${selectedBg === bg.id ? styles.selected : ''}`}
-                style={{ backgroundImage: `url(${bg.url})` }}
-                onClick={() => setSelectedBg(bg.id)}
+                key={bg}
+                className={`${styles.bgItem} ${
+                  selectedBg === bg ? styles.selected : ""
+                }`}
+                style={{
+                  backgroundImage: `url("/assets/images/${bg}.png")`,
+                }}
+                onClick={() => setSelectedBg(bg)}
               />
             ))}
           </div>
         </div>
 
-        <div className={styles.buttonsRow}>
-          <button className={styles.createBtn} onClick={handleCreate}>
-            <span className={styles.plusSignModal}>+</span>
-            Create
-          </button>
-          <button className={styles.closeBtn} onClick={onClose}>
-            X
-          </button>
-        </div>
+        <button className={styles.createBtn} onClick={handleCreate}>
+          <span className={styles.plusSignModal}>+</span>
+          Create
+        </button>
       </div>
     </div>
   );
