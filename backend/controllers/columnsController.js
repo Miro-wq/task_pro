@@ -83,7 +83,7 @@ const deleteColumn = async (req, res) => {
 
     // Ștergem coloana
     const column = await Column.findByIdAndDelete(columnId);
-    await Task.deleteMany({ boardId });
+    await Task.deleteMany({ columnId });
     if (!column) {
       return res.status(404).json({ message: "Column not found ^_^" });
     }
