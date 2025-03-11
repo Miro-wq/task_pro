@@ -6,47 +6,30 @@
   padding: 1em;
   border-radius: 6px;
   margin-bottom: 0.5rem;
+  position: relative;
 }
 
-.optionsButton {
-  background: none;
+.columnActions {
+  display: flex;
+  gap: 4px;
+}
+
+.actionButton {
+  background-color: #161616;
   border: none;
   color: #888;
   cursor: pointer;
   padding: 4px;
-}
-
-.optionsButton:hover {
-  color: #fff;
-}
-
-.optionsMenu {
-  position: absolute;
-  top: 3.5em;
-  right: 1em;
-  background-color: #161616;
   border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-  z-index: 10;
-  overflow: hidden;
 }
 
-.optionItem {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: none;
-  border: none;
+.actionButton:hover {
   color: #fff;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  transition: background-color 0.2s;
+  background-color: #333;
 }
 
-.optionItem:hover {
-  background-color: #333;
+.icon {
+  display: block;
 }
 
 .column {
@@ -58,12 +41,8 @@
 }
 
 .columnTitle {
-  margin-top: 0;
+  margin: 0;
   font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  background-color: #111;
-  padding: 1em;
-  border-radius: 6px;
 }
 
 .cardsContainer {

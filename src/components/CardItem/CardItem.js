@@ -8,7 +8,6 @@ import sprite from "../../assets/images/icons.svg";
 function CardItem({ task, columns, onTaskUpdated, onTaskDeleted }) {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showMoveModal, setShowMoveModal] = useState(false);
-  const [showOptions, setShowOptions] = useState(false);
 
   // Formatare dată
   const formatDate = (dateString) => {
@@ -67,49 +66,31 @@ function CardItem({ task, columns, onTaskUpdated, onTaskDeleted }) {
             <button
               className={styles.actionButton}
               onClick={() => setShowMoveModal(true)}
+              title="Move Task"
             >
-              <svg width="16" height="16">
-                <use href={`${sprite}#icon-arrow-circle-right`}></use>
+              <svg width="18" height="18">
+                <use href={`${sprite}#icon-entry`}></use>
               </svg>
             </button>
             <button
-              className={styles.optionsButton}
-              onClick={() => setShowOptions(!showOptions)}
+              className={styles.actionButton}
+              onClick={() => setShowEditModal(true)}
+              title="Edit Task"
             >
-              <svg width="16" height="16">
-                <use href={`${sprite}#icon-more`}></use>
+              <svg width="18" height="18">
+                <use href={`${sprite}#icon-pencil`}></use>
+              </svg>
+            </button>
+            <button
+              className={styles.actionButton}
+              onClick={handleDeleteTask}
+              title="Delete Task"
+            >
+              <svg width="18" height="18">
+                <use href={`${sprite}#icon-trash`}></use>
               </svg>
             </button>
           </div>
-
-          {showOptions && (
-            <div className={styles.optionsMenu}>
-              <button
-                className={styles.optionItem}
-                onClick={() => {
-                  setShowOptions(false);
-                  setShowEditModal(true);
-                }}
-              >
-                <svg width="16" height="16">
-                  <use href={`${sprite}#icon-pencil`}></use>
-                </svg>
-                Edit
-              </button>
-              <button
-                className={styles.optionItem}
-                onClick={() => {
-                  setShowOptions(false);
-                  handleDeleteTask();
-                }}
-              >
-                <svg width="16" height="16">
-                  <use href={`${sprite}#icon-trash`}></use>
-                </svg>
-                Delete
-              </button>
-            </div>
-          )}
         </div>
 
         <h3 className={styles.cardTitle}>{task.title}</h3>
@@ -131,8 +112,16 @@ function CardItem({ task, columns, onTaskUpdated, onTaskDeleted }) {
 
           {task.dueDate && (
             <span className={styles.dueDate}>
-              <svg width="14" height="14">
-                <use href={`${sprite}#icon-calendar`}></use>
+              <svg
+                className={styles.icon}
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="currentColor"
+                  d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"
+                />
               </svg>
               {formatDate(task.dueDate)}
             </span>
