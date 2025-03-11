@@ -4,6 +4,7 @@ import styles from "./ScreensPage.module.css";
 import { getTasks, getColumns, createColumn } from "../../services/api";
 import { BoardContext } from "../../context/BoardContext";
 import AddColumnModal from "../Modals/AddColumnModal";
+import Loader from "../Loader/Loader";
 
 function ScreensPage({ boardId }) {
   const [columns, setColumns] = useState([]);
@@ -96,7 +97,9 @@ function ScreensPage({ boardId }) {
     );
   }
 
-  if (loading) return <div>Loading columns...</div>;
+  if (loading) {
+    return <Loader />;
+  }
   if (error) return <div>{error}</div>;
 
   const currentBoard = boards.find((b) => b._id === boardId);

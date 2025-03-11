@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styles from "./ModalEditBoard.module.css";
 import { BoardContext } from "../../context/BoardContext";
-import sprite from "../../assets/images/icons.svg";
+import sprite from "../../assets/icons/icons.svg";
 
 function ModalEditBoard({ board, onClose }) {
   const { updateBoard } = useContext(BoardContext);

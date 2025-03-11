@@ -7,6 +7,7 @@ import Header from "../../components/header/Header";
 import Sidebar from "../../components/SideBar/SideBar";
 import styles from "./HomePage.module.css";
 import ScreensPage from "../../components/ScreensPage/ScreensPage";
+import Loader from "../../components/Loader/Loader";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function HomePage() {
   }, [loading, user, navigate]);
 
   if (loading) {
-    return <div>Loading user data...</div>;
+    return <Loader />;
   }
 
   if (error) {
