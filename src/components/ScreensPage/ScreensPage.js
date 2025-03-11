@@ -119,11 +119,11 @@ function ScreensPage({ boardId }) {
         style={
           currentBoard.background
             ? {
-                backgroundImage: `url("/assets/images/${currentBoard.background}.png")`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }
+              backgroundImage: `url("/assets/images/${currentBoard.background}.png")`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }
             : {}
         }
       >

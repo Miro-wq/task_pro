@@ -73,9 +73,8 @@ function ModalEditBoard({ board, onClose }) {
             {icons.map((icon) => (
               <button
                 key={icon}
-                className={`${styles.iconItem} ${
-                  selectedIcon === icon ? styles.selected : ""
-                }`}
+                className={`${styles.iconItem} ${selectedIcon === icon ? styles.selected : ""
+                  }`}
                 onClick={() => setSelectedIcon(icon)}
                 type="button"
               >
@@ -93,9 +92,8 @@ function ModalEditBoard({ board, onClose }) {
             {backgrounds.map((bg) => (
               <div
                 key={bg}
-                className={`${styles.bgItem} ${
-                  selectedBg === bg ? styles.selected : ""
-                }`}
+                className={`${styles.bgItem} ${selectedBg === bg ? styles.selected : ""
+                  }`}
                 style={{ backgroundImage: `url('/assets/images/${bg}.png')` }}
                 onClick={() => setSelectedBg(bg)}
               />

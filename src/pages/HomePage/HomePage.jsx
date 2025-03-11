@@ -40,14 +40,14 @@ function HomePage() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={styles.homePage} style={{ background: theme.background, color: theme.text }}>
+      <div
+        className={styles.homePage}
+        style={{ background: theme.background, color: theme.text }}
+      >
         <Header />
         <Sidebar onSelectBoard={handleSelectBoard} />
         <div className={styles.container}>
-          <button
-            className={styles.logoutButton}
-            onClick={logout}
-          >
+          <button className={styles.logoutButton} onClick={logout}>
             <svg className={styles.icon}>
               <use xlinkHref="/assets/icons/symbol-defs.svg#icon-logout" />
             </svg>
@@ -61,4 +61,3 @@ function HomePage() {
 }
 
 export default HomePage;
-

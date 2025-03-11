@@ -101,11 +101,12 @@ export const updateColumn = (token, columnId, columnData) => {
   });
 };
 
-export const deleteColumn = (token, columnId) => {
-  return API.delete(`/columns/${columnId}`, {
+export const deleteColumn = async (token, boardId, columnId) => {
+  return API.delete(`/boards/${boardId}/columns/${columnId}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
 
 export const moveTask = (token, taskId, newColumnId) => {
   return API.patch(
