@@ -101,7 +101,7 @@ function Column({
 
       {showEditColumnModal && (
         <EditColumnModal
-          column={{ _id: columnId, title }}
+          column={{ _id: columnId, title, boardId }} //lipsea boardId
           onClose={() => setShowEditColumnModal(false)}
           onColumnUpdated={onColumnUpdated}
         />

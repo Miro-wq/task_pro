@@ -9,17 +9,18 @@ function EditColumnModal({ column, onClose, onColumnUpdated }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!title.trim()) {
       setError("Title is required");
       return;
     }
-
+  
     try {
       const token = localStorage.getItem("token");
       const columnData = { title };
-
-      const response = await updateColumn(token, column._id, columnData);
+  
+      //updateColumn cu boardId si columnId
+      const response = await updateColumn(token, column.boardId, column._id, columnData);
+  
       if (onColumnUpdated) {
         onColumnUpdated(response.data);
       }
@@ -29,7 +30,7 @@ function EditColumnModal({ column, onClose, onColumnUpdated }) {
       console.error("Error updating column:", err);
     }
   };
-
+  
   return (
     <div className={styles.modalBackdrop}>
       <div className={styles.modalContent}>

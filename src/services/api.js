@@ -95,8 +95,8 @@ export const createColumn = (token, boardId, columnData) => {
   });
 };
 
-export const updateColumn = (token, columnId, columnData) => {
-  return API.put(`/columns/${columnId}`, columnData, {
+export const updateColumn = (token, boardId, columnId, columnData) => {
+  return API.put(`/boards/${boardId}/columns/${columnId}`, columnData, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
@@ -106,7 +106,6 @@ export const deleteColumn = async (token, boardId, columnId) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
-
 
 export const moveTask = (token, taskId, newColumnId) => {
   return API.patch(

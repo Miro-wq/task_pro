@@ -27,22 +27,26 @@ const createColumn = async (req, res) => {
 
 const updateColumn = async (req, res) => {
   try {
-    const { columnId } = req.params;
+    const { boardId, columnId } = req.params;
     const { title } = req.body;
 
     if (!title) {
-      return res.status(400).json({ message: "Title is required ^_^" });
+      return res.status(400).json({ message: "Title is required" });
     }
 
-    const updatedColumn = await Column.findOneAndUpdate(
-      columnId,
-      { title },
-      { new: true }
-    );
-    if (!updatedColumn) {
-      return res.status(404).json({ message: "Column not found ^_^" });
+    const board = await Board.findOne({
+      _id: boardId,
+      userId: req.user.userId,
+    });
+    if (!board) {
+      return res.status(404).json({ message: "Board not found or not yours." });
     }
-    res.status(200).json(updateColumn);
+
+    const updatedColumn = await Column.findByIdAndUpdate(columnId, { title }, { new: true });
+    if (!updatedColumn) {
+      return res.status(404).json({ message: "Column not found" });
+    }
+    res.status(200).json(updatedColumn);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error ^_^" });
