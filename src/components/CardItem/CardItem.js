@@ -28,6 +28,8 @@ function CardItem({ task, columns, onTaskUpdated, onTaskDeleted }) {
         return styles.mediumPriority;
       case "high":
         return styles.highPriority;
+      case "without priority":
+        return styles.withoutPriority;
       default:
         return styles.mediumPriority;
     }
@@ -37,7 +39,7 @@ function CardItem({ task, columns, onTaskUpdated, onTaskDeleted }) {
   const handleDeleteTask = async () => {
     try {
       const token = localStorage.getItem("token");
-      await deleteTask(token, task._id);
+      await deleteTask(token, task.columnId, task._id);
       if (onTaskDeleted) {
         onTaskDeleted(task._id);
       }
@@ -49,7 +51,7 @@ function CardItem({ task, columns, onTaskUpdated, onTaskDeleted }) {
   // Handler pentru actualizare task
   const handleTaskUpdated = (updatedTask) => {
     if (onTaskUpdated) {
-      onTaskUpdated(updatedTask);
+      onTaskUpdated(updatedTask._id);
     }
   };
 

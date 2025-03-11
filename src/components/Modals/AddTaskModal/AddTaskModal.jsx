@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { updateTask } from "../../../services/api";
-import styles from "./EditTaskModal.module.css";
+import styles from "./AddTaskModal.module.css";
 import sprite from "../../../assets/icons/icons.svg";
 import { motion, AnimatePresence } from "framer-motion";
 
-function EditTaskModal({ task, onClose, onTaskUpdated }) {
-  const [title, setTitle] = useState(task.title || "");
-  const [description, setDescription] = useState(task.description || "");
-  const [priority, setPriority] = useState(task.priority || "Low");
+function AddTaskModal({ onClose, onAdd, columnId }) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("Low");
   const [dueDate, setDueDate] = useState(
-    task.dueDate ? new Date(task.dueDate).toISOString().split("T")[0] : ""
+    new Date().toISOString().split("T")[0]
   );
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [error, setError] = useState("");
@@ -19,7 +18,7 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
 
   // Available label colors
   const labelColors = ["blue", "pink", "green", "gray"];
-  const [labelColor, setLabelColor] = useState(task.labelColor || "blue");
+  const [labelColor, setLabelColor] = useState("blue");
 
   // Available priorities
   const priorityMapping = {
@@ -34,10 +33,8 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
     setPriority(priorityMapping[color]);
   };
 
-  // Form submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!title.trim()) {
       setError("Title is required");
       return;
@@ -45,29 +42,15 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
 
     try {
       const token = localStorage.getItem("token");
-      const taskData = {
+      await onAdd(token, columnId, {
         title,
         description,
         priority,
-        dueDate: dueDate || null,
-        labelColor,
-      };
-
-      // Make sure we're passing columnId correctly
-      const response = await updateTask(
-        token,
-        task.columnId,
-        task._id,
-        taskData
-      );
-
-      if (onTaskUpdated && response.data) {
-        onTaskUpdated(response.data);
-      }
+        dueDate,
+      });
       onClose();
-    } catch (err) {
-      setError("Failed to update task. Please try again.");
-      console.error("Error updating task:", err);
+    } catch (error) {
+      console.error("Failed to add task:", error);
     }
   };
 
@@ -158,7 +141,7 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
     <div className={styles.modalBackdrop}>
       <div className={styles.modalContent}>
         <div className={styles.modalHeader}>
-          <h2>Edit card</h2>
+          <h2>Add card</h2>
           <button className={styles.closeButton} onClick={onClose}>
             <svg width="18" height="18">
               <use href={`${sprite}#icon-closeBtn`}></use>
@@ -261,7 +244,7 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
               Cancel
             </button>
             <button type="submit" className={styles.saveButton}>
-              Edit
+              Add
             </button>
           </div>
         </form>
@@ -270,4 +253,4 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
   );
 }
 
-export default EditTaskModal;
+export default AddTaskModal;

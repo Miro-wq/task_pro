@@ -82,6 +82,16 @@ export const deleteTask = (token, columnId, taskId) => {
   });
 };
 
+export const moveTask = (token, taskId, newColumnId) => {
+  return API.put(
+    `/tasks/${taskId}/move`,
+    { columnId: newColumnId },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+};
+
 // endpoint coloane
 export const getColumns = (token, boardId) => {
   return API.get(`/boards/${boardId}/columns`, {
@@ -105,16 +115,6 @@ export const deleteColumn = async (token, boardId, columnId) => {
   return API.delete(`/boards/${boardId}/columns/${columnId}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
-};
-
-export const moveTask = (token, taskId, newColumnId) => {
-  return API.patch(
-    `/tasks/${taskId}/move`,
-    { columnId: newColumnId },
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    }
-  );
 };
 
 // NU STERGE AASTA CA TESTEZ CEVA
