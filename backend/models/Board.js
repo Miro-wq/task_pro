@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const boardSchema = new mongoose.Schema({
   name: {
@@ -7,13 +7,15 @@ const boardSchema = new mongoose.Schema({
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
     required: true,
   },
+  icon: { type: String },
+  background: { type: String },
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
 
-module.exports = mongoose.model('Board', boardSchema);
+module.exports = mongoose.model("Board", boardSchema);

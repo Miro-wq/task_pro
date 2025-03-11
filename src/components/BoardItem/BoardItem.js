@@ -24,9 +24,14 @@ function BoardItem({ board, isActive, onSelect }) {
       className={`${styles.boardItem} ${isActive ? styles.active : ""}`}
       onClick={() => onSelect(board._id)}
     >
-      {board.icon && <span className={styles.boardIcon}>{board.icon}</span>}
+      {board.icon && (
+        <span className={styles.boardIcon}>
+          <svg width="18" height="18">
+            <use href={`${sprite}#${board.icon}`}></use>
+          </svg>
+        </span>
+      )}
       <span className={styles.boardName}>{board.name}</span>
-
       <div className={styles.actions}>
         <button className={styles.editBtn} onClick={handleEditClick}>
           <svg width="16" height="16">
@@ -39,7 +44,6 @@ function BoardItem({ board, isActive, onSelect }) {
           </svg>
         </button>
       </div>
-
       {showEditModal && (
         <ModalEditBoard board={board} onClose={() => setShowEditModal(false)} />
       )}

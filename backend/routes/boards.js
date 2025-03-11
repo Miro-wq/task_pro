@@ -8,7 +8,7 @@ const Column = require("../models/Column");
 // POST /api/boards/create
 router.post("/create", authenticateToken, async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, icon, background } = req.body;
     if (!name) {
       return res.status(400).json({ message: "Board name is required" });
     }
@@ -17,6 +17,8 @@ router.post("/create", authenticateToken, async (req, res) => {
     const newBoard = new Board({
       name,
       userId: req.user.userId,
+      icon,
+      background,
     });
     await newBoard.save();
 
@@ -79,19 +81,21 @@ router.delete("/:boardId", authenticateToken, async (req, res) => {
 router.put("/:boardId", authenticateToken, async (req, res) => {
   try {
     const { boardId } = req.params;
-    const { name } = req.body;
+    const { name, icon, background } = req.body;
     if (!name) {
       return res.status(400).json({ message: "Board name is required" });
     }
     const updatedBoard = await Board.findOneAndUpdate(
       { _id: boardId, userId: req.user.userId },
-      { name },
+      { name, icon, background },
       { new: true } // return la documentul actualizat
     );
     if (!updatedBoard) {
       return res.status(404).json({ message: "Board not found or not yours" });
     }
-    res.json({ message: "Board updated successfully", board: updatedBoard });
+    res
+      .status(200)
+      .json({ message: "Board updated successfully", board: updatedBoard });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
