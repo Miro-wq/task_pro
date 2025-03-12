@@ -3,7 +3,7 @@
   gap: 1rem;
   padding: 1rem;
   color: #fff;
-  width: 98%;
+  width: max-content;
   justify-content: space-between;
   height: 85vh;
   /* margin-top: 5em; */

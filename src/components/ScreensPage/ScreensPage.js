@@ -167,10 +167,6 @@ function ScreensPage({ boardId }) {
     <>
       <div className={styles.nameBoard}>
         <h2 className={styles.screensTitle}>{currentBoard.name}</h2>
-
-        <div className={styles.filterContainer}>
-          <FilterModal onApplyFilters={handleApplyFilters} />
-        </div>
       </div>
 
       <div
@@ -186,6 +182,9 @@ function ScreensPage({ boardId }) {
             : {}
         }
       >
+        <div className={styles.filterContainer}>
+          <FilterModal onApplyFilters={handleApplyFilters} />
+        </div>
         {columns.map((column) => (
           <Column
             key={column._id}
