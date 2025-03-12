@@ -17,14 +17,33 @@
   overflow: auto;
 }
 
-.filterWrapper {
+.headerContainer {
   display: flex;
-  justify-content: center;
-  padding: 8px 16px;
+  flex-direction: column;
   width: 100%;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  padding: 0 1rem;
+  margin-bottom: 8px;
+}
+
+.nameBoard {
+  margin-bottom: 8px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerFilters {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.screensTitle {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .noBoardSelected {
@@ -48,20 +67,6 @@
 
 .green {
   color: #a8df65;
-}
-
-.nameBoard {
-  margin-bottom: 10px;
-  width: 95%;
-  height: 2em;
-  z-index: 9;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.screensTitle {
-  color: #fff;
 }
 
 .columnTitle {

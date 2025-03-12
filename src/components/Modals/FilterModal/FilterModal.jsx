@@ -5,7 +5,6 @@ import sprite from "../../../assets/icons/icons.svg";
 function FilterModal({ onApplyFilters }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedPriority, setSelectedPriority] = useState(null);
-  const [showAllOptions, setShowAllOptions] = useState(false);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -30,7 +29,7 @@ function FilterModal({ onApplyFilters }) {
         low: newPriority === "low",
         medium: newPriority === "medium",
         high: newPriority === "high",
-        withoutpriority: newPriority === "withoutpriority",
+        without: newPriority === "without",
       },
     };
 
@@ -45,19 +44,12 @@ function FilterModal({ onApplyFilters }) {
         low: false,
         medium: false,
         high: false,
-        withoutpriority: false,
+        without: false,
       },
     };
 
     onApplyFilters(filters);
   };
-
-  const toggleShowAllOptions = (e) => {
-    e.preventDefault();
-    setShowAllOptions(!showAllOptions);
-  };
-
-  const initialOption = "low";
 
   return (
     <div className={styles.filterContainer} ref={dropdownRef}>
@@ -65,7 +57,7 @@ function FilterModal({ onApplyFilters }) {
         className={styles.filterButton}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <svg width="18" height="18">
+        <svg width="16" height="16">
           <use href={`${sprite}#icon-filter`}></use>
         </svg>
         Filters
@@ -87,92 +79,74 @@ function FilterModal({ onApplyFilters }) {
             <div className={styles.filterSection}>
               <div className={styles.labelColorHeader}>
                 <span>Label color</span>
-                <a
-                  href="#"
-                  className={styles.showAll}
-                  onClick={toggleShowAllOptions}
-                >
-                  {showAllOptions ? "Show less" : "Show all"}
-                </a>
               </div>
 
               <div className={styles.priorityOptions}>
                 <div
                   className={`${styles.priorityOption} ${
-                    selectedPriority === initialOption ? styles.selected : ""
+                    selectedPriority === "without" ? styles.selected : ""
                   }`}
-                  onClick={() => handlePriorityChange(initialOption)}
+                  onClick={() => handlePriorityChange("without")}
                 >
-                  <span className={styles.radioButton}>
-                    {selectedPriority === initialOption && (
-                      <span className={styles.radioInner}></span>
+                  <span
+                    className={`${styles.colorRadio} ${styles.withoutPriority}`}
+                  >
+                    {selectedPriority === "without" && (
+                      <span className={styles.radioCheck}></span>
                     )}
                   </span>
+                  <span>Without priority</span>
+                </div>
+
+                <div
+                  className={`${styles.priorityOption} ${
+                    selectedPriority === "low" ? styles.selected : ""
+                  }`}
+                  onClick={() => handlePriorityChange("low")}
+                >
                   <span
-                    className={`${styles.colorCircle} ${styles.lowPriority}`}
-                  ></span>
+                    className={`${styles.colorRadio} ${styles.lowPriority}`}
+                  >
+                    {selectedPriority === "low" && (
+                      <span className={styles.radioCheck}></span>
+                    )}
+                  </span>
                   <span>Low</span>
                 </div>
 
-                {showAllOptions && (
-                  <>
-                    <div
-                      className={`${styles.priorityOption} ${
-                        selectedPriority === "withoutpriority"
-                          ? styles.selected
-                          : ""
-                      }`}
-                      onClick={() => handlePriorityChange("withoutpriority")}
-                    >
-                      <span className={styles.radioButton}>
-                        {selectedPriority === "withoutpriority" && (
-                          <span className={styles.radioInner}></span>
-                        )}
-                      </span>
-                      <span
-                        className={`${styles.colorCircle} ${styles.grayPriority}`}
-                      ></span>
-                      <span>Without priority</span>
-                    </div>
+                <div
+                  className={`${styles.priorityOption} ${
+                    selectedPriority === "medium" ? styles.selected : ""
+                  }`}
+                  onClick={() => handlePriorityChange("medium")}
+                >
+                  <span
+                    className={`${styles.colorRadio} ${styles.mediumPriority}`}
+                  >
+                    {selectedPriority === "medium" && (
+                      <span className={styles.radioCheck}></span>
+                    )}
+                  </span>
+                  <span>Medium</span>
+                </div>
 
-                    <div
-                      className={`${styles.priorityOption} ${
-                        selectedPriority === "medium" ? styles.selected : ""
-                      }`}
-                      onClick={() => handlePriorityChange("medium")}
-                    >
-                      <span className={styles.radioButton}>
-                        {selectedPriority === "medium" && (
-                          <span className={styles.radioInner}></span>
-                        )}
-                      </span>
-                      <span
-                        className={`${styles.colorCircle} ${styles.mediumPriority}`}
-                      ></span>
-                      <span>Medium</span>
-                    </div>
-
-                    <div
-                      className={`${styles.priorityOption} ${
-                        selectedPriority === "high" ? styles.selected : ""
-                      }`}
-                      onClick={() => handlePriorityChange("high")}
-                    >
-                      <span className={styles.radioButton}>
-                        {selectedPriority === "high" && (
-                          <span className={styles.radioInner}></span>
-                        )}
-                      </span>
-                      <span
-                        className={`${styles.colorCircle} ${styles.highPriority}`}
-                      ></span>
-                      <span>High</span>
-                    </div>
-                  </>
-                )}
+                <div
+                  className={`${styles.priorityOption} ${
+                    selectedPriority === "high" ? styles.selected : ""
+                  }`}
+                  onClick={() => handlePriorityChange("high")}
+                >
+                  <span
+                    className={`${styles.colorRadio} ${styles.highPriority}`}
+                  >
+                    {selectedPriority === "high" && (
+                      <span className={styles.radioCheck}></span>
+                    )}
+                  </span>
+                  <span>High</span>
+                </div>
               </div>
 
-              {/* Clear button */}
               {selectedPriority && (
                 <div className={styles.filterActions}>
                   <button

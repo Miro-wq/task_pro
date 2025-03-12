@@ -7,11 +7,11 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 0px 16px;
+  padding: 8px 16px;
   background-color: transparent;
   border: none;
   color: #fff;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
   transition: all 0.2s;
@@ -21,12 +21,16 @@
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+.filterButton svg {
+  fill: #fff;
+}
+
 .filterDropdown {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  width: 280px;
-  background-color: #2c2c2c;
+  width: 200px;
+  background-color: #151515;
   border-radius: 8px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   z-index: 1000;
@@ -38,11 +42,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid #2a2a2a;
 }
 
 .filterHeader h3 {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   margin: 0;
   color: #fff;
@@ -51,7 +55,7 @@
 .closeButton {
   background: none;
   border: none;
-  color: #888;
+  color: #777;
   font-size: 20px;
   cursor: pointer;
   padding: 0;
@@ -73,24 +77,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .labelColorHeader span {
-  color: #bbb;
-  font-size: 16px;
-}
-
-.showAll {
-  color: #8fa1d0;
+  color: #888;
   font-size: 14px;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.showAll:hover {
-  color: #fff;
-  text-decoration: underline;
 }
 
 .priorityOptions {
@@ -102,60 +94,58 @@
 .priorityOption {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   cursor: pointer;
   color: #fff;
   padding: 8px;
-  border-radius: 4px;
+  border-radius: 8px;
   transition: background-color 0.2s ease;
 }
 
 .priorityOption:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .selected {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
-.radioButton {
-  width: 18px;
-  height: 18px;
+.colorRadio {
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  border: 2px solid #888;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid transparent;
 }
 
-.radioInner {
-  width: 10px;
-  height: 10px;
+.radioCheck {
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background-color: #8fa1d0;
+  background-color: #151515;
 }
 
-.colorCircle {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
+/* Priority colors */
 .lowPriority {
   background-color: #8fa1d0;
+  border-color: #8fa1d0;
 }
 
 .mediumPriority {
   background-color: #e09cb5;
+  border-color: #e09cb5;
 }
 
 .highPriority {
   background-color: #aee9a0;
+  border-color: #aee9a0;
 }
 
-.grayPriority {
-  background-color: #888;
+.withoutPriority {
+  background-color: #595959;
+  border-color: #595959;
 }
 
 .filterActions {
@@ -165,16 +155,16 @@
 }
 
 .clearButton {
-  background-color: #f5c542;
-  color: #111;
+  background-color: #bedbb0;
+  color: #121212;
   border: none;
   padding: 8px 16px;
   font-size: 14px;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: 500;
 }
 
 .clearButton:hover {
-  background-color: #d4a12a;
+  background-color: #9dc888;
 }

@@ -165,8 +165,13 @@ function ScreensPage({ boardId }) {
 
   return (
     <>
-      <div className={styles.nameBoard}>
-        <h2 className={styles.screensTitle}>{currentBoard.name}</h2>
+      <div className={styles.headerContainer}>
+        <div className={styles.nameBoard}>
+          <h2 className={styles.screensTitle}>{currentBoard.name}</h2>
+        </div>
+        <div className={styles.headerFilters}>
+          <FilterModal onApplyFilters={handleApplyFilters} />
+        </div>
       </div>
 
       <div
@@ -182,10 +187,6 @@ function ScreensPage({ boardId }) {
             : {}
         }
       >
-        <div className={styles.filterWrapper}>
-          <FilterModal onApplyFilters={handleApplyFilters} />
-        </div>
-
         <div className={styles.screensPage}>
           {columns.map((column) => (
             <Column
