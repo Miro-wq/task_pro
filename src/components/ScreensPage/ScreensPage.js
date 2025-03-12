@@ -165,11 +165,9 @@ function ScreensPage({ boardId }) {
 
   return (
     <>
-      <div className={styles.headerContainer}>
-        <div className={styles.nameBoard}>
-          <h2 className={styles.screensTitle}>{currentBoard.name}</h2>
-        </div>
-        <div className={styles.headerFilters}>
+      <div className={styles.nameBoard}>
+        <h2 className={styles.screensTitle}>{currentBoard.name}</h2>
+        <div className={styles.filterWrapper}>
           <FilterModal onApplyFilters={handleApplyFilters} />
         </div>
       </div>

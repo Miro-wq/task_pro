@@ -31,3 +31,8 @@ code {
 button {
   border: 0;
 }
+
+body,
+html {
+  overflow: hidden; /* Ascunde scroll-ul general al paginii */
+}
