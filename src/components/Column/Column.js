@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import CardItem from "../CardItem/CardItem";
 import styles from "./Column.module.css";
 import AddTaskModal from "../Modals/AddTaskModal/AddTaskModal";
 import EditColumnModal from "../Modals/EditColumnModal/EditColumnModal";
 import { createTask, deleteColumn } from "../../services/api";
 import sprite from "../../assets/icons/icons.svg";
+import { ThemeContext } from "../../context/ThemeContext/ThemeContext";
 
 function Column({
   title,
@@ -18,6 +19,7 @@ function Column({
   onColumnDeleted,
   onColumnUpdated,
 }) {
+  const {theme} = useContext(ThemeContext);
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
   const [showEditColumnModal, setShowEditColumnModal] = useState(false);
 
@@ -50,11 +52,11 @@ function Column({
 
   return (
     <div className={styles.column}>
-      <div className={styles.columnHeader}>
+      <div className={styles.columnHeader} style = {{background: theme.sidebarBackground, color: theme.text}}>
         <h2 className={styles.columnTitle}>{title}</h2>
         <div className={styles.columnActions}>
           <button
-            className={styles.actionButton}
+            className={styles.actionButton} style = {{background: theme.sidebarBackground}}
             onClick={() => setShowEditColumnModal(true)}
             title="Edit Column"
           >
@@ -63,7 +65,7 @@ function Column({
             </svg>
           </button>
           <button
-            className={styles.actionButton}
+            className={styles.actionButton} style = {{background: theme.sidebarBackground}}
             onClick={handleDeleteColumn}
             title="Delete Column"
           >

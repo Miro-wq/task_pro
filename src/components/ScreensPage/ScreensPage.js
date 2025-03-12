@@ -6,8 +6,10 @@ import { BoardContext } from "../../context/BoardContext";
 import AddColumnModal from "../Modals/AddColumnModal";
 import Loader from "../Loader/Loader";
 import FilterModal from "../Modals/FilterModal/FilterModal";
+import { ThemeContext } from "../../context/ThemeContext/ThemeContext";
 
 function ScreensPage({ boardId }) {
+  const { theme } = useContext(ThemeContext);
   const [columns, setColumns] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
@@ -141,7 +143,7 @@ function ScreensPage({ boardId }) {
   if (!boardId) {
     return (
       <div className={styles.noBoardSelected}>
-        <p className={styles.description}>
+        <p className={styles.description} style = {{color:theme.text}}>
           Before starting your project, it is essential{" "}
           <span className={styles.green}>to create a board</span> to visualize
           and track all the necessary tasks and milestones. This board serves as
@@ -166,7 +168,7 @@ function ScreensPage({ boardId }) {
   return (
     <>
       <div className={styles.nameBoard}>
-        <h2 className={styles.screensTitle}>{currentBoard.name}</h2>
+        <h2 className={styles.screensTitle} style = {{color:theme.text}}>{currentBoard.name}</h2>
         <div className={styles.filterWrapper}>
           <FilterModal onApplyFilters={handleApplyFilters} />
         </div>
@@ -203,12 +205,12 @@ function ScreensPage({ boardId }) {
               onColumnDeleted={handleColumnDeleted}
             />
           ))}
-          <div className={styles.addColumnContainer}>
+          <div className={styles.addColumnContainer} >
             <button
-              className={styles.addColumnButton}
+              className={styles.addColumnButton} style = {{background: theme.sidebarBackground, color: theme.text}}  
               onClick={() => setShowAddColumnModal(true)}
             >
-              <span className={styles.plusSignModal}>+</span>
+              <span className={styles.plusSignModal} style = {{background: theme.plusSignModal, color: theme.textPlusSignModal}} >+</span>
               Add another column
             </button>
           </div>

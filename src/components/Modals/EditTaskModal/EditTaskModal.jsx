@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { updateTask } from "../../../services/api";
 import styles from "./EditTaskModal.module.css";
 import sprite from "../../../assets/icons/icons.svg";
 import { motion, AnimatePresence } from "framer-motion";
+import { ThemeContext } from "../../../context/ThemeContext/ThemeContext";
+
 
 function EditTaskModal({ task, onClose, onTaskUpdated }) {
+  const { theme } = useContext(ThemeContext);
   const [title, setTitle] = useState(task.title || "");
   const [description, setDescription] = useState(task.description || "");
   const [priority, setPriority] = useState(task.priority || "Low");
@@ -106,7 +109,7 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
 
     return (
       <div className={styles.calendar}>
-        <div className={styles.calendarHeader}>
+        <div className={styles.calendarHeader} style = {{background: theme.inputBackground, color: theme.text}}>
           <button
             className={styles.calendarNavButton}
             onClick={() => setCurrentMonth(new Date(year, month - 1, 1))}
@@ -147,9 +150,9 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
 
   return (
     <div className={styles.modalBackdrop}>
-      <div className={styles.modalContent}>
-        <div className={styles.modalHeader}>
-          <h2>Edit card</h2>
+      <div className={styles.modalContent} style = {{background: theme.sidebarBackground, color: theme.text}}>
+        <div className={styles.modalHeader} style = {{color: theme.text}}>
+          <h2 style = {{color: theme.h2}}>Edit card</h2>
           <button className={styles.closeButton} onClick={onClose}>
             <svg width="18" height="18">
               <use href={`${sprite}#icon-closeBtn`}></use>
@@ -168,7 +171,7 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Title"
-              className={styles.input}
+              className={styles.input} style = {{background: theme.inputBackground, color: theme.text}}
             />
           </div>
 
@@ -179,7 +182,7 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Description"
-              className={styles.textarea}
+              className={styles.textarea} style = {{background: theme.inputBackground, color: theme.text}}
               rows="4"
             />
           </div>
@@ -226,7 +229,7 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
                 onClick={() => setShowDatePicker(!showDatePicker)}
                 readOnly
                 placeholder="Select due date"
-                className={styles.input}
+                className={styles.input} style = {{background: theme.inputBackground, color: theme.text}}
               />
               <button
                 type="button"
@@ -239,7 +242,7 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
               </button>
 
               {showDatePicker && (
-                <div className={styles.calendarDropdown}>
+                <div className={styles.calendarDropdown} style = {{background: theme.inputBackground, color: theme.text}}> 
                   {renderCalendar()}
                 </div>
               )}
@@ -249,7 +252,7 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
           <div className={styles.formActions}>
             <button
               type="button"
-              className={styles.cancelButton}
+              className={styles.cancelButton} style = {{background: theme.inputBackground, color: theme.text}}
               onClick={onClose}
             >
               Cancel

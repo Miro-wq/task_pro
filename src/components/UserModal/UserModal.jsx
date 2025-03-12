@@ -100,7 +100,7 @@ function UserModal({ onClose, onAvatarChange }) {
             />
             <button
               type="button"
-              className={styles.eyeButton}
+              className={styles.eyeButton} style = {{color: theme.eyeButton}}
               onClick={() => setPasswordVisible(!passwordVisible)}
             >
               {passwordVisible ? <FiEyeOff /> : <FiEye />}

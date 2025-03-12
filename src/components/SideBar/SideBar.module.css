@@ -101,13 +101,13 @@
 }
 
 .sideBoards:hover {
-  background-color: #222;
+  background-color: #b6b6b6;
   color: #fff;
 }
 
 .sideBoards.active {
   color: #fff;
-  background: #1f1f1f;
+  background: #b6b6b6;
   border-right: 4px solid #a8df65;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
