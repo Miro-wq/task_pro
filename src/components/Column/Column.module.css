@@ -12,6 +12,7 @@
 .columnActions {
   display: flex;
   gap: 4px;
+  margin-left: 1em;
 }
 
 .actionButton {
@@ -33,13 +34,14 @@
 }
 
 .column {
-  min-width: 300px;
+  /* min-width: 300px; */
+  max-width: 333px;
   padding-top: 1em;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  margin-bottom: 1rem; /* Add this */
+  margin-bottom: 1rem;
 }
 
 .columnTitle {
@@ -69,7 +71,7 @@
   justify-content: center;
   transition: background-color 0.2s;
   height: 5em;
-  width: 25em;
+  min-width: 25em;
 }
 
 .addCardButton:hover {

@@ -18,10 +18,18 @@
   flex-wrap: nowrap;
 }
 
+.screensPage::-webkit-scrollbar {
+  width: 8px;
+}
+
+.screensPage::-webkit-scrollbar-thumb {
+  background-color: #333;
+  border-radius: 4px;
+}
+
 .filterWrapper {
   display: flex;
   justify-content: flex-end;
-  /* padding: 8px 16px; */
   width: auto;
   position: static;
   top: 0;
@@ -50,18 +58,14 @@
 }
 
 .nameBoard {
-  /* margin-bottom: 10px; */
   width: 95%;
   height: 1.5em;
   z-index: 9;
   display: flex;
-  /* Change from fixed gap to space-between */
   justify-content: space-between;
   align-items: center;
-  /* Remove the fixed gap */
-  /* gap: 1050px; */
-  padding: 0 0.5rem; /* Add some padding */
-  margin-bottom: 0.5rem; /* Add some margin for spacing */
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .screensTitle {
@@ -78,10 +82,11 @@
 
 .addColumnContainer {
   margin-top: 1rem;
+  margin-right: 2em;
 }
 
 .addColumnButton {
-  width: 250px;
+  width: 266px;
   padding: 1em;
   background-color: #111;
   border: none;

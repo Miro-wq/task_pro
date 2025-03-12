@@ -37,6 +37,20 @@ function CardItem({ task, columns, onTaskUpdated, onTaskDeleted }) {
     }
   };
 
+  //pentru borderul acela din stanga
+  function getPriorityColorValue(priority) {
+    switch (priority?.toLowerCase()) {
+      case "low":
+        return "#8fa1d0";
+      case "medium":
+        return "#e09cb5";
+      case "high":
+        return "#bedbb0";
+      default:
+        return "#6e6e6e";
+    }
+  }
+
   // Handler pentru ștergere task
   const handleDeleteTask = async () => {
     try {
@@ -59,60 +73,40 @@ function CardItem({ task, columns, onTaskUpdated, onTaskDeleted }) {
 
   return (
     <>
-      <div className={styles.card} style={{background:theme.sidebarBackground}}>
-        <div className={styles.cardHeader}>
+<div 
+  className={styles.card} 
+  style={{
+    background: theme.sidebarBackground,
+    borderLeft: `4px solid ${getPriorityColorValue(task.priority)}`,
+  }}
+>
+         <div className={styles.cardHeader}>
           <div
             className={`${styles.priorityIndicator} ${getPriorityColor(
               task.priority
             )}`}
           ></div>
-          <div className={styles.cardActions}>
-            <button
-              className={styles.actionButton} style = {{background: theme.sidebarBackground}}
-              onClick={() => setShowMoveModal(true)}
-              title="Move Task"
-            >
-              <svg width="18" height="18">
-                <use href={`${sprite}#icon-entry`}></use>
-              </svg>
-            </button>
-            <button
-              className={styles.actionButton} style = {{background: theme.sidebarBackground}}
-              onClick={() => setShowEditModal(true)}
-              title="Edit Task"
-            >
-              <svg width="18" height="18">
-                <use href={`${sprite}#icon-pencil`}></use>
-              </svg>
-            </button>
-            <button
-              className={styles.actionButton} style = {{background: theme.sidebarBackground}}
-              onClick={handleDeleteTask}
-              title="Delete Task"
-            >
-              <svg width="18" height="18">
-                <use href={`${sprite}#icon-trash`}></use>
-              </svg>
-            </button>
-          </div>
         </div>
 
-        <h3 className={styles.cardTitle} style={{color: theme.text}}>{task.title}</h3>
+        <h3 className={styles.cardTitle}>{task.title}</h3>
 
         {task.description && (
           <p className={styles.cardDescription}>{task.description}</p>
         )}
 
         <div className={styles.cardFooter}>
-          {task.priority && (
-            <span
-              className={`${styles.priority} ${getPriorityColor(
-                task.priority
-              )}`}
-            >
-              {task.priority}
-            </span>
-          )}
+          <div className={styles.cardInfo}>
+            <p className={styles.info}>Priority</p>
+            {task.priority && (
+              <span
+                className={`${styles.priority} ${getPriorityColor(
+                  task.priority
+                )}`}
+              >
+                {task.priority}
+              </span>
+            )}
+          </div>
 
           {task.dueDate && (
             <span className={styles.dueDate}>
@@ -130,6 +124,36 @@ function CardItem({ task, columns, onTaskUpdated, onTaskDeleted }) {
               {formatDate(task.dueDate)}
             </span>
           )}
+
+          <div className={styles.cardActions}>
+            <button
+              className={styles.actionButton}
+              onClick={() => setShowMoveModal(true)}
+              title="Move Task"
+            >
+              <svg width="18" height="18">
+                <use href={`${sprite}#icon-entry`}></use>
+              </svg>
+            </button>
+            <button
+              className={styles.actionButton}
+              onClick={() => setShowEditModal(true)}
+              title="Edit Task"
+            >
+              <svg width="18" height="18">
+                <use href={`${sprite}#icon-pencil`}></use>
+              </svg>
+            </button>
+            <button
+              className={styles.actionButton}
+              onClick={handleDeleteTask}
+              title="Delete Task"
+            >
+              <svg width="18" height="18">
+                <use href={`${sprite}#icon-trash`}></use>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 

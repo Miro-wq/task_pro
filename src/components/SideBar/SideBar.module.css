@@ -7,7 +7,8 @@
   background: #0e0e0e;
   height: 100vh;
   align-items: flex-start;
-  width: 16rem;
+  min-width: 17rem;
+  max-width: 17rem;
 }
 
 .logo {
@@ -144,7 +145,6 @@
   font-size: 1rem;
 }
 
-/* cercul cu "?" în interior */
 .helpIcon {
   width: 24px;
   height: 24px;
@@ -158,7 +158,6 @@
   background-color: transparent;
 }
 
-/* textul "Need help?" */
 .helpText {
   font-size: 1rem;
   color: #fff;
@@ -169,12 +168,12 @@
     position: fixed;
     top: 0;
     left: 0;
-    transform: translateX(-100%); /* ascuns */
+    transform: translateX(-100%);
     z-index: 999;
     transition: transform 0.3s ease;
   }
 
   .sidebar.open {
-    transform: translateX(0); /* afișat */
+    transform: translateX(0);
   }
 }

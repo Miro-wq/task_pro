@@ -15,14 +15,18 @@ function AddTaskModal({ onClose, onAdd, columnId }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [error, setError] = useState("");
 
-  // Current month for calendar
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  // Available label colors
+  const labelColorMapping = {
+    blue: "#8fa1d0",
+    pink: "#e09cb5",
+    green: "#bedbb0",
+    gray: "#6e6e6e",
+  };
+
   const labelColors = ["blue", "pink", "green", "gray"];
   const [labelColor, setLabelColor] = useState("blue");
 
-  // Available priorities
   const priorityMapping = {
     blue: "Low",
     pink: "Medium",
@@ -56,25 +60,20 @@ function AddTaskModal({ onClose, onAdd, columnId }) {
     }
   };
 
-  // Generate calendar for the current month
   const renderCalendar = () => {
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
 
-    // First day of month
     const firstDayOfMonth = new Date(year, month, 1);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    // Day of week for first day (0 = Sunday)
     const startingDayOfWeek = firstDayOfMonth.getDay();
 
     const days = [];
-    // Days from previous week
     for (let i = 0; i < startingDayOfWeek; i++) {
       days.push(<div key={`empty-${i}`} className={styles.emptyDay}></div>);
     }
 
-    // Days from current month
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(year, month, day);
       const dateString = date.toISOString().split("T")[0];
@@ -130,7 +129,6 @@ function AddTaskModal({ onClose, onAdd, columnId }) {
     );
   };
 
-  // Format date for display
   const formatDate = (dateString) => {
     if (!dateString) return "Today, Month D";
     const date = new Date(dateString);
@@ -187,7 +185,7 @@ function AddTaskModal({ onClose, onAdd, columnId }) {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
                 className={styles.priorityLabel}
-                style={{ backgroundColor: labelColor }}
+                style={{ backgroundColor: labelColorMapping[labelColor] }}
               >
                 {priority}
               </motion.div>
@@ -202,6 +200,9 @@ function AddTaskModal({ onClose, onAdd, columnId }) {
                   }`}
                   onClick={() => handleLabelColorChange(color)}
                   aria-label={`Select ${color} color`}
+                  style={{
+                    backgroundColor: labelColorMapping[color],
+                  }}
                 />
               ))}
             </div>

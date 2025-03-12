@@ -64,7 +64,7 @@
 
 .input,
 .textarea {
-  width: 100%;
+  width: 95%;
   padding: 10px;
   border-radius: 4px;
   border: 1px solid #333;
@@ -278,4 +278,5 @@
   padding: 4px 8px;
   border-radius: 12px;
   display: inline-block;
+  margin-bottom: 1em;
 }
