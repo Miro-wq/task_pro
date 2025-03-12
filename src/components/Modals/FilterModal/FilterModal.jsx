@@ -1,59 +1,25 @@
 import React, { useState } from "react";
 import styles from "./FilterModal.module.css";
-import sprite from "../../../assets/images/icons.svg";
+import sprite from "../../../assets/icons/icons.svg";
 
 function FilterModal({ onClose, onApplyFilters }) {
-  const [filters, setFilters] = useState({
-    priority: {
-      low: false,
-      medium: false,
-      high: false,
-    },
-    status: {
-      todo: false,
-      inProgress: false,
-      done: false,
-    },
-  });
+  const [selectedPriority, setSelectedPriority] = useState(null);
+  const [showAll, setShowAll] = useState(false); // Adăugăm un state pentru a controla afișarea opțiunilor
 
   const handlePriorityChange = (priority) => {
-    setFilters({
-      ...filters,
+    setSelectedPriority(priority);
+
+    const filters = {
       priority: {
-        ...filters.priority,
-        [priority]: !filters.priority[priority],
+        low: priority === "low",
+        medium: priority === "medium",
+        high: priority === "high",
+        withoutpriority: priority === "withoutpriority",
       },
-    });
-  };
+    };
 
-  const handleStatusChange = (status) => {
-    setFilters({
-      ...filters,
-      status: {
-        ...filters.status,
-        [status]: !filters.status[status],
-      },
-    });
-  };
-
-  const handleApply = () => {
-    onApplyFilters(filters);
-    onClose();
-  };
-
-  const clearFilters = () => {
-    setFilters({
-      priority: {
-        low: false,
-        medium: false,
-        high: false,
-      },
-      status: {
-        todo: false,
-        inProgress: false,
-        done: false,
-      },
-    });
+    onApplyFilters(filters); // Aplica filtrele imediat
+    onClose(); // Închide modalul
   };
 
   return (
@@ -63,91 +29,81 @@ function FilterModal({ onClose, onApplyFilters }) {
           <h2>Filters</h2>
           <button className={styles.closeButton} onClick={onClose}>
             <svg width="18" height="18">
-              <use href={`${sprite}#icon-close`}></use>
+              <use href={`${sprite}#icon-closeBtn`}></use>
             </svg>
           </button>
         </div>
 
         <div className={styles.filterForm}>
           <div className={styles.filterSection}>
-            <h3 className={styles.filterTitle}>Label color</h3>
-            <div className={styles.colorFilters}>
-              <label className={styles.colorOption}>
-                <input
-                  type="checkbox"
-                  checked={filters.priority.low}
-                  onChange={() => handlePriorityChange("low")}
-                />
-                <span
-                  className={`${styles.colorDot} ${styles.lowPriority}`}
-                ></span>
-                <span>Low</span>
-              </label>
-
-              <label className={styles.colorOption}>
-                <input
-                  type="checkbox"
-                  checked={filters.priority.medium}
-                  onChange={() => handlePriorityChange("medium")}
-                />
-                <span
-                  className={`${styles.colorDot} ${styles.mediumPriority}`}
-                ></span>
-                <span>Medium</span>
-              </label>
-
-              <label className={styles.colorOption}>
-                <input
-                  type="checkbox"
-                  checked={filters.priority.high}
-                  onChange={() => handlePriorityChange("high")}
-                />
-                <span
-                  className={`${styles.colorDot} ${styles.highPriority}`}
-                ></span>
-                <span>High</span>
-              </label>
+            <h3 className={styles.filterTitle}>Priority</h3>
+            <div className={styles.showAll}>
+              <a href="#" onClick={() => setShowAll(!showAll)}>
+                {showAll ? "Show less" : "Show all"}
+              </a>
             </div>
-          </div>
 
-          <div className={styles.filterSection}>
-            <h3 className={styles.filterTitle}>Status</h3>
-            <div className={styles.statusFilters}>
-              <label className={styles.statusOption}>
-                <input
-                  type="checkbox"
-                  checked={filters.status.todo}
-                  onChange={() => handleStatusChange("todo")}
-                />
-                <span>To Do</span>
-              </label>
+            {showAll && (
+              <div className={styles.priorityOptions}>
+                <div
+                  className={`${styles.priorityOption} ${
+                    selectedPriority === "withoutpriority"
+                      ? styles.selected
+                      : ""
+                  }`}
+                  onClick={() => handlePriorityChange("withoutpriority")}
+                >
+                  <span
+                    className={`${styles.colorCircle} ${styles.grayPriority}`}
+                  ></span>
+                  <span>Without priority</span>
+                </div>
 
-              <label className={styles.statusOption}>
-                <input
-                  type="checkbox"
-                  checked={filters.status.inProgress}
-                  onChange={() => handleStatusChange("inProgress")}
-                />
-                <span>In Progress</span>
-              </label>
+                <div
+                  className={`${styles.priorityOption} ${
+                    selectedPriority === "low" ? styles.selected : ""
+                  }`}
+                  onClick={() => handlePriorityChange("low")}
+                >
+                  <span
+                    className={`${styles.colorCircle} ${styles.lowPriority}`}
+                  ></span>
+                  <span>Low</span>
+                </div>
 
-              <label className={styles.statusOption}>
-                <input
-                  type="checkbox"
-                  checked={filters.status.done}
-                  onChange={() => handleStatusChange("done")}
-                />
-                <span>Done</span>
-              </label>
-            </div>
+                <div
+                  className={`${styles.priorityOption} ${
+                    selectedPriority === "medium" ? styles.selected : ""
+                  }`}
+                  onClick={() => handlePriorityChange("medium")}
+                >
+                  <span
+                    className={`${styles.colorCircle} ${styles.mediumPriority}`}
+                  ></span>
+                  <span>Medium</span>
+                </div>
+
+                <div
+                  className={`${styles.priorityOption} ${
+                    selectedPriority === "high" ? styles.selected : ""
+                  }`}
+                  onClick={() => handlePriorityChange("high")}
+                >
+                  <span
+                    className={`${styles.colorCircle} ${styles.highPriority}`}
+                  ></span>
+                  <span>High</span>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className={styles.filterActions}>
-            <button className={styles.clearButton} onClick={clearFilters}>
-              Clear filters
-            </button>
-            <button className={styles.applyButton} onClick={handleApply}>
-              Apply
+            <button
+              className={styles.clearButton}
+              onClick={() => handlePriorityChange(null)}
+            >
+              Clear
             </button>
           </div>
         </div>
