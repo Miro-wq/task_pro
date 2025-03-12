@@ -21,7 +21,7 @@
 }
 
 .actionButton {
-  background-color: #161616;
+  background-color: #16161600;
   border: none;
   color: #888;
   cursor: pointer;
@@ -53,7 +53,7 @@
 }
 
 .highPriority {
-  background-color: #f5c542;
+  background-color: #bedbb0;
 }
 
 .withoutPriority {
@@ -74,7 +74,10 @@
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
+  border-bottom: 2px solid #333;
+  padding-bottom: 1em;
 }
 
 .cardFooter {
@@ -83,6 +86,19 @@
   align-items: center;
   font-size: 0.8rem;
   margin-top: 4px;
+}
+
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info {
+  font-weight: 400;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
 }
 
 .priority {

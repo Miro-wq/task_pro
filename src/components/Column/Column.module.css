@@ -12,10 +12,11 @@
 .columnActions {
   display: flex;
   gap: 4px;
+  margin-left: 1em;
 }
 
 .actionButton {
-  background-color: #161616;
+  background-color: #16161600;
   border: none;
   color: #888;
   cursor: pointer;
@@ -69,7 +70,7 @@
   justify-content: center;
   transition: background-color 0.2s;
   height: 5em;
-  width: 25em;
+  min-width: 25em;
 }
 
 .addCardButton:hover {

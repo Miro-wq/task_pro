@@ -5,10 +5,14 @@ import styles from "./UserInfo.module.css";
 function UserInfo() {
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const [avatar, setAvatar] = useState(localStorage.getItem("avatar") || "/assets/icons/icons.svg");
+  const [avatar, setAvatar] = useState(
+    localStorage.getItem("avatar") || "/assets/icons/icons.svg"
+  );
   const [name, setName] = useState(localStorage.getItem("name") || "User");
   const [email, setEmail] = useState(localStorage.getItem("email") || "");
-  const [password, setPassword] = useState(localStorage.getItem("password") || "");
+  const [password, setPassword] = useState(
+    localStorage.getItem("password") || ""
+  );
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -21,7 +25,6 @@ function UserInfo() {
 
   return (
     <div className={styles.userInfo}>
-      
       <img
         src={avatar}
         alt=" "
@@ -54,9 +57,3 @@ function UserInfo() {
 }
 
 export default UserInfo;
-
-
-
-
-
-

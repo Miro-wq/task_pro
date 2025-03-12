@@ -55,8 +55,8 @@ function UserModal({ onClose, onAvatarChange }) {
         <h2 className={styles.title}>Edit profile</h2>
         <div className={styles.avatarContainer}>
           <img
-            src={avatar || "/assets/icons/icons.svg"}
-            alt="User Avatar"
+            src={avatar || "assets/images/abstract.png"}
+            alt=" "
             className={styles.avatar}
           />
           <label htmlFor="avatarInput" className={styles.editAvatar}>

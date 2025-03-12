@@ -35,6 +35,20 @@ function CardItem({ task, columns, onTaskUpdated, onTaskDeleted }) {
     }
   };
 
+  //pentru borderul acela din stanga
+  function getPriorityColorValue(priority) {
+    switch (priority?.toLowerCase()) {
+      case "low":
+        return "#8fa1d0";
+      case "medium":
+        return "#e09cb5";
+      case "high":
+        return "#bedbb0";
+      default:
+        return "#6e6e6e";
+    }
+  }
+
   // Handler pentru ștergere task
   const handleDeleteTask = async () => {
     try {
@@ -57,13 +71,56 @@ function CardItem({ task, columns, onTaskUpdated, onTaskDeleted }) {
 
   return (
     <>
-      <div className={styles.card}>
+      <div className={styles.card}
+        style={{
+          borderLeft: `4px solid ${getPriorityColorValue(task.priority)}`,
+        }}
+      >
         <div className={styles.cardHeader}>
           <div
             className={`${styles.priorityIndicator} ${getPriorityColor(
               task.priority
             )}`}
           ></div>
+        </div>
+
+        <h3 className={styles.cardTitle}>{task.title}</h3>
+
+        {task.description && (
+          <p className={styles.cardDescription}>{task.description}</p>
+        )}
+
+        <div className={styles.cardFooter}>
+          <div className={styles.cardInfo}>
+            <p className={styles.info}>Priority</p>
+            {task.priority && (
+              <span
+                className={`${styles.priority} ${getPriorityColor(
+                  task.priority
+                )}`}
+              >
+                {task.priority}
+              </span>
+            )}
+          </div>
+
+          {task.dueDate && (
+            <span className={styles.dueDate}>
+              <svg
+                className={styles.icon}
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="currentColor"
+                  d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"
+                />
+              </svg>
+              {formatDate(task.dueDate)}
+            </span>
+          )}
+
           <div className={styles.cardActions}>
             <button
               className={styles.actionButton}
@@ -93,41 +150,6 @@ function CardItem({ task, columns, onTaskUpdated, onTaskDeleted }) {
               </svg>
             </button>
           </div>
-        </div>
-
-        <h3 className={styles.cardTitle}>{task.title}</h3>
-
-        {task.description && (
-          <p className={styles.cardDescription}>{task.description}</p>
-        )}
-
-        <div className={styles.cardFooter}>
-          {task.priority && (
-            <span
-              className={`${styles.priority} ${getPriorityColor(
-                task.priority
-              )}`}
-            >
-              {task.priority}
-            </span>
-          )}
-
-          {task.dueDate && (
-            <span className={styles.dueDate}>
-              <svg
-                className={styles.icon}
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill="currentColor"
-                  d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"
-                />
-              </svg>
-              {formatDate(task.dueDate)}
-            </span>
-          )}
         </div>
       </div>
 

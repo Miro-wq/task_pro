@@ -17,57 +17,52 @@ function Header({ onToggleSidebar }) {
 
   return (
     <>
-    <button className={styles.hamburger} onClick={onToggleSidebar}>
+      <button className={styles.hamburger} onClick={onToggleSidebar}>
         <span className={styles.bar}></span>
         <span className={styles.bar}></span>
         <span className={styles.bar}></span>
       </button>
-    <header
-      className={styles.header}
-      style={{ background: theme.headerBackground, color: theme.text }}
-    >
-      {/* <button className={styles.hamburger} onClick={onToggleSidebar}>
-        <span className={styles.bar}></span>
-        <span className={styles.bar}></span>
-        <span className={styles.bar}></span>
-      </button> */}
-      <div className={styles.dropdown}>
-        <button
-          onClick={() => setDropdownOpen(!isDropdownOpen)}
-          className={`${styles.themeButton} ${
-            isDropdownOpen ? styles.dropdownOpen : ""
-          }`}
-        >
-          Theme <FiChevronDown className={styles.arrow} />
-        </button>
-        {isDropdownOpen && (
-          <ul
-            className={styles.dropdownMenu}
-            style={{ background: theme.headerDropdownMenu }}
+      <header
+        className={styles.header}
+        style={{ background: theme.headerBackground, color: theme.text }}
+      >
+        <div className={styles.dropdown}>
+          <button
+            onClick={() => setDropdownOpen(!isDropdownOpen)}
+            className={`${styles.themeButton} ${
+              isDropdownOpen ? styles.dropdownOpen : ""
+            }`}
           >
-            <li onClick={() => handleThemeChange("light")}>Light</li>
-            <li onClick={() => handleThemeChange("violet")}>Violet</li>
-            <li onClick={() => handleThemeChange("dark")}>Dark</li>
-          </ul>
-        )}
-      </div>
+            Theme <FiChevronDown className={styles.arrow} />
+          </button>
+          {isDropdownOpen && (
+            <ul
+              className={styles.dropdownMenu}
+              style={{ background: theme.headerDropdownMenu }}
+            >
+              <li onClick={() => handleThemeChange("light")}>Light</li>
+              <li onClick={() => handleThemeChange("violet")}>Violet</li>
+              <li onClick={() => handleThemeChange("dark")}>Dark</li>
+            </ul>
+          )}
+        </div>
 
-      <div className={styles.userInfo}>
-        {user && user.name ? (
-          <p
-            className={styles.username}
-            style={{ color: theme.headerUsername }}
-          >
-            {" "}
-            {user.name}
-          </p>
-        ) : (
-          <p>Welcome, Guest!</p>
-        )}
-      </div>
+        <div className={styles.userInfo}>
+          {user && user.name ? (
+            <p
+              className={styles.username}
+              style={{ color: theme.headerUsername }}
+            >
+              {" "}
+              {user.name}
+            </p>
+          ) : (
+            <p>Welcome, Guest!</p>
+          )}
+        </div>
 
-      <UserInfo />
-    </header>
+        <UserInfo />
+      </header>
     </>
   );
 }

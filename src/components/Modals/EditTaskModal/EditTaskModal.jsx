@@ -16,6 +16,13 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
+  const labelColorMapping = {
+    blue: "#8fa1d0",
+    pink: "#e09cb5",
+    green: "#bedbb0",
+    gray: "#6e6e6e",
+  };
+
   const labelColors = ["blue", "pink", "green", "gray"];
   const [labelColor, setLabelColor] = useState(task.labelColor || "blue");
 
@@ -65,7 +72,6 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
 
-    // First day of month
     const firstDayOfMonth = new Date(year, month, 1);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
@@ -187,7 +193,7 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
                 className={styles.priorityLabel}
-                style={{ backgroundColor: labelColor }}
+                style={{ backgroundColor: labelColorMapping[labelColor] }}
               >
                 {priority}
               </motion.div>
@@ -202,6 +208,9 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
                   }`}
                   onClick={() => handleLabelColorChange(color)}
                   aria-label={`Select ${color} color`}
+                  style={{
+                    backgroundColor: labelColorMapping[color],
+                  }}
                 />
               ))}
             </div>
