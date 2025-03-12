@@ -1,24 +1,26 @@
 import React, { useState } from "react";
-import { updateTask } from "../../../services/api";
-import styles from "./EditTaskModal.module.css";
+import styles from "./AddTaskModal.module.css";
 import sprite from "../../../assets/icons/icons.svg";
 import { motion, AnimatePresence } from "framer-motion";
 
-function EditTaskModal({ task, onClose, onTaskUpdated }) {
-  const [title, setTitle] = useState(task.title || "");
-  const [description, setDescription] = useState(task.description || "");
-  const [priority, setPriority] = useState(task.priority || "Low");
+function AddTaskModal({ onClose, onAdd, columnId }) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("Low");
   const [dueDate, setDueDate] = useState(
-    task.dueDate ? new Date(task.dueDate).toISOString().split("T")[0] : ""
+    new Date().toISOString().split("T")[0]
   );
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [error, setError] = useState("");
 
+  // Current month for calendar
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
+  // Available label colors
   const labelColors = ["blue", "pink", "green", "gray"];
-  const [labelColor, setLabelColor] = useState(task.labelColor || "blue");
+  const [labelColor, setLabelColor] = useState("blue");
 
+  // Available priorities
   const priorityMapping = {
     blue: "Low",
     pink: "Medium",
@@ -33,7 +35,6 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!title.trim()) {
       setError("Title is required");
       return;
@@ -41,26 +42,19 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
 
     try {
       const token = localStorage.getItem("token");
-      const taskData = {
+      await onAdd(token, columnId, {
         title,
         description,
         priority,
-        dueDate: dueDate || null,
-        labelColor,
-      };
-
-      await updateTask(token, task.columnId, task._id, taskData);
-
-      if (onTaskUpdated) {
-        onTaskUpdated(task._id);
-      }
+        dueDate,
+      });
       onClose();
-    } catch (err) {
-      setError("Failed to update task. Please try again.");
-      console.error("Error updating task:", err);
+    } catch (error) {
+      console.error("Failed to add task:", error);
     }
   };
 
+  // Generate calendar for the current month
   const renderCalendar = () => {
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
@@ -69,13 +63,16 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
     const firstDayOfMonth = new Date(year, month, 1);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
+    // Day of week for first day (0 = Sunday)
     const startingDayOfWeek = firstDayOfMonth.getDay();
 
     const days = [];
+    // Days from previous week
     for (let i = 0; i < startingDayOfWeek; i++) {
       days.push(<div key={`empty-${i}`} className={styles.emptyDay}></div>);
     }
 
+    // Days from current month
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(year, month, day);
       const dateString = date.toISOString().split("T")[0];
@@ -131,6 +128,7 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
     );
   };
 
+  // Format date for display
   const formatDate = (dateString) => {
     if (!dateString) return "Today, Month D";
     const date = new Date(dateString);
@@ -143,7 +141,7 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
     <div className={styles.modalBackdrop}>
       <div className={styles.modalContent}>
         <div className={styles.modalHeader}>
-          <h2>Edit card</h2>
+          <h2>Add card</h2>
           <button className={styles.closeButton} onClick={onClose}>
             <svg width="18" height="18">
               <use href={`${sprite}#icon-closeBtn`}></use>
@@ -246,7 +244,7 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
               Cancel
             </button>
             <button type="submit" className={styles.saveButton}>
-              Edit
+              Add
             </button>
           </div>
         </form>
@@ -255,4 +253,4 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
   );
 }
 
-export default EditTaskModal;
+export default AddTaskModal;

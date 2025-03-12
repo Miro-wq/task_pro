@@ -1,157 +1,192 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./FilterModal.module.css";
-import sprite from "../../../assets/images/icons.svg";
+import sprite from "../../../assets/icons/icons.svg";
 
-function FilterModal({ onClose, onApplyFilters }) {
-  const [filters, setFilters] = useState({
-    priority: {
-      low: false,
-      medium: false,
-      high: false,
-    },
-    status: {
-      todo: false,
-      inProgress: false,
-      done: false,
-    },
-  });
+function FilterModal({ onApplyFilters }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedPriority, setSelectedPriority] = useState(null);
+  const [showAllOptions, setShowAllOptions] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handlePriorityChange = (priority) => {
-    setFilters({
-      ...filters,
+    let newPriority = priority === selectedPriority ? null : priority;
+    setSelectedPriority(newPriority);
+
+    const filters = {
       priority: {
-        ...filters.priority,
-        [priority]: !filters.priority[priority],
+        low: newPriority === "low",
+        medium: newPriority === "medium",
+        high: newPriority === "high",
+        withoutpriority: newPriority === "withoutpriority",
       },
-    });
-  };
+    };
 
-  const handleStatusChange = (status) => {
-    setFilters({
-      ...filters,
-      status: {
-        ...filters.status,
-        [status]: !filters.status[status],
-      },
-    });
-  };
-
-  const handleApply = () => {
     onApplyFilters(filters);
-    onClose();
   };
 
-  const clearFilters = () => {
-    setFilters({
+  const handleClearFilters = () => {
+    setSelectedPriority(null);
+
+    const filters = {
       priority: {
         low: false,
         medium: false,
         high: false,
+        withoutpriority: false,
       },
-      status: {
-        todo: false,
-        inProgress: false,
-        done: false,
-      },
-    });
+    };
+
+    onApplyFilters(filters);
   };
 
+  const toggleShowAllOptions = (e) => {
+    e.preventDefault();
+    setShowAllOptions(!showAllOptions);
+  };
+
+  const initialOption = "low";
+
   return (
-    <div className={styles.modalBackdrop}>
-      <div className={styles.modalContent}>
-        <div className={styles.modalHeader}>
-          <h2>Filters</h2>
-          <button className={styles.closeButton} onClick={onClose}>
-            <svg width="18" height="18">
-              <use href={`${sprite}#icon-close`}></use>
-            </svg>
-          </button>
-        </div>
+    <div className={styles.filterContainer} ref={dropdownRef}>
+      <button
+        className={styles.filterButton}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <svg width="18" height="18">
+          <use href={`${sprite}#icon-filter`}></use>
+        </svg>
+        Filters
+      </button>
 
-        <div className={styles.filterForm}>
-          <div className={styles.filterSection}>
-            <h3 className={styles.filterTitle}>Label color</h3>
-            <div className={styles.colorFilters}>
-              <label className={styles.colorOption}>
-                <input
-                  type="checkbox"
-                  checked={filters.priority.low}
-                  onChange={() => handlePriorityChange("low")}
-                />
-                <span
-                  className={`${styles.colorDot} ${styles.lowPriority}`}
-                ></span>
-                <span>Low</span>
-              </label>
-
-              <label className={styles.colorOption}>
-                <input
-                  type="checkbox"
-                  checked={filters.priority.medium}
-                  onChange={() => handlePriorityChange("medium")}
-                />
-                <span
-                  className={`${styles.colorDot} ${styles.mediumPriority}`}
-                ></span>
-                <span>Medium</span>
-              </label>
-
-              <label className={styles.colorOption}>
-                <input
-                  type="checkbox"
-                  checked={filters.priority.high}
-                  onChange={() => handlePriorityChange("high")}
-                />
-                <span
-                  className={`${styles.colorDot} ${styles.highPriority}`}
-                ></span>
-                <span>High</span>
-              </label>
-            </div>
-          </div>
-
-          <div className={styles.filterSection}>
-            <h3 className={styles.filterTitle}>Status</h3>
-            <div className={styles.statusFilters}>
-              <label className={styles.statusOption}>
-                <input
-                  type="checkbox"
-                  checked={filters.status.todo}
-                  onChange={() => handleStatusChange("todo")}
-                />
-                <span>To Do</span>
-              </label>
-
-              <label className={styles.statusOption}>
-                <input
-                  type="checkbox"
-                  checked={filters.status.inProgress}
-                  onChange={() => handleStatusChange("inProgress")}
-                />
-                <span>In Progress</span>
-              </label>
-
-              <label className={styles.statusOption}>
-                <input
-                  type="checkbox"
-                  checked={filters.status.done}
-                  onChange={() => handleStatusChange("done")}
-                />
-                <span>Done</span>
-              </label>
-            </div>
-          </div>
-
-          <div className={styles.filterActions}>
-            <button className={styles.clearButton} onClick={clearFilters}>
-              Clear filters
-            </button>
-            <button className={styles.applyButton} onClick={handleApply}>
-              Apply
+      {isOpen && (
+        <div className={styles.filterDropdown}>
+          <div className={styles.filterHeader}>
+            <h3>Filters</h3>
+            <button
+              className={styles.closeButton}
+              onClick={() => setIsOpen(false)}
+            >
+              ×
             </button>
           </div>
+
+          <div className={styles.filterContent}>
+            <div className={styles.filterSection}>
+              <div className={styles.labelColorHeader}>
+                <span>Label color</span>
+                <a
+                  href="#"
+                  className={styles.showAll}
+                  onClick={toggleShowAllOptions}
+                >
+                  {showAllOptions ? "Show less" : "Show all"}
+                </a>
+              </div>
+
+              <div className={styles.priorityOptions}>
+                <div
+                  className={`${styles.priorityOption} ${
+                    selectedPriority === initialOption ? styles.selected : ""
+                  }`}
+                  onClick={() => handlePriorityChange(initialOption)}
+                >
+                  <span className={styles.radioButton}>
+                    {selectedPriority === initialOption && (
+                      <span className={styles.radioInner}></span>
+                    )}
+                  </span>
+                  <span
+                    className={`${styles.colorCircle} ${styles.lowPriority}`}
+                  ></span>
+                  <span>Low</span>
+                </div>
+
+                {showAllOptions && (
+                  <>
+                    <div
+                      className={`${styles.priorityOption} ${
+                        selectedPriority === "withoutpriority"
+                          ? styles.selected
+                          : ""
+                      }`}
+                      onClick={() => handlePriorityChange("withoutpriority")}
+                    >
+                      <span className={styles.radioButton}>
+                        {selectedPriority === "withoutpriority" && (
+                          <span className={styles.radioInner}></span>
+                        )}
+                      </span>
+                      <span
+                        className={`${styles.colorCircle} ${styles.grayPriority}`}
+                      ></span>
+                      <span>Without priority</span>
+                    </div>
+
+                    <div
+                      className={`${styles.priorityOption} ${
+                        selectedPriority === "medium" ? styles.selected : ""
+                      }`}
+                      onClick={() => handlePriorityChange("medium")}
+                    >
+                      <span className={styles.radioButton}>
+                        {selectedPriority === "medium" && (
+                          <span className={styles.radioInner}></span>
+                        )}
+                      </span>
+                      <span
+                        className={`${styles.colorCircle} ${styles.mediumPriority}`}
+                      ></span>
+                      <span>Medium</span>
+                    </div>
+
+                    <div
+                      className={`${styles.priorityOption} ${
+                        selectedPriority === "high" ? styles.selected : ""
+                      }`}
+                      onClick={() => handlePriorityChange("high")}
+                    >
+                      <span className={styles.radioButton}>
+                        {selectedPriority === "high" && (
+                          <span className={styles.radioInner}></span>
+                        )}
+                      </span>
+                      <span
+                        className={`${styles.colorCircle} ${styles.highPriority}`}
+                      ></span>
+                      <span>High</span>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Clear button */}
+              {selectedPriority && (
+                <div className={styles.filterActions}>
+                  <button
+                    className={styles.clearButton}
+                    onClick={handleClearFilters}
+                  >
+                    Clear
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

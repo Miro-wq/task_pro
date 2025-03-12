@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CardItem from "../CardItem/CardItem";
 import styles from "./Column.module.css";
-import AddTaskModal from "../Modals/AddTaskModal";
+import AddTaskModal from "../Modals/AddTaskModal/AddTaskModal";
 import EditColumnModal from "../Modals/EditColumnModal/EditColumnModal";
 import { createTask, deleteColumn } from "../../services/api";
 import sprite from "../../assets/icons/icons.svg";

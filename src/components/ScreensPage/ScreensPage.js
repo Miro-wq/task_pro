@@ -5,13 +5,16 @@ import { getTasks, getColumns, createColumn } from "../../services/api";
 import { BoardContext } from "../../context/BoardContext";
 import AddColumnModal from "../Modals/AddColumnModal";
 import Loader from "../Loader/Loader";
+import FilterModal from "../Modals/FilterModal/FilterModal";
 
 function ScreensPage({ boardId }) {
   const [columns, setColumns] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [filteredTasks, setFilteredTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [showAddColumnModal, setShowAddColumnModal] = useState(false);
+  const [activeFilter, setActiveFilter] = useState(null);
   const { boards } = useContext(BoardContext);
 
   useEffect(() => {
@@ -36,6 +39,7 @@ function ScreensPage({ boardId }) {
           allTasks = [...allTasks, ...tasksResponse.data];
         }
         setTasks(allTasks);
+        setFilteredTasks(allTasks);
       } catch (err) {
         console.error(err);
         setError("Could not fetch data");
@@ -71,16 +75,67 @@ function ScreensPage({ boardId }) {
 
   const handleTaskAdded = (newTask) => {
     setTasks([...tasks, newTask]);
+    if (!activeFilter) {
+      setFilteredTasks([...filteredTasks, newTask]);
+    } else {
+      const taskPriority =
+        newTask.priority?.toLowerCase() || "without priority";
+      if (activeFilter === taskPriority.replace(" ", "")) {
+        setFilteredTasks([...filteredTasks, newTask]);
+      }
+    }
   };
 
-  const handleTaskUpdated = (updatedTask) => {
-    setTasks(
-      tasks.map((task) => (task._id === updatedTask._id ? updatedTask : task))
-    );
+  const handleTaskUpdated = async (taskId) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      // Refresh taskuri si coloane
+      let allTasks = [];
+      for (const column of columns) {
+        const tasksResponse = await getTasks(token, column._id);
+        allTasks = [...allTasks, ...tasksResponse.data];
+      }
+      setTasks(allTasks);
+
+      // Applica filtru pe taskurile updated
+      if (activeFilter) {
+        const filtered = allTasks.filter((task) => {
+          const taskPriority =
+            task.priority?.toLowerCase() || "without priority";
+          return activeFilter === taskPriority.replace(" ", "");
+        });
+        setFilteredTasks(filtered);
+      } else {
+        setFilteredTasks(allTasks);
+      }
+    } catch (error) {
+      console.error("Error refreshing tasks:", error);
+    }
   };
 
   const handleTaskDeleted = (taskId) => {
     setTasks(tasks.filter((task) => task._id !== taskId));
+    setFilteredTasks(filteredTasks.filter((task) => task._id !== taskId));
+  };
+
+  const handleApplyFilters = (filters) => {
+    // Get the selected priority
+    const selectedPriorities = Object.keys(filters.priority).filter(
+      (key) => filters.priority[key]
+    );
+
+    if (selectedPriorities.length === 0) {
+      setActiveFilter(null);
+      setFilteredTasks(tasks);
+    } else {
+      setActiveFilter(selectedPriorities[0]);
+      const filtered = tasks.filter((task) => {
+        const taskPriority = task.priority?.toLowerCase() || "without priority";
+        return selectedPriorities.includes(taskPriority.replace(" ", ""));
+      });
+      setFilteredTasks(filtered);
+    }
   };
 
   if (!boardId) {
@@ -103,7 +158,6 @@ function ScreensPage({ boardId }) {
   if (error) return <div>{error}</div>;
 
   const currentBoard = boards.find((b) => b._id === boardId);
-  console.log(currentBoard.background);
 
   if (!currentBoard) {
     return <p>Board not found</p>;
@@ -114,42 +168,51 @@ function ScreensPage({ boardId }) {
       <div className={styles.nameBoard}>
         <h2 className={styles.screensTitle}>{currentBoard.name}</h2>
       </div>
+
       <div
-        className={styles.screensPage}
+        className={styles.screensPageContainer}
         style={
           currentBoard.background
             ? {
-              backgroundImage: `url("/assets/images/${currentBoard.background}.png")`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }
+                backgroundImage: `url("/assets/images/${currentBoard.background}.png")`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }
             : {}
         }
       >
-        {columns.map((column) => (
-          <Column
-            key={column._id}
-            title={column.title}
-            tasks={tasks.filter((task) => task.columnId === column._id)}
-            columnId={column._id}
-            boardId={boardId}
-            columns={columns}
-            onTaskAdded={handleTaskAdded}
-            onTaskUpdated={handleTaskUpdated}
-            onTaskDeleted={handleTaskDeleted}
-            onColumnUpdated={handleColumnUpdated}
-            onColumnDeleted={handleColumnDeleted}
-          />
-        ))}
-        <div className={styles.addColumnContainer}>
-          <button
-            className={styles.addColumnButton}
-            onClick={() => setShowAddColumnModal(true)}
-          >
-            <span className={styles.plusSignModal}>+</span>
-            Add another column
-          </button>
+        <div className={styles.filterWrapper}>
+          <FilterModal onApplyFilters={handleApplyFilters} />
+        </div>
+
+        <div className={styles.screensPage}>
+          {columns.map((column) => (
+            <Column
+              key={column._id}
+              title={column.title}
+              tasks={filteredTasks.filter(
+                (task) => task.columnId === column._id
+              )}
+              columnId={column._id}
+              boardId={boardId}
+              columns={columns}
+              onTaskAdded={handleTaskAdded}
+              onTaskUpdated={handleTaskUpdated}
+              onTaskDeleted={handleTaskDeleted}
+              onColumnUpdated={handleColumnUpdated}
+              onColumnDeleted={handleColumnDeleted}
+            />
+          ))}
+          <div className={styles.addColumnContainer}>
+            <button
+              className={styles.addColumnButton}
+              onClick={() => setShowAddColumnModal(true)}
+            >
+              <span className={styles.plusSignModal}>+</span>
+              Add another column
+            </button>
+          </div>
         </div>
       </div>
 

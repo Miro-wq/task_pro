@@ -17,11 +17,10 @@ function MoveTaskModal({ task, columns, onClose, onTaskMoved }) {
 
     try {
       const token = localStorage.getItem("token");
-      console.log(selectedColumnId);
-      const response = await moveTask(token, task._id, selectedColumnId);
+      await moveTask(token, task._id, selectedColumnId);
 
       if (onTaskMoved) {
-        onTaskMoved(response.data);
+        onTaskMoved(task._id);
       }
       onClose();
     } catch (err) {

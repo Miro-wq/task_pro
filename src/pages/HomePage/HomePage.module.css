@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: flex-start;
   height: 100vh;
+  width: max-content;
   background: #1f1f1f;
   margin: 0;
   padding: 0;
@@ -13,8 +14,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 100%;
-  width: 100%;
+  max-width: max-content;
+  /* width: 100%; */
   overflow-x: auto;
 }
 
@@ -29,7 +30,8 @@
 }
 
 .green {
-  color: #a8df65;}
+  color: #a8df65;
+}
 
 .title {
   /* font-weight: 400; */
