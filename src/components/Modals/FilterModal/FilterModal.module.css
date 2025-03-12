@@ -178,35 +178,3 @@
 .clearButton:hover {
   background-color: #d4a12a;
 }
-
-/* Responsive styles */
-@media screen and (max-width: 768px) {
-  .filterDropdown {
-    width: 250px;
-    right: -60px;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .filterDropdown {
-    width: 220px;
-    right: -100px;
-  }
-
-  .filterButton {
-    padding: 6px 12px;
-  }
-
-  .priorityOption {
-    padding: 6px;
-    gap: 8px;
-  }
-
-  .filterHeader {
-    padding: 12px;
-  }
-
-  .filterContent {
-    padding: 12px;
-  }
-}

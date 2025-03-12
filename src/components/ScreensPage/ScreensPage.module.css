@@ -1,12 +1,30 @@
+.screensPageContainer {
+  display: flex;
+  flex-direction: column;
+  height: 85vh;
+  width: 100%;
+  overflow: hidden;
+}
+
 .screensPage {
   display: flex;
   gap: 1rem;
   padding: 1rem;
   color: #fff;
   width: max-content;
-  justify-content: space-between;
-  height: 85vh;
-  /* margin-top: 5em; */
+  justify-content: flex-start;
+  height: calc(100% - 40px);
+  overflow: auto;
+}
+
+.filterWrapper {
+  display: flex;
+  justify-content: center;
+  padding: 8px 16px;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .noBoardSelected {
@@ -37,6 +55,9 @@
   width: 95%;
   height: 2em;
   z-index: 9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .screensTitle {
@@ -44,7 +65,6 @@
 }
 
 .columnTitle {
-  /* margin-top: 1rem; */
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
   background-color: #111;
@@ -53,10 +73,6 @@
 }
 
 .addColumnContainer {
-  /* width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center; */
   margin-top: 1rem;
 }
 
@@ -88,114 +104,4 @@
   margin-right: 11px;
   border-radius: 5px;
   background: #fff;
-}
-
-.filterContainer {
-  position: relative;
-  display: inline-block;
-}
-
-.filterButton {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background-color: #f5f6fa;
-  border: 1px solid #dce0e9;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s;
-}
-
-.filterButton:hover {
-  background-color: #e9ecf3;
-}
-
-.filterDropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  width: 280px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(17, 17, 17, 0.1);
-  padding: 16px;
-  margin-top: 8px;
-  z-index: 100;
-}
-
-.filterHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.filterHeader h3 {
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0;
-}
-
-.clearFiltersBtn {
-  background: none;
-  border: none;
-  color: #7b61ff;
-  font-size: 14px;
-  cursor: pointer;
-  padding: 0;
-}
-
-.filterOptions {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.filterOption {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.filterOption input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  margin: 0;
-  cursor: pointer;
-}
-
-.filterOption label {
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.colorCircle {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-}
-
-.withoutPriorityColor {
-  background-color: #bbb;
-}
-
-.lowColor {
-  background-color: #8fa1d0;
-}
-
-.mediumColor {
-  background-color: #e09cb5;
-}
-
-.highColor {
-  background-color: #72c2be;
-}
-
-.nameBoard {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
 }

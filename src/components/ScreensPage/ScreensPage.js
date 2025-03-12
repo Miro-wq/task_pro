@@ -170,7 +170,7 @@ function ScreensPage({ boardId }) {
       </div>
 
       <div
-        className={styles.screensPage}
+        className={styles.screensPageContainer}
         style={
           currentBoard.background
             ? {
@@ -182,32 +182,37 @@ function ScreensPage({ boardId }) {
             : {}
         }
       >
-        <div className={styles.filterContainer}>
+        <div className={styles.filterWrapper}>
           <FilterModal onApplyFilters={handleApplyFilters} />
         </div>
-        {columns.map((column) => (
-          <Column
-            key={column._id}
-            title={column.title}
-            tasks={filteredTasks.filter((task) => task.columnId === column._id)}
-            columnId={column._id}
-            boardId={boardId}
-            columns={columns}
-            onTaskAdded={handleTaskAdded}
-            onTaskUpdated={handleTaskUpdated}
-            onTaskDeleted={handleTaskDeleted}
-            onColumnUpdated={handleColumnUpdated}
-            onColumnDeleted={handleColumnDeleted}
-          />
-        ))}
-        <div className={styles.addColumnContainer}>
-          <button
-            className={styles.addColumnButton}
-            onClick={() => setShowAddColumnModal(true)}
-          >
-            <span className={styles.plusSignModal}>+</span>
-            Add another column
-          </button>
+
+        <div className={styles.screensPage}>
+          {columns.map((column) => (
+            <Column
+              key={column._id}
+              title={column.title}
+              tasks={filteredTasks.filter(
+                (task) => task.columnId === column._id
+              )}
+              columnId={column._id}
+              boardId={boardId}
+              columns={columns}
+              onTaskAdded={handleTaskAdded}
+              onTaskUpdated={handleTaskUpdated}
+              onTaskDeleted={handleTaskDeleted}
+              onColumnUpdated={handleColumnUpdated}
+              onColumnDeleted={handleColumnDeleted}
+            />
+          ))}
+          <div className={styles.addColumnContainer}>
+            <button
+              className={styles.addColumnButton}
+              onClick={() => setShowAddColumnModal(true)}
+            >
+              <span className={styles.plusSignModal}>+</span>
+              Add another column
+            </button>
+          </div>
         </div>
       </div>
 
