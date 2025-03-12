@@ -56,7 +56,7 @@ function Header({ onToggleSidebar }) {
         {user && user.name ? (
           <p
             className={styles.username}
-            style={{ color: theme.headerUsername }}
+            style={{ color: theme.text }}
           >
             {" "}
             {user.name}

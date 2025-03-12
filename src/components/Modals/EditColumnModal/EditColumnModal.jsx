@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { updateColumn } from "../../../services/api";
 import styles from "./EditColumnModal.module.css";
 import sprite from "../../../assets/icons/icons.svg";
+import { ThemeContext } from "../../../context/ThemeContext/ThemeContext";
 
 function EditColumnModal({ column, onClose, onColumnUpdated }) {
+  const { theme } = useContext(ThemeContext);
   const [title, setTitle] = useState(column.title || "");
   const [error, setError] = useState("");
 
@@ -33,10 +35,10 @@ function EditColumnModal({ column, onClose, onColumnUpdated }) {
   
   return (
     <div className={styles.modalBackdrop}>
-      <div className={styles.modalContent}>
+      <div className={styles.modalContent} style = {{background: theme.sidebarBackground}}>
         <div className={styles.modalHeader}>
-          <h2>Edit column</h2>
-          <button className={styles.closeButton} onClick={onClose}>
+          <h2 style = {{color: theme.h2}}>Edit column</h2>
+          <button className={styles.closeButton} style={{color: theme.text}} onClick={onClose}>
             <svg width="18" height="18">
               <use href={`${sprite}#icon-close`}></use>
             </svg>
@@ -54,14 +56,14 @@ function EditColumnModal({ column, onClose, onColumnUpdated }) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Enter column title"
-              className={styles.input}
+              className={styles.input} style = {{background: theme.inputBackground, color: theme.text}}
             />
           </div>
 
           <div className={styles.formActions}>
             <button
               type="button"
-              className={styles.cancelButton}
+              className={styles.cancelButton} style = {{background: theme.inputBackground, color: theme.text}} 
               onClick={onClose}
             >
               Cancel

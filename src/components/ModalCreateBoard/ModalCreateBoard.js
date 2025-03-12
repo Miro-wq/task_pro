@@ -2,8 +2,10 @@ import React, { useState, useContext } from "react";
 import styles from "./ModalCreateBoard.module.css";
 import { BoardContext } from "../../context/BoardContext";
 import sprite from "../../assets/icons/icons.svg";
+import { ThemeContext } from "../../context/ThemeContext/ThemeContext";
 
 function ModalCreateBoard({ onClose }) {
+  const {theme} = useContext(ThemeContext);
   const { createBoard } = useContext(BoardContext);
   const [boardName, setBoardName] = useState("");
   const [selectedIcon, setSelectedIcon] = useState(null);
@@ -49,17 +51,17 @@ function ModalCreateBoard({ onClose }) {
   // momentan pagiane/modalu e pentru test, trebuie mai modificata
   return (
     <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeBtn} onClick={onClose}>
+      <div className={styles.modal} style = {{background: theme.sidebarBackground}} onClick={(e) => e.stopPropagation()}>
+        <button className={styles.closeBtn} style = {{color:theme.text}} onClick={onClose}>
           <svg width="18" height="18">
             <use href={`${sprite}#icon-closeBtn`}></use>
           </svg>
         </button>
 
-        <h2 className={styles.title}>New board</h2>
+        <h2 className={styles.title} style = {{color:theme.text}}>New board</h2>
 
         <input
-          className={styles.inputTitle}
+          className={styles.inputTitle} style = {{background: theme.inputBackground, color: theme.text}}
           type="text"
           placeholder="Title"
           value={boardName}
@@ -67,7 +69,7 @@ function ModalCreateBoard({ onClose }) {
         />
 
         <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>Icons</h3>
+          <h3 className={styles.sectionTitle} style = {{color:theme.text}}>Icons</h3>
           <div className={styles.iconsContainer}>
             {icons.map((icon) => (
               <button
@@ -86,7 +88,7 @@ function ModalCreateBoard({ onClose }) {
         </div>
 
         <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>Background</h3>
+          <h3 className={styles.sectionTitle} style = {{color:theme.text}}>Background</h3>
           <div className={styles.backgroundContainer}>
             {backgrounds.map((bg) => (
               <div
