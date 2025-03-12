@@ -14,14 +14,11 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [error, setError] = useState("");
 
-  // Current month for calendar
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  // Available label colors
   const labelColors = ["blue", "pink", "green", "gray"];
   const [labelColor, setLabelColor] = useState(task.labelColor || "blue");
 
-  // Available priorities
   const priorityMapping = {
     blue: "Low",
     pink: "Medium",
@@ -34,7 +31,6 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
     setPriority(priorityMapping[color]);
   };
 
-  // Form submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -53,16 +49,10 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
         labelColor,
       };
 
-      // Make sure we're passing columnId correctly
-      const response = await updateTask(
-        token,
-        task.columnId,
-        task._id,
-        taskData
-      );
+      await updateTask(token, task.columnId, task._id, taskData);
 
-      if (onTaskUpdated && response.data) {
-        onTaskUpdated(response.data);
+      if (onTaskUpdated) {
+        onTaskUpdated(task._id);
       }
       onClose();
     } catch (err) {
@@ -71,7 +61,6 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
     }
   };
 
-  // Generate calendar for the current month
   const renderCalendar = () => {
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
@@ -80,16 +69,13 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
     const firstDayOfMonth = new Date(year, month, 1);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    // Day of week for first day (0 = Sunday)
     const startingDayOfWeek = firstDayOfMonth.getDay();
 
     const days = [];
-    // Days from previous week
     for (let i = 0; i < startingDayOfWeek; i++) {
       days.push(<div key={`empty-${i}`} className={styles.emptyDay}></div>);
     }
 
-    // Days from current month
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(year, month, day);
       const dateString = date.toISOString().split("T")[0];
@@ -145,7 +131,6 @@ function EditTaskModal({ task, onClose, onTaskUpdated }) {
     );
   };
 
-  // Format date for display
   const formatDate = (dateString) => {
     if (!dateString) return "Today, Month D";
     const date = new Date(dateString);

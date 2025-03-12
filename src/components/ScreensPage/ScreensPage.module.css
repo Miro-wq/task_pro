@@ -89,3 +89,113 @@
   border-radius: 5px;
   background: #fff;
 }
+
+.filterContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.filterButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #f5f6fa;
+  border: 1px solid #dce0e9;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.filterButton:hover {
+  background-color: #e9ecf3;
+}
+
+.filterDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 280px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(17, 17, 17, 0.1);
+  padding: 16px;
+  margin-top: 8px;
+  z-index: 100;
+}
+
+.filterHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.filterHeader h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.clearFiltersBtn {
+  background: none;
+  border: none;
+  color: #7b61ff;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.filterOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filterOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filterOption input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.filterOption label {
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.colorCircle {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.withoutPriorityColor {
+  background-color: #bbb;
+}
+
+.lowColor {
+  background-color: #8fa1d0;
+}
+
+.mediumColor {
+  background-color: #e09cb5;
+}
+
+.highColor {
+  background-color: #72c2be;
+}
+
+.nameBoard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
