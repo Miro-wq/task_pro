@@ -98,7 +98,10 @@ function AddTaskModal({ onClose, onAdd, columnId }) {
 
     return (
       <div className={styles.calendar}>
-        <div className={styles.calendarHeader} style = {{background: theme.inputBackground, color: theme.text}} >
+        <div
+          className={styles.calendarHeader}
+          style={{ background: theme.inputBackground, color: theme.text }}
+        >
           <button
             className={styles.calendarNavButton}
             onClick={() => setCurrentMonth(new Date(year, month - 1, 1))}
@@ -139,9 +142,12 @@ function AddTaskModal({ onClose, onAdd, columnId }) {
 
   return (
     <div className={styles.modalBackdrop}>
-      <div className={styles.modalContent} style = {{background: theme.sidebarBackground, color: theme.text}}>
+      <div
+        className={styles.modalContent}
+        style={{ background: theme.sidebarBackground, color: theme.text }}
+      >
         <div className={styles.modalHeader}>
-          <h2 style = {{color: theme.h2}}>Add card</h2>
+          <h2 style={{ color: theme.h2 }}>Add card</h2>
           <button className={styles.closeButton} onClick={onClose}>
             <svg width="18" height="18">
               <use href={`${sprite}#icon-closeBtn`}></use>
@@ -160,7 +166,8 @@ function AddTaskModal({ onClose, onAdd, columnId }) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Title"
-              className={styles.input} style = {{background: theme.inputBackground, color: theme.text}}
+              className={styles.input}
+              style={{ background: theme.inputBackground, color: theme.text }}
             />
           </div>
 
@@ -171,7 +178,8 @@ function AddTaskModal({ onClose, onAdd, columnId }) {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Description"
-              className={styles.textarea} style = {{background: theme.inputBackground, color: theme.text}}
+              className={styles.textarea}
+              style={{ background: theme.inputBackground, color: theme.text }}
               rows="4"
             />
           </div>
@@ -218,7 +226,8 @@ function AddTaskModal({ onClose, onAdd, columnId }) {
                 onClick={() => setShowDatePicker(!showDatePicker)}
                 readOnly
                 placeholder="Select due date"
-                className={styles.input} style = {{background: theme.inputBackground, color: theme.text}}
+                className={styles.input}
+                style={{ background: theme.inputBackground, color: theme.text }}
               />
               <button
                 type="button"
@@ -231,7 +240,13 @@ function AddTaskModal({ onClose, onAdd, columnId }) {
               </button>
 
               {showDatePicker && (
-                <div className={styles.calendarDropdown} style = {{background: theme.inputBackground, color: theme.text}}>
+                <div
+                  className={styles.calendarDropdown}
+                  style={{
+                    background: theme.inputBackground,
+                    color: theme.text,
+                  }}
+                >
                   {renderCalendar()}
                 </div>
               )}
@@ -241,7 +256,8 @@ function AddTaskModal({ onClose, onAdd, columnId }) {
           <div className={styles.formActions}>
             <button
               type="button"
-              className={styles.cancelButton} style = {{background: theme.inputBackground, color: theme.text}}
+              className={styles.cancelButton}
+              style={{ background: theme.inputBackground, color: theme.text }}
               onClick={onClose}
             >
               Cancel

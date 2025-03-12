@@ -7,7 +7,7 @@ import sprite from "../../assets/icons/icons.svg";
 import { ThemeContext } from "../../context/ThemeContext/ThemeContext";
 
 function CardItem({ task, columns, onTaskUpdated, onTaskDeleted }) {
-  const{theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showMoveModal, setShowMoveModal] = useState(false);
 
@@ -73,14 +73,14 @@ function CardItem({ task, columns, onTaskUpdated, onTaskDeleted }) {
 
   return (
     <>
-<div 
-  className={styles.card} 
-  style={{
-    background: theme.sidebarBackground,
-    borderLeft: `4px solid ${getPriorityColorValue(task.priority)}`,
-  }}
->
-         <div className={styles.cardHeader}>
+      <div
+        className={styles.card}
+        style={{
+          background: theme.sidebarBackground,
+          borderLeft: `4px solid ${getPriorityColorValue(task.priority)}`,
+        }}
+      >
+        <div className={styles.cardHeader}>
           <div
             className={`${styles.priorityIndicator} ${getPriorityColor(
               task.priority
