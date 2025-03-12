@@ -102,7 +102,7 @@
 }
 
 .addColumnButton:hover {
-  background-color: #242424;
+  background-color: #242424 !important;
 }
 
 .plusSignModal {

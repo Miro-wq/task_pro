@@ -60,9 +60,9 @@ router.post('/register', async (req, res) => {
 
 /**
  * @swagger
- * /api/auth/login:
+ * /auth/login:
  *   post:
- *     summary: Login an existing user
+ *     summary: Login an existing user (with refresh token)
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -76,29 +76,36 @@ router.post('/register', async (req, res) => {
  *             properties:
  *               email:
  *                 type: string
- *                 example: john.doe@example.com
+ *                 example: user@example.com
  *               password:
  *                 type: string
- *                 example: mypassword
+ *                 example: password123
  *     responses:
  *       200:
- *         description: Login successful, returns a JWT token and user data
+ *         description: Login successful, returns an access token, a refresh token, and user data
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 token:
+ *                 accessToken:
  *                   type: string
+ *                   description: Access token (short-lived)
+ *                 refreshToken:
+ *                   type: string
+ *                   description: Refresh token (long-lived)
  *                 user:
  *                   type: object
  *                   properties:
  *                     id:
  *                       type: string
+ *                       description: User ID
  *                     name:
  *                       type: string
+ *                       description: User's name
  *                     email:
  *                       type: string
+ *                       description: User's email
  *       400:
  *         description: Invalid credentials
  *       500:
@@ -119,25 +126,21 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // Access Token generat pt durată scurtă
     const accessToken = jwt.sign(
       { userId: user._id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: '15m' } // exemplu: 15 minute
+      { expiresIn: '15m' }
     );
 
-    // generare Refresh Token cu durată mai lungă
     const refreshToken = jwt.sign(
       { userId: user._id, email: user.email },
       process.env.JWT_REFRESH_SECRET,
-      { expiresIn: '7d' } // exemplu: 7 zile
+      { expiresIn: '7d' }
     );
 
-    // stocare refreshToken în DB
     user.refreshTokens.push(refreshToken);
     await user.save();
 
-    // returnare ambele token-uri
     res.json({
       accessToken,
       refreshToken,
@@ -149,10 +152,47 @@ router.post('/login', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /auth/refresh:
+ *   post:
+ *     summary: Obtain a new access token using a refresh token
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - refreshToken
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *                 example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *                 description: The refresh token used to generate a new access token
+ *     responses:
+ *       200:
+ *         description: Returns a new short-lived access token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 accessToken:
+ *                   type: string
+ *                   description: Newly generated access token
+ *       401:
+ *         description: No refresh token provided
+ *       403:
+ *         description: Refresh token not valid, or expired
+ *       500:
+ *         description: Server error
+ */
 
 // POST /auth/refresh
 router.post('/refresh', async (req, res) => {
-  const { refreshToken } = req.body; // sau req.cookies, dacă îl stochezi în cookie
+  const { refreshToken } = req.body;
   if (!refreshToken) {
     return res.status(401).json({ message: 'No refresh token provided' });
   }
@@ -173,15 +213,6 @@ router.post('/refresh', async (req, res) => {
         process.env.JWT_SECRET,
         { expiresIn: '15m' }
       );
-
-      // user.refreshTokens = user.refreshTokens.filter(rt => rt !== refreshToken);
-      // const newRefreshToken = jwt.sign(
-      //   { userId: decoded.userId, email: decoded.email },
-      //   process.env.JWT_REFRESH_SECRET,
-      //   { expiresIn: '7d' }
-      // );
-      // user.refreshTokens.push(newRefreshToken);
-      // await user.save();
 
       res.json({
         accessToken: newAccessToken,
@@ -231,23 +262,9 @@ router.post('/logout', async (req, res) => {
   }
 });
 
-
-// middleware pentru verificare
-// const authenticateToken = (req, res, next) => {
-//   const authHeader = req.headers['authorization'];
-//   const token = authHeader && authHeader.split(' ')[1];
-//   if (!token) return res.sendStatus(401);
-
-//   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-//     if (err) return res.sendStatus(403);
-//     req.user = user;
-//     next();
-//   });
-// };
-
 /**
  * @swagger
- * /api/auth/me:
+ * /auth/me:
  *   get:
  *     summary: Get the authenticated user's profile
  *     tags: [Auth]
@@ -263,12 +280,13 @@ router.post('/logout', async (req, res) => {
  *               properties:
  *                 _id:
  *                   type: string
+ *                   description: The user ID
  *                 name:
  *                   type: string
+ *                   description: The user's name
  *                 email:
  *                   type: string
- *       401:
- *         description: Unauthorized
+ *                   description: The user's email address
  *       404:
  *         description: User not found
  *       500:
@@ -286,6 +304,56 @@ router.get('/me', authenticateToken, async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+/**
+ * @swagger
+ * /auth/me:
+ *   put:
+ *     summary: Update the authenticated user's name
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: "John Smith"
+ *                 description: The new name of the user
+ *     responses:
+ *       200:
+ *         description: Name updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Name updated successfully
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       description: The user ID
+ *                     name:
+ *                       type: string
+ *                       description: The updated name
+ *                     email:
+ *                       type: string
+ *                       description: The user's email
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
 
 // enpoint actualizare date utilizator
 // PUT /api/auth/me

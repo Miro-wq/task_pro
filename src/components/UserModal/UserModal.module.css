@@ -36,7 +36,7 @@
   }
   
   .closeButton:hover {
-    color: #BEDBB0; 
+    color: #a8df65; 
     transform: scale(1.1);
 
 
@@ -64,7 +64,7 @@
     bottom:-10px;
     left: 50%;
     transform: translateX(-50%);
-    background: #c4f0a1;
+    background: #a8df65;
     border: none;
     width: 24px;
     height: 24px;
@@ -75,34 +75,35 @@
     line-height: 24px;
     cursor: pointer;
     z-index: 1;
+    transition: background-color 0.3s ease;
   }
 
   .editAvatar:hover {
-    background-color: #5C8A52; /* Culoare de fundal mai intensă la hover */
-    color: #fff; /* Text alb la hover */
+    background-color: #92c05a;
+    color: #fff;
     
     
   }
 
   input[type="file"] {
-    display: none; /* Ascunde input-ul */
+    display: none;
   }
   
   .input {
-    width: 330px; /* Ajustează lățimea inputurilor pentru a fi mai mici și centrate */
+    width: 330px;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #BEDBB0;
+    border: 1px solid #a8df65;
     border-radius: 5px;
     background:transparent;
     color: white;
     font-size: 16px;
-    text-align: center; /* Textul din input va fi centrat */
+    text-align: center;
   }
   
   .passwordContainer {
     position: relative;
-    width: 100%; /* Asigură-te că și containerul pentru parolă are aceeași lățime */
+    width: 100%;
   }
   
   .eyeButton {
@@ -117,19 +118,19 @@
   }
   
   .sendButton {
-    width: 350px; /* Ajustează și butonul pentru a se alinia cu inputurile */
+    width: 350px;
     padding: 12px;
-    background: #BEDBB0;
+    background: #a8df65;
     border: none;
     border-radius: 5px;
     font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
     margin-top: 10px;
+    transition: background-color 0.3s ease;
   }
   
   .sendButton:hover {
-    background-color: #5C8A52; /* Culoare de fundal mai intensă la hover */
-    color: #fff; /* Text alb la hover */
-    transform: scale(1.05); /* Mărire ușoară a butonului pentru efect vizual */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adăugăm o umbră subtilă pentru adâncire */
+    background-color: #92c05a;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }

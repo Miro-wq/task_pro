@@ -16,7 +16,7 @@
 }
 
 .actionButton {
-  background: #161616;
+  background: #16161600;
   border: none;
   color: #888;
   cursor: pointer;
@@ -25,8 +25,8 @@
 }
 
 .actionButton:hover {
-  color: #fff;
-  background-color: #333;
+  color: #a8df65;
+  /* background-color: #333; */
 }
 
 .icon {

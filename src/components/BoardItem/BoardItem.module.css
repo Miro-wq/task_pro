@@ -24,10 +24,18 @@
   cursor: pointer;
 }
 
+.editBtn:hover {
+  color: #a8df65;
+}
+
 .deleteBtn {
   background-color: rgba(0, 0, 0, 0);
   color: gray;
   cursor: pointer;
+}
+
+.deleteBtn:hover {
+  color: #a8df65;
 }
 
 .boardIcon {
