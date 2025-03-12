@@ -32,7 +32,7 @@
 
 .dropdownMenu li:hover {
   color: #bedbb0;
-  transform: scale(1.05); /* Mărire ușoară la hover */
+  transform: scale(1.05);
 }
 
 .username {
@@ -54,16 +54,40 @@
 }
 
 .themeButton:hover {
-  color: #bedbb0; /* Culoare text la hover */
-  transform: scale(1.05); /* Mărire ușoară la hover */
+  color: #bedbb0;
+  transform: scale(1.05);
 }
 
 .arrow {
-  margin-left: 8px; /* Spațiu între text și săgeată */
-  transition: transform 0.3s ease; /* Adaugă tranziție pentru rotirea săgeții */
+  margin-left: 8px;
+  transition: transform 0.3s ease;
 }
 
-/* Dacă dropdown-ul este deschis, rotește săgeata */
 .dropdownOpen .arrow {
   transform: rotate(180deg);
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background-color: #fff;
+  margin: 4px 0;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    margin: 1.5em;
+  }
 }

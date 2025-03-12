@@ -5,7 +5,7 @@ import UserInfo from "../UserInfo/UserInfo";
 import { FiChevronDown } from "react-icons/fi";
 import styles from "./Header.module.css";
 
-function Header() {
+function Header({ onToggleSidebar }) {
   const { user } = useContext(UserContext);
   const { theme, switchTheme } = useContext(ThemeContext);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -16,16 +16,35 @@ function Header() {
   };
 
   return (
-    <header className={styles.header} style={{ background: theme.headerBackground, color: theme.text }}>
+    <>
+    <button className={styles.hamburger} onClick={onToggleSidebar}>
+        <span className={styles.bar}></span>
+        <span className={styles.bar}></span>
+        <span className={styles.bar}></span>
+      </button>
+    <header
+      className={styles.header}
+      style={{ background: theme.headerBackground, color: theme.text }}
+    >
+      {/* <button className={styles.hamburger} onClick={onToggleSidebar}>
+        <span className={styles.bar}></span>
+        <span className={styles.bar}></span>
+        <span className={styles.bar}></span>
+      </button> */}
       <div className={styles.dropdown}>
         <button
           onClick={() => setDropdownOpen(!isDropdownOpen)}
-          className={`${styles.themeButton} ${isDropdownOpen ? styles.dropdownOpen : ""}`}
+          className={`${styles.themeButton} ${
+            isDropdownOpen ? styles.dropdownOpen : ""
+          }`}
         >
           Theme <FiChevronDown className={styles.arrow} />
         </button>
         {isDropdownOpen && (
-          <ul className={styles.dropdownMenu} style={{ background: theme.headerDropdownMenu }}>
+          <ul
+            className={styles.dropdownMenu}
+            style={{ background: theme.headerDropdownMenu }}
+          >
             <li onClick={() => handleThemeChange("light")}>Light</li>
             <li onClick={() => handleThemeChange("violet")}>Violet</li>
             <li onClick={() => handleThemeChange("dark")}>Dark</li>
@@ -34,14 +53,23 @@ function Header() {
       </div>
 
       <div className={styles.userInfo}>
-        {user && user.name ? <p className={styles.username} style={{ color: theme.headerUsername }}> {user.name}</p> : <p>Welcome, Guest!</p>}
+        {user && user.name ? (
+          <p
+            className={styles.username}
+            style={{ color: theme.headerUsername }}
+          >
+            {" "}
+            {user.name}
+          </p>
+        ) : (
+          <p>Welcome, Guest!</p>
+        )}
       </div>
 
       <UserInfo />
     </header>
+    </>
   );
 }
 
 export default Header;
-
-

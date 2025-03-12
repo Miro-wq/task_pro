@@ -10,10 +10,15 @@ import ScreensPage from "../../components/ScreensPage/ScreensPage";
 import Loader from "../../components/Loader/Loader";
 
 function HomePage() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
   const { user, loading, error, logout } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
   const [selectedBoardId, setSelectedBoardId] = useState(null);
+
+  const handleToggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   useEffect(() => {
     if (!loading && !user) {
@@ -44,8 +49,12 @@ function HomePage() {
         className={styles.homePage}
         style={{ background: theme.background, color: theme.text }}
       >
-        <Header />
-        <Sidebar onSelectBoard={handleSelectBoard} />
+        <Header onToggleSidebar={handleToggleSidebar} />
+        <Sidebar
+          isOpen={isSidebarOpen}
+          onSelectBoard={handleSelectBoard}
+          onClose={() => setIsSidebarOpen(false)}
+        />
         <div className={styles.container}>
           <button className={styles.logoutButton} onClick={logout}>
             <svg className={styles.icon}>

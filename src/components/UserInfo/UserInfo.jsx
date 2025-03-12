@@ -5,16 +5,14 @@ import styles from "./UserInfo.module.css";
 function UserInfo() {
   const [isModalOpen, setModalOpen] = useState(false);
 
-  // Încarcă datele din localStorage sau folosește valori default
   const [avatar, setAvatar] = useState(localStorage.getItem("avatar") || "/assets/icons/icons.svg");
   const [name, setName] = useState(localStorage.getItem("name") || "User");
   const [email, setEmail] = useState(localStorage.getItem("email") || "");
   const [password, setPassword] = useState(localStorage.getItem("password") || "");
 
-  // Efect pentru a reîncărca datele din localStorage când modalul se închide
   useEffect(() => {
     if (!isModalOpen) {
-      setAvatar(localStorage.getItem("avatar") || "/assets/icons/icons.svg");
+      setAvatar(localStorage.getItem("avatar") || "assets/images/abstract.png");
       setName(localStorage.getItem("name") || "User");
       setEmail(localStorage.getItem("email") || "");
       setPassword(localStorage.getItem("password") || "");
@@ -26,7 +24,7 @@ function UserInfo() {
       
       <img
         src={avatar}
-        alt="User Avatar"
+        alt=" "
         className={styles.avatar}
         onClick={() => setModalOpen(true)}
       />

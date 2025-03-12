@@ -7,20 +7,22 @@ import { BoardContext } from '../../context/BoardContext';
 
 
 
-function Sidebar({ onSelectBoard }) {
+function Sidebar({ isOpen, onSelectBoard, onClose }) {
     const { boards } = useContext(BoardContext);
     const [showModal, setShowModal] = useState(false);
     const [activeBoardId, setActiveBoardId] = useState(null);
 
     const handleSelectBoard = (boardId) => {
         setActiveBoardId(boardId);
+        onSelectBoard(boardId);
+        onClose();
         if (onSelectBoard) {
             onSelectBoard(boardId);
         }
     };
 
     return (
-        <div className={styles.sidebar}>
+        <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
             <h1 className={styles.logo}>
                 <svg className={styles.icon}>
                     <use xlinkHref="/assets/icons/symbol-defs.svg#icon-black_icon" />
