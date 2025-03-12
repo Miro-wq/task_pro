@@ -95,7 +95,7 @@ function FilterModal({ onApplyFilters }) {
                       <span className={styles.radioCheck}></span>
                     )}
                   </span>
-                  <span>Without priority</span>
+                  <span>Without Priority</span>
                 </div>
 
                 <div
