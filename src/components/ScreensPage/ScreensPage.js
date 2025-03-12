@@ -5,22 +5,16 @@ import { getTasks, getColumns, createColumn } from "../../services/api";
 import { BoardContext } from "../../context/BoardContext";
 import AddColumnModal from "../Modals/AddColumnModal";
 import Loader from "../Loader/Loader";
-import sprite from "../../assets/icons/icons.svg";
 import FilterModal from "../Modals/FilterModal/FilterModal";
 
 function ScreensPage({ boardId }) {
   const [columns, setColumns] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
   const [showAddColumnModal, setShowAddColumnModal] = useState(false);
-
-  const [showFilterModal, setShowFilterModal] = useState(false);
   const [activeFilter, setActiveFilter] = useState(null);
-
   const { boards } = useContext(BoardContext);
 
   useEffect(() => {
@@ -81,19 +75,40 @@ function ScreensPage({ boardId }) {
 
   const handleTaskAdded = (newTask) => {
     setTasks([...tasks, newTask]);
+    if (!activeFilter) {
+      setFilteredTasks([...filteredTasks, newTask]);
+    } else {
+      const taskPriority =
+        newTask.priority?.toLowerCase() || "without priority";
+      if (activeFilter === taskPriority.replace(" ", "")) {
+        setFilteredTasks([...filteredTasks, newTask]);
+      }
+    }
   };
 
   const handleTaskUpdated = async (taskId) => {
     try {
       const token = localStorage.getItem("token");
 
-      // Refresh all tasks from all columns to ensure consistency
+      // Refresh taskuri si coloane
       let allTasks = [];
       for (const column of columns) {
         const tasksResponse = await getTasks(token, column._id);
         allTasks = [...allTasks, ...tasksResponse.data];
       }
       setTasks(allTasks);
+
+      // Applica filtru pe taskurile updated
+      if (activeFilter) {
+        const filtered = allTasks.filter((task) => {
+          const taskPriority =
+            task.priority?.toLowerCase() || "without priority";
+          return activeFilter === taskPriority.replace(" ", "");
+        });
+        setFilteredTasks(filtered);
+      } else {
+        setFilteredTasks(allTasks);
+      }
     } catch (error) {
       console.error("Error refreshing tasks:", error);
     }
@@ -101,14 +116,11 @@ function ScreensPage({ boardId }) {
 
   const handleTaskDeleted = (taskId) => {
     setTasks(tasks.filter((task) => task._id !== taskId));
-  };
-
-  const handleFilterToggle = (priority) => {
-    setActiveFilter(priority === activeFilter ? null : priority);
+    setFilteredTasks(filteredTasks.filter((task) => task._id !== taskId));
   };
 
   const handleApplyFilters = (filters) => {
-    // preia prioritatea selectata
+    // Get the selected priority
     const selectedPriorities = Object.keys(filters.priority).filter(
       (key) => filters.priority[key]
     );
@@ -157,15 +169,7 @@ function ScreensPage({ boardId }) {
         <h2 className={styles.screensTitle}>{currentBoard.name}</h2>
 
         <div className={styles.filterContainer}>
-          <button
-            className={styles.filterButton}
-            onClick={() => setShowFilterModal(true)}
-          >
-            <svg width="18" height="18">
-              <use href={`${sprite}#icon-filter`}></use>
-            </svg>
-            Filters
-          </button>
+          <FilterModal onApplyFilters={handleApplyFilters} />
         </div>
       </div>
 
@@ -213,12 +217,6 @@ function ScreensPage({ boardId }) {
           onClose={() => setShowAddColumnModal(false)}
           onAdd={handleAddColumn}
           boardId={boardId}
-        />
-      )}
-      {showFilterModal && (
-        <FilterModal
-          onClose={() => setShowFilterModal(false)}
-          onApplyFilters={handleApplyFilters}
         />
       )}
     </>
