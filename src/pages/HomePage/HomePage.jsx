@@ -56,7 +56,7 @@ function HomePage() {
           onClose={() => setIsSidebarOpen(false)}
         />
         <div className={styles.container}>
-          <button className={styles.logoutButton} style = {{color:theme.text}} onClick={logout}>
+          <button className={styles.logoutButton} onClick={logout}>
             <svg className={styles.icon}>
               <use xlinkHref="/assets/icons/symbol-defs.svg#icon-logout" />
             </svg>

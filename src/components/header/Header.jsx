@@ -47,19 +47,20 @@ function Header({ onToggleSidebar }) {
           )}
         </div>
 
-      <div className={styles.userInfo}>
-        {user && user.name ? (
-          <p
-            className={styles.username}
-            style={{ color: theme.text }}
-          >
-            {" "}
-            {user.name}
-          </p>
-        ) : (
-          <p>Welcome, Guest!</p>
-        )}
-      </div>
+        <div className={styles.userInfo}>
+          {user && user.name ? (
+            <p
+              className={styles.username}
+              style={{ color: theme.headerUsername }}
+            >
+              {" "}
+              {user.name}
+            </p>
+          ) : (
+            <p>Welcome, Guest!</p>
+          )}
+        </div>
+
         <UserInfo />
       </header>
     </>

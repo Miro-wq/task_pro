@@ -1,9 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import styles from "./Modal.module.css";
-import { ThemeContext } from "../../context/ThemeContext/ThemeContext";
 
 function AddColumnModal({ onClose, onAdd, boardId }) {
-  const { theme } = useContext(ThemeContext);
   const [title, setTitle] = useState("");
 
   const handleSubmit = async (e) => {
@@ -21,7 +19,7 @@ function AddColumnModal({ onClose, onAdd, boardId }) {
 
   return (
     <div className={styles.modalOverlay}>
-      <div className={styles.modalContent}  style = {{background: theme.sidebarBackground, color: theme.text}}>
+      <div className={styles.modalContent}>
         <div className={styles.modalHeader}>
           <h2>Add column</h2>
           <button className={styles.closeButton} onClick={onClose}>
@@ -32,7 +30,7 @@ function AddColumnModal({ onClose, onAdd, boardId }) {
           <div className={styles.formGroup}>
             <input
               type="text"
-              className={styles.input} style = {{background: theme.inputBackground, color: theme.text}}
+              className={styles.input}
               placeholder="Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
