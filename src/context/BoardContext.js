@@ -33,7 +33,6 @@ export const BoardProvider = ({ children }) => {
       }
     };
 
-    // Așteptăm puțin să fie token-ul salvat
     setTimeout(fetchBoards, 500);
   }, []);
 

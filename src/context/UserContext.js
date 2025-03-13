@@ -22,7 +22,7 @@ export const UserProvider = ({ children }) => {
             try {
                 const res = await getUserProfile(token);
                 setUser(res.data);
-                localStorage.setItem("user", JSON.stringify(res.data)); // Salvăm în localStorage
+                localStorage.setItem("user", JSON.stringify(res.data));
             } catch (err) {
                 console.error("Error fetching user:", err);
                 setError("Could not fetch user data. Please log in again.");
@@ -60,7 +60,7 @@ export const UserProvider = ({ children }) => {
     
           // actualizare user in context
           setUser(updatedUser);
-          // daca tot pastram userul în localStorage, atunci :
+          // daca tot pastram userul în localStorage
           localStorage.setItem('user', JSON.stringify(updatedUser));
         } catch (err) {
           console.error(err);

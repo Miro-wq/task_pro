@@ -86,7 +86,7 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: #222;
+  background: #22222200;
   color: gray;
   border-radius: 6px;
   cursor: pointer;
@@ -96,8 +96,9 @@
 }
 
 .iconItem:hover {
-  transform: scale(1.1);
-  background-color: #333;
+  /* transform: scale(1.1); */
+  /* background-color: #333; */
+  color: #fff;
 }
 
 .bgItem {
