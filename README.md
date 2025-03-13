@@ -1,70 +1,107 @@
-# Getting Started with Create React App
+# TaskPro
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+TaskPro is a Trello-inspired task management application built with **React.js** and **MongoDB**. It offers user authentication, board creation, and a drag-and-drop-like experience for managing tasks across three default columns: **To Do**, **In Progress**, and **Done**.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## **Key Features**
+ ### 1. User Authentication
 
-### `npm start`
+- **Register** new users
+- **Login** with short-lived access tokens and refresh tokens
+- **Protected routes** for board and task operations
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 2. Board & Columns
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Create new boards with default columns: **To Do**, **In Progress**, **Done**
+- Edit board details (name, icon, background)
+- Add or remove custom columns if needed
 
-### `npm test`
+### 3. Tasks
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Create tasks under specific columns
+- Edit, move, or delete tasks
+- Assign priority levels (low, medium, high, etc.) with color indicators
+- Set due dates using a custom calendar component
 
-### `npm run build`
+### 4. Responsive UI
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Built with CSS Modules and Media Queries for various screen sizes
+- A hamburger menu hides the sidebar on smaller devices
+  
+### Help Modal
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- A user can send help requests via a SendGrid-integrated form
+- Automatically sends an email to the project’s support address
+  
+## **Technologies Used**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Frontend
 
-### `npm run eject`
+- React.js (functional components, hooks)
+- React Router for routing
+- Formik and Yup for form handling and validation
+- CSS Modules for scoped styling
+- Axios or Fetch for HTTP requests
+- Swagger UI for API documentation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Backend
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Node.js with Express
+- MongoDB with Mongoose for data persistence
+- JSON Web Tokens (JWT) for authentication and refresh tokens
+- SendGrid for sending emails
+  
+### Other
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Framer Motion for small animations
+- Swagger for documenting API endpoints
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## **Configure environment**
 
-## Learn More
+Backend: In the backend/.env file, set up:
+```bash
+PORT=5000
+MONGO_URI=your-mongodb-uri
+JWT_SECRET=your_jwt_secret
+JWT_REFRESH_SECRET=your_refresh_secret
+SENDGRID_API_KEY=your_sendgrid_api_key
+SENDGRID_FROM_EMAIL=verified_email@domain.com
+```
+Frontend: If using a proxy, add `"proxy": "http://localhost:5000"` in `package.json`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The backend runs at `http://localhost:5000` and the frontend at `http://localhost:3000`.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## **API Documentation**
 
-### Code Splitting
+Swagger-based API documentation is available at:
+```bash
+http://localhost:5000/api-docs
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+This includes routes for:
 
-### Analyzing the Bundle Size
+Auth (`/auth/register`, `/auth/login`, `/auth/refresh`, `/auth/me`, etc.)
+Boards (`/boards/create`, etc.)
+Columns and Tasks
+Help (`/help/send` via SendGrid)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## **Project Structure**
+```plaintext
+taskpro/
+ ┣ backend/
+ ┃ ┣ controllers/
+ ┃ ┣ models/
+ ┃ ┣ routes/
+ ┃ ┣ .env
+ ┃ ┗ server.js
+ ┣ frontend/
+ ┃ ┣ src/
+ ┃ ┃ ┣ components/
+ ┃ ┃ ┣ pages/
+ ┃ ┃ ┣ context/
+ ┃ ┃ ┗ App.js
+ ┃ ┗ package.json
+ ┗ README.md
+```
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
