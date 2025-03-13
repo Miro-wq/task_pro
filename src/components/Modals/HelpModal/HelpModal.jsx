@@ -21,7 +21,7 @@ function HelpModal({ isOpen, onClose }) {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/send", {
+      const response = await fetch("http://localhost:5000/api/help/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

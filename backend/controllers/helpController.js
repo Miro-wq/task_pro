@@ -1,20 +1,16 @@
 const sgMail = require("@sendgrid/mail");
 
-// Set SendGrid API key from environment variables
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-// Helper function to validate email
 const isValidEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
 
-// Send help request email
 exports.sendHelpRequest = async (req, res) => {
   try {
     const { email, comment } = req.body;
 
-    // Validate input
     if (!email || !comment) {
       return res
         .status(400)
@@ -27,10 +23,9 @@ exports.sendHelpRequest = async (req, res) => {
         .json({ message: "Please provide a valid email address" });
     }
 
-    // Create email message
     const msg = {
       to: "taskpro.project@gmail.com",
-      from: process.env.SENDGRID_FROM_EMAIL, // Must be verified in SendGrid
+      from: process.env.VERIFIED_SENDER_EMAIL,
       subject: "TaskPro Help Request",
       text: `Help request from ${email}\n\nComment: ${comment}`,
       html: `
@@ -44,7 +39,6 @@ exports.sendHelpRequest = async (req, res) => {
       replyTo: email,
     };
 
-    // Send email
     await sgMail.send(msg);
 
     res.status(200).json({ message: "Help request sent successfully" });
