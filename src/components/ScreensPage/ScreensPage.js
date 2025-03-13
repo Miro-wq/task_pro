@@ -134,12 +134,6 @@ function ScreensPage({ boardId }) {
       setActiveFilter(selectedPriorities[0]);
       const filtered = tasks.filter((task) => {
         const taskPriority = task.priority?.toLowerCase() || "without priority";
-        console.log({
-          activeFilter,
-          taskPriority: (
-            task.priority?.toLowerCase() || "without priority"
-          ).replace(/\s+/g, ""),
-        });
         return selectedPriorities.includes(taskPriority.replace(/\s+/g, ""));
       });
       setFilteredTasks(filtered);
