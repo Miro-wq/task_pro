@@ -6,6 +6,7 @@ const boardRoutes = require("./routes/boards");
 const columnsRoutes = require("./routes/columnsRoutes");
 const tasksRoutes = require("./routes/tasksRoutes");
 const moveRoute = require("./routes/moveRoute");
+const helpRoutes = require("./routes/help");
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");
@@ -17,6 +18,9 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+//pentru need help
+app.use("/api/help", helpRoutes);
 
 // connect MongoDB
 mongoose
