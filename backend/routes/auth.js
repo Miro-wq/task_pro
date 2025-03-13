@@ -1,9 +1,11 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const User = require('../models/Users'); // s-ar putea sa nu merga la toti cu User cu U mare
-const { authenticateToken } = require('../middleware/auth');
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const User = require("../models/Users"); // s-ar putea sa nu merga la toti cu User cu U mare
+const { authenticateToken } = require("../middleware/auth");
 
 /**
  * @swagger
@@ -41,20 +43,20 @@ const { authenticateToken } = require('../middleware/auth');
  */
 
 // POST /auth/register
-router.post('/register', async (req, res) => {
+router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({ message: "User already exists" });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
-    res.status(201).json({ message: 'User registered successfully' });
+    res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -113,17 +115,17 @@ router.post('/register', async (req, res) => {
  */
 
 // POST /auth/login (cu refresh token)
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: "Invalid credentials" });
     }
     // trebuie comparata  parola
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: "Invalid credentials" });
     }
 
     const accessToken = jwt.sign(
@@ -148,7 +150,7 @@ router.post('/login', async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -194,25 +196,30 @@ router.post('/login', async (req, res) => {
 router.post('/refresh', async (req, res) => {
   const { refreshToken } = req.body;
   if (!refreshToken) {
-    return res.status(401).json({ message: 'No refresh token provided' });
+    return res.status(401).json({ message: "No refresh token provided" });
   }
 
   try {
     const user = await User.findOne({ refreshTokens: refreshToken });
     if (!user) {
-      return res.status(403).json({ message: 'Refresh token not valid' });
+      return res.status(403).json({ message: "Refresh token not valid" });
     }
 
-    jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, async (err, decoded) => {
-      if (err) {
-        return res.status(403).json({ message: 'Refresh token expired or invalid' });
-      }
+    jwt.verify(
+      refreshToken,
+      process.env.JWT_REFRESH_SECRET,
+      async (err, decoded) => {
+        if (err) {
+          return res
+            .status(403)
+            .json({ message: "Refresh token expired or invalid" });
+        }
 
-      const newAccessToken = jwt.sign(
-        { userId: decoded.userId, email: decoded.email },
-        process.env.JWT_SECRET,
-        { expiresIn: '15m' }
-      );
+        const newAccessToken = jwt.sign(
+          { userId: decoded.userId, email: decoded.email },
+          process.env.JWT_SECRET,
+          { expiresIn: "15m" }
+        );
 
       res.json({
         accessToken: newAccessToken,
@@ -220,10 +227,9 @@ router.post('/refresh', async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
 });
-
 
 /**
  * @swagger
@@ -243,22 +249,23 @@ router.post('/refresh', async (req, res) => {
  */
 
 // POST /auth/logout
-router.post('/logout', async (req, res) => {
+router.post("/logout", async (req, res) => {
   const { refreshToken } = req.body; // sau cookie
-  if (!refreshToken) return res.status(400).json({ message: 'No token provided' });
+  if (!refreshToken)
+    return res.status(400).json({ message: "No token provided" });
 
   try {
     // scoate token-ul din DB
     const user = await User.findOne({ refreshTokens: refreshToken });
     if (!user) {
-      return res.status(400).json({ message: 'Invalid token' });
+      return res.status(400).json({ message: "Invalid token" });
     }
-    user.refreshTokens = user.refreshTokens.filter(rt => rt !== refreshToken);
+    user.refreshTokens = user.refreshTokens.filter((rt) => rt !== refreshToken);
     await user.save();
 
-    res.json({ message: 'User logged out' });
+    res.json({ message: "User logged out" });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -294,14 +301,14 @@ router.post('/logout', async (req, res) => {
  */
 
 // endpoint date utilizator
-router.get('/me', authenticateToken, async (req, res) => {
+router.get("/me", authenticateToken, async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId).select('-password');
-    if (!user) return res.status(404).json({ message: 'User not found' });
+    const user = await User.findById(req.user.userId).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found" });
     res.json(user);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -357,21 +364,93 @@ router.get('/me', authenticateToken, async (req, res) => {
 
 // enpoint actualizare date utilizator
 // PUT /api/auth/me
-router.put('/me', authenticateToken, async (req, res) => {
+router.put("/me", authenticateToken, async (req, res) => {
   try {
     const { name } = req.body;
     const user = await User.findById(req.user.userId);
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
     user.name = name;
     await user.save();
-    res.json({ message: 'Name updated successfully', user });
+    res.json({ message: "Name updated successfully", user });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
 });
 
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:5000/api/auth/google/callback",
+      scope: ["profile", "email"],
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        let user = await User.findOne({ email: profile.emails[0].value });
+
+        if (user) {
+          return done(null, user);
+        }
+
+        const newUser = new User({
+          name: profile.displayName,
+          email: profile.emails[0].value,
+          password: await bcrypt.hash(Math.random().toString(36).slice(-8), 10),
+          googleId: profile.id,
+        });
+
+        await newUser.save();
+        return done(null, newUser);
+      } catch (error) {
+        return done(error, null);
+      }
+    }
+  )
+);
+
+router.use(passport.initialize());
+
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+// Google OAuth callback route
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    session: false,
+    failureRedirect: "/login",
+  }),
+  async (req, res) => {
+    try {
+      const accessToken = jwt.sign(
+        { userId: req.user._id, email: req.user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: "15m" }
+      );
+
+      const refreshToken = jwt.sign(
+        { userId: req.user._id, email: req.user.email },
+        process.env.JWT_REFRESH_SECRET,
+        { expiresIn: "7d" }
+      );
+
+      req.user.refreshTokens.push(refreshToken);
+      await req.user.save();
+
+      res.redirect(
+        `http://localhost:3000/auth-success?accessToken=${accessToken}&refreshToken=${refreshToken}`
+      );
+    } catch (error) {
+      console.error(error);
+      res.redirect("http://localhost:3000/login?error=authentication_failed");
+    }
+  }
+);
 
 module.exports = router;

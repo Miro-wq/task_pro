@@ -1,36 +1,38 @@
-import React, { useState, useContext } from 'react';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../../services/api';
-import { UserContext } from '../../context/UserContext';
-import { Link } from 'react-router-dom';
-import styles from './LoginPage.module.css';
+import React, { useState, useContext } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../../services/api";
+import { UserContext } from "../../context/UserContext";
+import { Link } from "react-router-dom";
+import GoogleAuthButton from "../../components/Google/GoogleAuthButton";
+import styles from "./LoginPage.module.css";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { login } = useContext(UserContext);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   const formik = useFormik({
-    initialValues: { email: '', password: '' },
+    initialValues: { email: "", password: "" },
     validationSchema: Yup.object({
-      email: Yup.string().email('Invalid email').required('Email required'),
-      password: Yup.string().min(6, 'Password too short').required('Password required'),
+      email: Yup.string().email("Invalid email").required("Email required"),
+      password: Yup.string()
+        .min(6, "Password too short")
+        .required("Password required"),
     }),
     onSubmit: async (values) => {
       try {
         const response = await loginUser(values.email, values.password);
         const { accessToken, refreshToken, user } = response.data;
         login(accessToken, user);
-        localStorage.setItem('refreshToken', refreshToken); // salvează refresh token si in localStorage
-        navigate('/home');
-
+        localStorage.setItem("refreshToken", refreshToken); // salvează refresh token si in localStorage
+        navigate("/home");
       } catch (error) {
         if (error.response && error.response.data.message) {
           setErrorMessage(error.response.data.message);
         } else {
-          setErrorMessage('An error occurred. Please try again later.');
+          setErrorMessage("An error occurred. Please try again later.");
         }
       }
     },
@@ -40,8 +42,13 @@ const LoginPage = () => {
     <div className={styles.container}>
       <div className={styles.loginBox}>
         <div className={styles.tabContainer}>
-          <Link to="/register" className={styles.tabButton}>Registration</Link>
-          <button className={`${styles.tabButton} ${styles.activeTab}`}>Log In</button>
+          <Link to="/register" className={styles.tabButton}>
+            Registration
+          </Link>
+          <button className={`${styles.tabButton} ${styles.activeTab}`}>
+            Log In
+          </button>
+          <GoogleAuthButton />
         </div>
         <form onSubmit={formik.handleSubmit} className={styles.form}>
           <input
@@ -52,7 +59,9 @@ const LoginPage = () => {
             onChange={formik.handleChange}
             value={formik.values.email}
           />
-          {formik.errors.email && <div className={styles.errorText}>{formik.errors.email}</div>}
+          {formik.errors.email && (
+            <div className={styles.errorText}>{formik.errors.email}</div>
+          )}
 
           <input
             className={styles.inputField}
@@ -62,9 +71,13 @@ const LoginPage = () => {
             onChange={formik.handleChange}
             value={formik.values.password}
           />
-          {formik.errors.password && <div className={styles.errorText}>{formik.errors.password}</div>}
+          {formik.errors.password && (
+            <div className={styles.errorText}>{formik.errors.password}</div>
+          )}
 
-          <button type="submit" className={styles.loginButton}>Log In</button>
+          <button type="submit" className={styles.loginButton}>
+            Log In
+          </button>
         </form>
 
         {errorMessage && <div className={styles.errorText}>{errorMessage}</div>}
