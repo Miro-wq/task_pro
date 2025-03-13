@@ -29,7 +29,7 @@ function FilterModal({ onApplyFilters }) {
         low: newPriority === "low",
         medium: newPriority === "medium",
         high: newPriority === "high",
-        without: newPriority === "without",
+        withoutpriority: newPriority === "withoutpriority",
       },
     };
 
@@ -44,7 +44,7 @@ function FilterModal({ onApplyFilters }) {
         low: false,
         medium: false,
         high: false,
-        without: false,
+        withoutpriority: false,
       },
     };
 
@@ -84,14 +84,16 @@ function FilterModal({ onApplyFilters }) {
               <div className={styles.priorityOptions}>
                 <div
                   className={`${styles.priorityOption} ${
-                    selectedPriority === "without" ? styles.selected : ""
+                    selectedPriority === "withoutpriority"
+                      ? styles.selected
+                      : ""
                   }`}
-                  onClick={() => handlePriorityChange("without")}
+                  onClick={() => handlePriorityChange("withoutpriority")}
                 >
                   <span
                     className={`${styles.colorRadio} ${styles.withoutPriority}`}
                   >
-                    {selectedPriority === "without" && (
+                    {selectedPriority === "withoutpriority" && (
                       <span className={styles.radioCheck}></span>
                     )}
                   </span>

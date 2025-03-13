@@ -82,7 +82,7 @@ function ScreensPage({ boardId }) {
     } else {
       const taskPriority =
         newTask.priority?.toLowerCase() || "without priority";
-      if (activeFilter === taskPriority.replace(" ", "")) {
+      if (activeFilter === taskPriority.replace(/\s+/g, "")) {
         setFilteredTasks([...filteredTasks, newTask]);
       }
     }
@@ -105,7 +105,7 @@ function ScreensPage({ boardId }) {
         const filtered = allTasks.filter((task) => {
           const taskPriority =
             task.priority?.toLowerCase() || "without priority";
-          return activeFilter === taskPriority.replace(" ", "");
+          return activeFilter === taskPriority.replace(/\s+/g, "");
         });
         setFilteredTasks(filtered);
       } else {
@@ -134,7 +134,13 @@ function ScreensPage({ boardId }) {
       setActiveFilter(selectedPriorities[0]);
       const filtered = tasks.filter((task) => {
         const taskPriority = task.priority?.toLowerCase() || "without priority";
-        return selectedPriorities.includes(taskPriority.replace(" ", ""));
+        console.log({
+          activeFilter,
+          taskPriority: (
+            task.priority?.toLowerCase() || "without priority"
+          ).replace(/\s+/g, ""),
+        });
+        return selectedPriorities.includes(taskPriority.replace(/\s+/g, ""));
       });
       setFilteredTasks(filtered);
     }
@@ -143,7 +149,7 @@ function ScreensPage({ boardId }) {
   if (!boardId) {
     return (
       <div className={styles.noBoardSelected}>
-        <p className={styles.description} style = {{color:theme.text}}>
+        <p className={styles.description} style={{ color: theme.text }}>
           Before starting your project, it is essential{" "}
           <span className={styles.green}>to create a board</span> to visualize
           and track all the necessary tasks and milestones. This board serves as
@@ -168,7 +174,9 @@ function ScreensPage({ boardId }) {
   return (
     <>
       <div className={styles.nameBoard}>
-        <h2 className={styles.screensTitle} style = {{color:theme.text}}>{currentBoard.name}</h2>
+        <h2 className={styles.screensTitle} style={{ color: theme.text }}>
+          {currentBoard.name}
+        </h2>
         <div className={styles.filterWrapper}>
           <FilterModal onApplyFilters={handleApplyFilters} />
         </div>
@@ -205,12 +213,21 @@ function ScreensPage({ boardId }) {
               onColumnDeleted={handleColumnDeleted}
             />
           ))}
-          <div className={styles.addColumnContainer} >
+          <div className={styles.addColumnContainer}>
             <button
-              className={styles.addColumnButton} style = {{background: theme.sidebarBackground, color: theme.text}}  
+              className={styles.addColumnButton}
+              style={{ background: theme.sidebarBackground, color: theme.text }}
               onClick={() => setShowAddColumnModal(true)}
             >
-              <span className={styles.plusSignModal} style = {{background: theme.plusSignModal, color: theme.textPlusSignModal}} >+</span>
+              <span
+                className={styles.plusSignModal}
+                style={{
+                  background: theme.plusSignModal,
+                  color: theme.textPlusSignModal,
+                }}
+              >
+                +
+              </span>
               Add another column
             </button>
           </div>
